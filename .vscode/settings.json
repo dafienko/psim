@@ -6,5 +6,8 @@
 			"binaryPath": "/Users/dafienko/Documents/gluttest/main",
 			"binaryArgs": []
 		}
-	]
+	],
+	"files.associations": {
+		"iostream": "cpp"
+	}
 }
