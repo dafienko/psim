@@ -5,6 +5,7 @@
             "includePath": [
                 "/opt/homebrew/include/"
             ],
+            "compilerPath": "/usr/bin/clang++",
             "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
