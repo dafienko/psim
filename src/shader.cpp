@@ -30,9 +30,7 @@ void checkShaderErrors(const std::string &filename, GLuint shader) {
 	}
 }
 
-ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &fs_filename) :
-	uniform_locations()
-{
+ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &fs_filename) {
 	std::string vertex_source, fragment_source;
 	getFileSource(vs_filename, vertex_source);
 	getFileSource(fs_filename, fragment_source);
