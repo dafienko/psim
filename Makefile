@@ -11,7 +11,7 @@ MAIN = src/main.cpp
 SRC_FILES = $(filter-out $(MAIN),$(wildcard src/*.cpp))
 
 main: $(MAIN) $(SRC_FILES) 
-	$(CC) -g -Wall $(CINCLUDE) -I src $^ -o $@ $(CFLAGS)
+	$(CC) -std=c++14 -g -Wall $(CINCLUDE) -I src $^ -o $@ $(CFLAGS)
 
 clean:
 	if [ -f *.o ]; then rm *.o; fi

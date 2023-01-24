@@ -26,7 +26,7 @@ void checkShaderErrors(const std::string &filename, GLuint shader) {
 
 		std::cerr << "error compiling shader " << filename << std::endl;
 		std::cerr << &errorLog[0] << std::endl;
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -56,7 +56,7 @@ ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &
 	glDeleteShader(fragment_shader);
 }
 
-GLuint ShaderProgram::GetProgram() {
+GLuint ShaderProgram::getProgram() {
 	return program;
 }
 

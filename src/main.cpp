@@ -1,25 +1,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "glm/ext.hpp"
 #include <iostream>
 
 #include "shader.h"
-
-static const struct
-{
-    float x, y;
-    float r, g, b;
-} vertices[3] =
-{
-    { -0.6f, -0.4f, 1.f, 0.f, 0.f },
-    {  0.6f, -0.4f, 0.f, 1.f, 0.f },
-    {   0.f,  0.6f, 0.f, 0.f, 1.f }
-};
+#include "core.h"
  
 static void error_callback(int error, const char* description)
 {
     std::cout << "Error: " << description << std::endl;
-	exit(1);
+	exit(EXIT_FAILURE);
 }
  
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -27,13 +16,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) 
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
- 
-int main(void)
-{
-    GLFWwindow* window;
-    GLuint vertex_buffer;
-    GLint mvp_location, vpos_location, vcol_location;
- 
+
+GLFWwindow* createWindow(const char* windowTitle) {
+	GLFWwindow* window;
     glfwSetErrorCallback(error_callback);
  
     if (!glfwInit())
@@ -41,8 +26,8 @@ int main(void)
  
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
- 
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+
+    window = glfwCreateWindow(640, 480, windowTitle, NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -54,51 +39,45 @@ int main(void)
     glfwMakeContextCurrent(window);
     glewInit();
     glfwSwapInterval(1);
- 
-    glGenBuffers(1, &vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
- 
-    ShaderProgram shaderProgram("shaders/vertex.glsl", "shaders/fragment.glsl");
-	GLuint program = shaderProgram.GetProgram();
-	
-    mvp_location = glGetUniformLocation(program, "MVP");
-    vpos_location = glGetAttribLocation(program, "vPos");
-    vcol_location = glGetAttribLocation(program, "vCol");
- 
-    glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void*) 0);
 
-    glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void*) (sizeof(float) * 2));
+	return window;
+}
+
+void destroyWindow(GLFWwindow* window) {
+	glfwDestroyWindow(window);
  
+    glfwTerminate();
+}
+
+int main(int argc, char** argv)
+{
+	GLFWwindow* window = createWindow(*argv);
+
+	Core::init();
+ 
+	float last = (float)glfwGetTime();
     while (!glfwWindowShouldClose(window))
     {
-        float ratio;
+		float t = (float)glfwGetTime();
+		float dt = t - last;
+		last = t;
+
         int width, height;
-        glm::mat4x4 p, mvp;
-		glm::mat4x4 m = glm::identity<glm::mat4x4>();
- 
         glfwGetFramebufferSize(window, &width, &height);
-        ratio = width / (float) height;
  
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
- 
-		m = glm::rotate(m, (float)glfwGetTime(), glm::vec3(0, 0, 1));
-		p = glm::ortho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-		mvp = p * m;
- 
-        glUseProgram(program);
-        glUniformMatrix4fv(mvp_location, 1, GL_FALSE, &mvp[0][0]);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
- 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+		Core::update(width, height, dt);
+		Core::render(width, height);
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
     }
  
-    glfwDestroyWindow(window);
- 
-    glfwTerminate();
+	Core::destroy();
+    destroyWindow(window);
+
     exit(EXIT_SUCCESS);
 }

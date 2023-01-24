@@ -1,3 +1,5 @@
+#pragma once
+
 #include <GL/glew.h>
 
 class ShaderProgram {
@@ -8,5 +10,5 @@ class ShaderProgram {
 		ShaderProgram(const std::string &vs_filename, const std::string &fs_filename);
 		~ShaderProgram();
 
-		GLuint GetProgram();		
+		GLuint getProgram();		
 };
