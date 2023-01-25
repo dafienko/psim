@@ -10,5 +10,6 @@ class ShaderProgram {
 		ShaderProgram(const std::string &vs_filename, const std::string &fs_filename);
 		~ShaderProgram();
 
-		GLuint getProgram();		
+		GLuint getProgram();
+		void bind();
 };

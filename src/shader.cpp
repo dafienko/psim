@@ -37,20 +37,20 @@ ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &
 
 	vertex_shader = glCreateShader(GL_VERTEX_SHADER);
 	const char* p = vertex_source.c_str();
-    glShaderSource(vertex_shader, 1, &p, NULL);
-    glCompileShader(vertex_shader);
+	glShaderSource(vertex_shader, 1, &p, NULL);
+	glCompileShader(vertex_shader);
 	checkShaderErrors(vs_filename, vertex_shader);
 
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	p = fragment_source.c_str();
-    glShaderSource(fragment_shader, 1, &p, NULL);
-    glCompileShader(fragment_shader);
+	glShaderSource(fragment_shader, 1, &p, NULL);
+	glCompileShader(fragment_shader);
 	checkShaderErrors(fs_filename, fragment_shader);
 
 	program = glCreateProgram();
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
+	glAttachShader(program, vertex_shader);
+	glAttachShader(program, fragment_shader);
+	glLinkProgram(program);
 
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
@@ -58,6 +58,10 @@ ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &
 
 GLuint ShaderProgram::getProgram() {
 	return program;
+}
+
+void ShaderProgram::bind() {
+	glUseProgram(program);
 }
 
 ShaderProgram::~ShaderProgram() {

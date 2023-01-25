@@ -7,77 +7,80 @@
  
 static void error_callback(int error, const char* description)
 {
-    std::cout << "Error: " << description << std::endl;
+	std::cerr << "Error: " << description << std::endl;
 	exit(EXIT_FAILURE);
 }
  
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) 
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
 }
 
 GLFWwindow* createWindow(const char* windowTitle) {
 	GLFWwindow* window;
-    glfwSetErrorCallback(error_callback);
+	glfwSetErrorCallback(error_callback);
  
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
- 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	if (!glfwInit()) {
+		exit(EXIT_FAILURE);
+	}
 
-    window = glfwCreateWindow(640, 480, windowTitle, NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	window = glfwCreateWindow(640, 480, windowTitle, NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		exit(EXIT_FAILURE);
+	}
  
-    glfwSetKeyCallback(window, key_callback);
+	glfwSetKeyCallback(window, key_callback);
  
-    glfwMakeContextCurrent(window);
-    glewInit();
-    glfwSwapInterval(1);
+	glfwMakeContextCurrent(window);
+	glewInit();
+	glfwSwapInterval(1);
 
 	return window;
 }
 
 void destroyWindow(GLFWwindow* window) {
 	glfwDestroyWindow(window);
- 
-    glfwTerminate();
+	glfwTerminate();
 }
 
 int main(int argc, char** argv)
 {
 	GLFWwindow* window = createWindow(*argv);
 
-	Core::init();
+	Core::init(640, 480);
  
 	float last = (float)glfwGetTime();
-    while (!glfwWindowShouldClose(window))
-    {
+	while (!glfwWindowShouldClose(window))
+	{
 		float t = (float)glfwGetTime();
 		float dt = t - last;
 		last = t;
 
-        int width, height;
-        glfwGetFramebufferSize(window, &width, &height);
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
  
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClear(GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-		Core::update(width, height, dt);
-		Core::render(width, height);
+		Core::resize(width, height);
+		Core::update(dt);
+		Core::render();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-    }
+	}
  
 	Core::destroy();
-    destroyWindow(window);
+	destroyWindow(window);
 
-    exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
