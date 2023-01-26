@@ -6,10 +6,15 @@
 
 void getFileSource(const std::string &filename, std::string &source_text) {
 	std::ifstream file(filename);
-		
-	std::string line;
-	while (std::getline(file, line)) {
-		source_text += line + "\n";
+	
+	if (file) {
+		std::string line;
+		while (std::getline(file, line)) {
+			source_text += line + "\n";
+		}
+	} else {
+		std::cerr << "could not find file " << filename << std::endl;
+		exit(EXIT_FAILURE);
 	}
 }
 

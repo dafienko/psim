@@ -28,7 +28,7 @@ GLuint RenderTarget::quadVAO, RenderTarget::posVBO, RenderTarget::tposVBO, Rende
 std::unique_ptr<ShaderProgram> RenderTarget::quadShaderProgram;
 
 void RenderTarget::init() {
-	quadShaderProgram = std::make_unique<ShaderProgram>("shaders/quad.vs", "shaders/quad.fs");
+	quadShaderProgram = std::make_unique<ShaderProgram>("shaders/quad.vsh", "shaders/quad.fs");
 	quadShaderProgram->bind();
 
 	glGenVertexArrays(1, &quadVAO);

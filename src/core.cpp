@@ -37,7 +37,7 @@ void Core::init(unsigned int width, unsigned int height) {
 	screenHeight = height;
 
 	RenderTarget::init();
-	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vs", "shaders/triangle.fs");
+	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vsh", "shaders/triangle.fs");
 	offScreenTarget = std::make_unique<RenderTarget>(100, 100);
 
 	GLuint program = shaderProgram->getProgram();
@@ -88,7 +88,7 @@ void Core::render() {
 	shaderProgram->bind();
 	glUniformMatrix4fv(mvp_location, 1, GL_FALSE, &mvp[0][0]);
 	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 3); 
 	
 	RenderTarget::bindDefault();
 	offScreenTarget->renderToQuad();
