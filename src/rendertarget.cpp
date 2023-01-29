@@ -23,7 +23,6 @@ static constexpr unsigned int QUAD_INDICES[] = {
 	2, 3, 0
 };
 
-
 GLuint RenderTarget::quadVAO, RenderTarget::posVBO, RenderTarget::tposVBO, RenderTarget::iVBO;
 std::unique_ptr<ShaderProgram> RenderTarget::quadShaderProgram;
 

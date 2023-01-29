@@ -1,6 +1,6 @@
 ifeq ($(OS),Windows_NT) # windows
     CC = g++
-	CFLAGS = -lglew32 -lglfw3 -lopengl32 -lgdi32
+	CFLAGS = -lglew32 -lglfw3 -lopengl32 -lgdi32 -l:freetype.a
 else # mac
     CC = clang++
 	CINCLUDE = -isystem /opt/homebrew/include/

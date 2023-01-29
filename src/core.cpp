@@ -3,11 +3,11 @@
 #include <memory>
 #include <string>
 #include <iostream>
-#include <format>
 
 #include "core.h"
 #include "rendertarget.h"
 #include "shader.h"
+#include "text.h"
 
 unsigned int Core::screenWidth, Core::screenHeight;
 
