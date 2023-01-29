@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "font.h"
+#include "text.h"
 
 extern FT_Library Text::ft;
 
@@ -9,8 +10,8 @@ static std::string FONT_FACE_FILENAMES[] = {
 };
 
 Font::Font(FontFace fontFace, unsigned int fontSize) : 
-	fontFace(fontFace), 
-	fontSize(fontSize) 
+	fontSize(fontSize), 
+	fontFace(fontFace) 
 {
 	const std::string &filename = FONT_FACE_FILENAMES[fontFace];
 
@@ -53,7 +54,7 @@ Font::Font(FontFace fontFace, unsigned int fontSize) :
 			texture, 
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x >> 6
+			(unsigned int)face->glyph->advance.x >> 6
 		};
 		
 		glyphData[c] = glyph;

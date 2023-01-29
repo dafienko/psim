@@ -1,11 +1,10 @@
 #pragma once
 
+#include <glm/ext.hpp>
 #include <memory>
 #include <string>
 #include <map>
 #include <GL/glew.h>
-
-#include "text.h"
 
 enum FontFace {
 	Consola
