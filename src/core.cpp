@@ -36,9 +36,11 @@ void Core::init(unsigned int width, unsigned int height) {
 	screenWidth = width;
 	screenHeight = height;
 
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
 	RenderTarget::init();
 	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vsh", "shaders/triangle.fs");
-	offScreenTarget = std::make_unique<RenderTarget>(100, 100);
+	offScreenTarget = std::make_unique<RenderTarget>(width, height);
 
 	GLuint program = shaderProgram->getProgram();
 	mvp_location = glGetUniformLocation(program, "MVP");
@@ -82,8 +84,8 @@ void Core::update(float dt) {
 
 void Core::render() {
 	offScreenTarget->bind();
+	offScreenTarget->clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	offScreenTarget->clear();
 	
 	shaderProgram->bind();
 	glUniformMatrix4fv(mvp_location, 1, GL_FALSE, &mvp[0][0]);
@@ -91,6 +93,7 @@ void Core::render() {
 	glDrawArrays(GL_TRIANGLES, 0, 3); 
 	
 	RenderTarget::bindDefault();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	offScreenTarget->renderToQuad();
 }
 

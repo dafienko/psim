@@ -67,9 +67,6 @@ int main(int argc, char** argv)
 
 		int width, height;
 		glfwGetFramebufferSize(window, &width, &height);
- 
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClear(GL_DEPTH_BUFFER_BIT); 
 
 		Core::resize(width, height);
 		Core::update(dt);

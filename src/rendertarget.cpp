@@ -54,9 +54,8 @@ void RenderTarget::init() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RenderTarget::clear() {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+void RenderTarget::clear(int buffersToClear) {
+	glClear(buffersToClear); 
 }
 
 void RenderTarget::bindDefault() {

@@ -23,6 +23,6 @@ class RenderTarget {
 
 		void setSize(int width, int height);
 		void bind();
-		void clear();
+		void clear(int buffersToClear);
 		void renderToQuad();
 };

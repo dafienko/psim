@@ -73,6 +73,7 @@
 		"vector": "cpp",
 		"algorithm": "cpp",
 		"memory_resource": "cpp",
-		"format": "cpp"
+		"format": "cpp",
+		"filesystem": "cpp"
 	}
 }
