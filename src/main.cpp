@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 
 	Core::init(640, 480);
 	Text::init();
- 
+
 	float last = (float)glfwGetTime();
 	while (!glfwWindowShouldClose(window))
 	{
@@ -76,8 +76,6 @@ int main(int argc, char** argv)
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-		break;
 	}
  
 	Text::destroy();

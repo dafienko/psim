@@ -11,7 +11,7 @@ enum FontFace {
 };
 
 struct Glyph {
-	unsigned int id;
+	GLuint texture;
 	glm::ivec2 glyphSize;	
 	glm::ivec2 tlOffset;
 	unsigned int advance;

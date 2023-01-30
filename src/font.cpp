@@ -22,6 +22,8 @@ Font::Font(FontFace fontFace, unsigned int fontSize) :
 		exit(EXIT_FAILURE);
 	}
 
+	FT_Set_Pixel_Sizes(face, 0, fontSize);  
+
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	for (unsigned char c = 0; c < 128; c++) {
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -54,18 +56,13 @@ Font::Font(FontFace fontFace, unsigned int fontSize) :
 			texture, 
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			(unsigned int)face->glyph->advance.x >> 6
+			(unsigned int)(face->glyph->advance.x >> 6)
 		};
 		
-		if (c == 'A') {
-			int x = 0;
-		}
-
 		glyphData[c] = glyph;
 	}
 	
 	FT_Done_Face(face);
-	FT_Done_FreeType(Text::ft);
 }
 
 Glyph Font::getGlyph(char c) const {
