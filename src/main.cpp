@@ -76,6 +76,8 @@ int main(int argc, char** argv)
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		break;
 	}
  
 	Text::destroy();

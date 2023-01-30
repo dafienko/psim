@@ -74,6 +74,7 @@
 		"algorithm": "cpp",
 		"memory_resource": "cpp",
 		"format": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"map": "cpp"
 	}
 }

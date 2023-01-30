@@ -91,6 +91,8 @@ void Core::render() {
 	glUniformMatrix4fv(mvp_location, 1, GL_FALSE, &mvp[0][0]);
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, 3); 
+
+	Text::renderText("(hello) text test", glm::ivec2(100, 100), FontFace::Consola);
 	
 	RenderTarget::bindDefault();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

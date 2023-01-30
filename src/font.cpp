@@ -6,7 +6,7 @@
 extern FT_Library Text::ft;
 
 static std::string FONT_FACE_FILENAMES[] = {
-	"fonts/consola.ttf"
+	"fonts/MesloLGS NF Regular.ttf"
 };
 
 Font::Font(FontFace fontFace, unsigned int fontSize) : 
@@ -57,9 +57,21 @@ Font::Font(FontFace fontFace, unsigned int fontSize) :
 			(unsigned int)face->glyph->advance.x >> 6
 		};
 		
+		if (c == 'A') {
+			int x = 0;
+		}
+
 		glyphData[c] = glyph;
 	}
 	
 	FT_Done_Face(face);
 	FT_Done_FreeType(Text::ft);
+}
+
+Glyph Font::getGlyph(char c) const {
+	return glyphData.at(c);
+}
+
+Font::~Font() {
+
 }

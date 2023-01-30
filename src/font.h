@@ -10,15 +10,15 @@ enum FontFace {
 	Consola
 };
 
+struct Glyph {
+	unsigned int id;
+	glm::ivec2 glyphSize;	
+	glm::ivec2 tlOffset;
+	unsigned int advance;
+};
+
 class Font {
 	private:
-		struct Glyph {
-			unsigned int id;
-			glm::ivec2 glyphSize;	
-			glm::ivec2 tlOffset;
-			unsigned int advance;
-		};
-
 		std::map<char, Glyph> glyphData;
 	public:
 		const unsigned int fontSize;
@@ -26,4 +26,6 @@ class Font {
 
 		Font(FontFace fontFace, unsigned int fontSize);
 		~Font();
+
+		Glyph getGlyph(char c) const;
 };
