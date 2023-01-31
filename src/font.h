@@ -11,7 +11,7 @@ enum FontFace {
 };
 
 struct Glyph {
-	GLuint texture;
+	glm::vec2 texTL, texBR;
 	glm::ivec2 glyphSize;	
 	glm::ivec2 tlOffset;
 	unsigned int advance;
@@ -20,6 +20,7 @@ struct Glyph {
 class Font {
 	private:
 		std::map<char, Glyph> glyphData;
+		GLuint glyphTexture;
 	public:
 		const unsigned int fontSize;
 		const FontFace fontFace;
@@ -28,4 +29,5 @@ class Font {
 		~Font();
 
 		Glyph getGlyph(char c) const;
+		GLuint getGlyphTexture() const;
 };

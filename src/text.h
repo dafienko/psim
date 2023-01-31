@@ -11,6 +11,6 @@ namespace Text {
 	extern FT_Library ft;
 	
 	void init();
-	void renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace);
+	void renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, glm::vec3 textColor);
 	void destroy();
 }

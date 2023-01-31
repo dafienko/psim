@@ -36,7 +36,7 @@ void Text::init() {
 	glyphShader = std::make_unique<ShaderProgram>("shaders/textGlyph.vsh", "shaders/textGlyph.fs");
 }
 
-void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace) {
+void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, glm::vec3 textColor) {
 	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_DEPTH_TEST);
 
@@ -45,12 +45,13 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 	glyphShader->bind();
 
+	glBindTexture(GL_TEXTURE_2D, testFont->getGlyphTexture());
+
 	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::screenWidth, (float)Core::screenHeight, 0.0f);
 	GLint projLoc = glGetUniformLocation(glyphShader->getProgram(), "projection");
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, &ortho[0][0]);
 
 	GLint tcLoc = glGetUniformLocation(glyphShader->getProgram(), "textColor");
-	glm::vec3 textColor(1.0f, 0.0f, 0.0f);
 	glUniform3fv(tcLoc, 1, &textColor.r);
 
 	glBindVertexArray(textVAO);
@@ -67,17 +68,15 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 		glm::vec2 brf = tlf + glm::vec2((float) size.x, (float) size.y);
 
 		float positions[4][4] = {
-			{tlf.x, tlf.y, 0.0f, 0.0f},
-			{brf.x, tlf.y, 1.0f, 0.0f},
-			{tlf.x, brf.y, 0.0f, 1.0f},
-			{brf.x, brf.y, 1.0f, 1.0f},
+			{tlf.x, tlf.y, glyph.texTL.x, glyph.texTL.y},
+			{brf.x, tlf.y, glyph.texBR.x, glyph.texTL.y},
+			{tlf.x, brf.y, glyph.texTL.x, glyph.texBR.y},
+			{brf.x, brf.y, glyph.texBR.x, glyph.texBR.y},
 		};
 
 		glBindBuffer(GL_ARRAY_BUFFER, textVBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * 4, positions, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glBindTexture(GL_TEXTURE_2D, glyph.texture);
 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

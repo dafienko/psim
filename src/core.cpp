@@ -92,7 +92,7 @@ void Core::render() {
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, 3); 
 
-	Text::renderText("(hello) text test", glm::ivec2(100, 100), FontFace::Consola);
+	Text::renderText("(hello) text test", glm::ivec2(100, 100), FontFace::Consola, glm::vec3(1.0f, 1.0f, 1.0f));
 	
 	RenderTarget::bindDefault();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
