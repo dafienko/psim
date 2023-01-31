@@ -74,12 +74,25 @@ void Core::resize(unsigned int width, unsigned int height) {
 	offScreenTarget = std::make_unique<RenderTarget>(width, height);
 }
 
+static float elapsedTime, floatFPS, averageFrameTime;
+static int elapsedFrames;
+
 void Core::update(float dt) {
 	float ratio = screenWidth / (float) screenHeight;
 	p = glm::ortho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 
 	m = glm::rotate(m, dt, glm::vec3(0, 0, 1));
 	mvp = p * m;
+
+	elapsedTime += dt;
+	elapsedFrames += 1;
+	
+	if (elapsedTime > .5f) {
+		floatFPS = elapsedFrames / elapsedTime;
+		averageFrameTime = elapsedTime / elapsedFrames;
+		elapsedTime = 0.0f;
+		elapsedFrames = 0;
+	}
 }
 
 void Core::render() {
@@ -92,7 +105,8 @@ void Core::render() {
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, 3); 
 
-	Text::renderText("(hello) text test", glm::ivec2(100, 100), FontFace::Consola, glm::vec3(1.0f, 1.0f, 1.0f));
+	std::string frameTimeStr =  std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
+	Text::renderText(frameTimeStr, glm::ivec2(20, 30), FontFace::Consola, 24, glm::vec3(0.0f, 1.0f, 0.0f));
 	
 	RenderTarget::bindDefault();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

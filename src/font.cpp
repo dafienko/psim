@@ -35,7 +35,6 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 
 			glm::ivec2 glyphSheetPos((int)c % GLYPH_SHEET_COLS, (int)c / GLYPH_SHEET_COLS);
 
-			std::cout << (int)c << " " << glyphSheetPos.x << ", " << glyphSheetPos.y << std::endl;
 			for (int y = 0; y < bitmapHeight; y++) {
 				int bufferRow = glyphSheetPos.y * glyphHeight + y; 
 				unsigned char* glyphRowStart = buffer + bufferRow * width + glyphSheetPos.x * glyphWidth;
@@ -74,7 +73,7 @@ Font::Font(FontFace fontFace, unsigned int fontSize) :
 		exit(EXIT_FAILURE);
 	}
 
-	Glyphsheet glyphsheet(50, 50);
+	Glyphsheet glyphsheet((face->bbox.xMax - face->bbox.xMin) >> 6, (face->bbox.yMax - face->bbox.yMin) >> 6);
 
 	FT_Set_Pixel_Sizes(face, 0, fontSize);  
 	for (unsigned char c = 0; c < 128; c++) {

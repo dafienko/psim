@@ -1,4 +1,6 @@
 #include <iostream>
+#include <unordered_map>
+#include <map>
 
 #include "text.h"
 #include "core.h"
@@ -8,7 +10,7 @@ FT_Library Text::ft;
 
 GLuint textVAO, textVBO;
 
-std::unique_ptr<Font> testFont;
+std::unique_ptr<std::unordered_map<int, std::map<unsigned int, std::unique_ptr<Font>>>> fonts;
 std::unique_ptr<ShaderProgram> glyphShader;
 
 void Text::init() {
@@ -31,12 +33,26 @@ void Text::init() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	testFont = std::make_unique<Font>(FontFace::Consola, 40);
+	fonts = std::make_unique<std::unordered_map<int, std::map<unsigned int, std::unique_ptr<Font>>>>();
 
 	glyphShader = std::make_unique<ShaderProgram>("shaders/textGlyph.vsh", "shaders/textGlyph.fs");
 }
 
-void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, glm::vec3 textColor) {
+const Font& getFont(FontFace fontFace, unsigned int fontSize) {
+	int fontId = static_cast<std::underlying_type<FontFace>::type>(fontFace);
+	std::map<unsigned int, std::unique_ptr<Font>> &fontSizes = (*fonts.get())[fontId];
+	
+	try {
+		return *fontSizes.at(fontSize).get();
+	} catch (...) {
+		fontSizes[fontSize] = std::make_unique<Font>(fontFace, fontSize);
+		return *fontSizes[fontSize].get();
+	}
+}
+
+void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, unsigned int fontSize, glm::vec3 textColor) {
+	const Font &font = getFont(fontFace, fontSize);
+
 	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_DEPTH_TEST);
 
@@ -45,7 +61,7 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 	glyphShader->bind();
 
-	glBindTexture(GL_TEXTURE_2D, testFont->getGlyphTexture());
+	glBindTexture(GL_TEXTURE_2D, font.getGlyphTexture());
 
 	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::screenWidth, (float)Core::screenHeight, 0.0f);
 	GLint projLoc = glGetUniformLocation(glyphShader->getProgram(), "projection");
@@ -56,7 +72,6 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 	glBindVertexArray(textVAO);
 	
-	const Font &font = *testFont.get();
 	glm::ivec2 textPos = pos;
 	for (char c : text) {
 		const Glyph glyph = font.getGlyph(c);
@@ -87,7 +102,7 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 }
 
 void Text::destroy() {
-	testFont.release();
+	fonts.release();
 	glyphShader.release();
 	
 	FT_Done_FreeType(ft);
