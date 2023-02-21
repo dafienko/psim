@@ -43,7 +43,7 @@ void Core::init(unsigned int width, unsigned int height) {
 	RenderTarget::init();
 	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vsh", "shaders/triangle.fs");
 	offScreenTarget = std::make_unique<RenderTarget>(width, height);
-	int x = 100;
+	int x = (int)width;
 	fluid = std::make_unique<FluidTexture>(glm::ivec2(x, x));
 
 	GLuint program = shaderProgram->getProgram();
@@ -88,6 +88,7 @@ void Core::update(float dt) {
 	m = glm::rotate(m, dt, glm::vec3(0, 0, 1));
 	mvp = p * m;
 
+	fluid->update(dt);
 	fluid->update(dt);
 
 	elapsedTime += dt;

@@ -21,8 +21,8 @@ float getS(ivec2 p) {
 vec2 getVel(ivec2 p) {
 	vec2 vel = texelFetch(velTexture, p, 0).xy;
 
-	if (p == ivec2(1, int(simulationSize.y - 1) / 2)) {
-		vel.x = 10;
+	if (p.x == 1 && p.y >= int(simulationSize.y - 1) / 2 - 3 && p.y <= int(simulationSize.y - 1) / 2 + 3 ) {
+		vel.x = 39;
 	} 
 
 	return vel;
@@ -43,17 +43,14 @@ void main() {
 	float l = bl.x;
 	float t = -tl.y;
 	float r = -br.x;
-
-	float s = 0;
-	float d = 0;
 	
 	float ts = getS(pos + ivec2(0, 1));
 	float bs = getS(pos + ivec2(0, -1));
 	float rs = getS(pos + ivec2(1, 0));
 	float ls = getS(pos + ivec2(-1, 0));
 	
-	d = (b + l + t + r); 
-	s = ts + bs + rs + ls;
+	float d = (b + l + t + r); 
+	float s = ts + bs + rs + ls;
 
 	result = vec4(d, s, 0.0, 1.0);
 }

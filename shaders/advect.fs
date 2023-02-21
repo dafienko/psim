@@ -12,16 +12,12 @@ uniform vec2 simulationSize;
 
 float dt = .02;
 
-float getO(ivec2 p) {
-	if (p.x == 0 || p.y == 0 || p.x == simulationSize.x - 1 || p.y == simulationSize.y - 1) {
-		return 0.0;
-	}
-	
-	return texelFetch(obstaclesTexture, p, 0).x;
-}
-
 vec2 getVel(ivec2 p) {
 	return texelFetch(velTexture, p, 0).xy;
+}
+
+float getO(ivec2 p) {
+	return texelFetch(obstaclesTexture, p, 0).x;
 }
 
 float linear(float A, float B, float alpha) {
@@ -35,25 +31,27 @@ float bilinear(float A, float B, float C, float D, vec2 alpha) {
 }
 
 float sampleU(vec2 pos) {
-	ivec2 p = ivec2(pos - vec2(0, .5));
-	float A = getVel(p).x;
-	float B = getVel(p + ivec2(1, 0)).x;
-	float C = getVel(p + ivec2(0, 1)).x;
-	float D = getVel(p + ivec2(1, 1)).x;
+	pos -= vec2(0, .5);
+	ivec2 bl = ivec2(floor(pos.x), floor(pos.y));
+	float A = getVel(bl + ivec2(0, 1)).x;
+	float B = getVel(bl + ivec2(1, 1)).x;
+	float C = getVel(bl).x;
+	float D = getVel(bl + ivec2(1, 0)).x;
 	
-	vec2 alpha = pos - vec2(p);
+	vec2 alpha = pos - vec2(bl);
 	
 	return bilinear(A, B, C, D, alpha);
 }
 
 float sampleV(vec2 pos) {
-	ivec2 p = ivec2(pos - vec2(.5, 0));
-	float A = getVel(p).y;
-	float B = getVel(p + ivec2(1, 0)).y;
-	float C = getVel(p + ivec2(0, 1)).y;
-	float D = getVel(p + ivec2(1, 1)).y;
+	pos -= vec2(.5, 0);
+	ivec2 bl = ivec2(floor(pos.x), floor(pos.y));
+	float A = getVel(bl + ivec2(0, 1)).y;
+	float B = getVel(bl + ivec2(1, 1)).y;
+	float C = getVel(bl).y;
+	float D = getVel(bl + ivec2(1, 0)).y;
 
-	vec2 alpha = pos - vec2(p);
+	vec2 alpha = pos - vec2(bl);
 	
 	return bilinear(A, B, C, D, alpha);
 }
@@ -61,18 +59,24 @@ float sampleV(vec2 pos) {
 void main() {
 	vec2 fPos = texCoords * simulationSize;
 	ivec2 pos = ivec2(fPos.xy);
+	// vec2 vel = vec2(sampleU(vec2(pos) + vec2(0, .5)), sampleV(vec2(pos) + vec2(.5, 0)));
 	vec2 vel = getVel(pos);
+
 	vec2 newVel = vel;
 
-	vec2 u = vec2(vel.x, sampleV(fPos + vec2(0, .5)));
-	vec2 v = vec2(sampleU(fPos + vec2(.5, 0)), vel.y);
 
-	if (getO(pos - ivec2(round(fPos.x - u.x), round(fPos.y + .5 - u.y))) > 0) { 
-		newVel.x = sampleU(vec2(fPos.x - u.x, fPos.y + .5 - u.y));
+	vec2 leftMarker = fPos - vec2(.5, 0);
+	vec2 u = vec2(vel.x, sampleV(leftMarker)) * dt;
+	vec2 leftAdvectFrom = leftMarker - u;
+	if (getO(ivec2(round(leftAdvectFrom.x), round(leftAdvectFrom.y))) > 0) { 
+		newVel.x = sampleU(leftAdvectFrom);
 	}
 
-	if (getO(pos - ivec2(round(fPos.x + .5 - v.x), round(fPos.y - v.y))) > 0) { 
-		newVel.y = sampleV(vec2(fPos.x + .5 - v.x, fPos.y - v.y));
+	vec2 bottomMarker = fPos - vec2(0, .5);
+	vec2 v = vec2(sampleU(bottomMarker), vel.y) * dt;
+	vec2 bottomAdvectFrom = bottomMarker - v;
+	if (getO(ivec2(round(bottomAdvectFrom.x), round(bottomAdvectFrom.y))) > 0) { 
+		newVel.y = sampleV(bottomAdvectFrom);
 	}
 
 	result = vec4(newVel.xy, 0.0, 1.0);

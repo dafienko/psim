@@ -38,7 +38,7 @@ void main() {
 
 	float o = getO(pos);
 	result = vec4(abs(thisVel.x) / 1, abs(thisVel.y) / 1, 0.0, 1.0);
-	// result = vec4(ds.x / 1.0, 0, -ds.x / 1.0, 1);
+	result = vec4(ds.x / 1.0, 0, -ds.x / 1.0, 1);
 
 	if (o == 0.0) {
 		result = vec4(1.0, 1.0, 1.0, 1.0);

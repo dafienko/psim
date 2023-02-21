@@ -6,6 +6,9 @@
 #include "core.h"
 #include "text.h"
 
+#define W 1000
+#define H 1000
+
 static void error_callback(int error, const char* description)
 {
 	std::cerr << "Error: " << description << std::endl;
@@ -34,7 +37,7 @@ GLFWwindow* createWindow(const char* windowTitle) {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(1200, 1200, windowTitle, NULL, NULL);
+	window = glfwCreateWindow(W, H, windowTitle, NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -59,7 +62,7 @@ int main(int argc, char** argv)
 {
 	GLFWwindow* window = createWindow(*argv);
 
-	Core::init(640, 480);
+	Core::init(W, H);
 	Text::init();
 
 	float last = (float)glfwGetTime();

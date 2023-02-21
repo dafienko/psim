@@ -1,4 +1,5 @@
 #include "fluidTexture.h"
+#include "core.h"
 #include <iostream>
 
 FluidTexture::FluidTexture(glm::ivec2 simulationSize) : 
@@ -107,7 +108,7 @@ void FluidTexture::advect(float dt) {
 	currentPhysicalTarget = targetIndex;
 
 	glUniform2f(
-		glGetUniformLocation(gridSolveShader->getProgram(), "simulationSize"), 
+		glGetUniformLocation(advectShader->getProgram(), "simulationSize"), 
 		simulationSize.x + 1, simulationSize.y + 1
 	);
 	
@@ -119,12 +120,13 @@ void FluidTexture::update(float dt) {
 	glDisable(GL_BLEND);
 
 	updateObstacles(dt);
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 40; i++) {
 		updatePressure(dt);
 		solve(dt);
 	}
 	
-	//advect(dt);
+	advect(dt);
+	
 }
 
 void FluidTexture::render() {

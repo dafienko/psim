@@ -143,10 +143,11 @@ function bilinear(a, b, c, d, x, y, lerp) {
 }
 
 function sampleU(x, y) {
+	y -= .5;
 	let blx = Math.floor(x);
-	let bly = Math.floor(y - .5);
+	let bly = Math.floor(y);
 	let ax = x - blx;
-	let ay = y - bly - .5;
+	let ay = y - bly;
 
 	return bilinear(
 		get(uGrid, blx, bly+1),
@@ -158,9 +159,10 @@ function sampleU(x, y) {
 }
 
 function sampleV(x, y) {
-	let blx = Math.floor(x - .5);
+	x -= .5;
+	let blx = Math.floor(x);
 	let bly = Math.floor(y);
-	let ax = x - blx - .5;
+	let ax = x - blx;
 	let ay = y - bly;
 
 	return bilinear(
@@ -208,14 +210,14 @@ function advect(dt) {
 
 	for (let y = 0; y <= GRID_HEIGHT; y++) {
 		for (let x = 0; x <= GRID_WIDTH; x++) {
-			let u = [uGrid[y][x], sampleV(x, y+.5)];
-			if (get(oGrid, Math.round(x - u[0] * dt), Math.round(y+.5 - u[1] * dt)) != 0) { 
-				newU[y][x] = sampleU(x - u[0] * dt, y+.5 - u[1] * dt)
+			let u = [uGrid[y][x] * dt, sampleV(x, y+.5) * dt];
+			if (get(oGrid, Math.round(x - u[0]), Math.round(y+.5 - u[1])) != 0) { 
+				newU[y][x] = sampleU(x - u[0], y+.5 - u[1])
 			}
 
-			let v = [sampleU(x+.5, y), vGrid[y][x]];
-			if (get(oGrid, Math.round(x+.5 - v[0] * dt), Math.round(y - v[1] * dt)) != 0) {
-				newV[y][x] = sampleV(x+.5 - v[0] * dt, y - v[1] * dt)
+			let v = [sampleU(x+.5, y) * dt, vGrid[y][x] * dt];
+			if (get(oGrid, Math.round(x+.5 - v[0]), Math.round(y - v[1])) != 0) {
+				newV[y][x] = sampleV(x+.5 - v[0], y - v[1])
 			}
 		}
 	}
