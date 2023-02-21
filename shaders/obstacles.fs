@@ -17,7 +17,7 @@ void main() {
 	if (init) {
 		if (p.x == 0 || p.y == 0 || p.x == simulationSize.x - 1 || p.y == simulationSize.y - 1) {
 			result = 0.0;
-		} else if (length(fp - vec2(simulationSize / 2)) < 5) {
+		} else if (length(fp - vec2(simulationSize / 2)) < 4) {
 			result = 0.0;
 		} else {
 			result = 1.0;

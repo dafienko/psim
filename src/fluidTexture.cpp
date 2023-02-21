@@ -7,25 +7,21 @@ FluidTexture::FluidTexture(glm::ivec2 simulationSize) :
 {
 	fluidShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/fluid.fs");
 	gridSolveShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/solve.fs");
-	advectShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/advect.fs");
+	advectVelocityShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/velocityAdvect.fs");
+	advectDensityShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/densityAdvect.fs");
 	obstaclesShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/obstacles.fs");
 	visualShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/fluidVisual.fs");
 
-	physicsTargets[0] = std::make_unique<RenderTarget>(simulationSize.x + 1, simulationSize.y + 1, GL_RGBA32F, GL_NEAREST);
-	physicsTargets[1] = std::make_unique<RenderTarget>(simulationSize.x + 1, simulationSize.y + 1, GL_RGBA32F, GL_NEAREST);
-
+	physicsTargets = std::make_unique<RenderTargetArray>(2, simulationSize.x + 1, simulationSize.y + 1, GL_RGBA32F, GL_NEAREST);
+	densityTargets = std::make_unique<RenderTargetArray>(2, simulationSize.x, simulationSize.y, GL_RGB, GL_NEAREST);
+	obstaclesTargets = std::make_unique<RenderTargetArray>(2, simulationSize.x, simulationSize.y, GL_RED, GL_NEAREST);
+	
 	pressureTarget = std::make_unique<RenderTarget>(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST);
 	visualTarget = std::make_unique<RenderTarget>(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST);
 	
-	obstaclesTargets[0] = std::make_unique<RenderTarget>(simulationSize.x, simulationSize.y, GL_RED, GL_NEAREST);
-	obstaclesTargets[1] = std::make_unique<RenderTarget>(simulationSize.x, simulationSize.y, GL_RED, GL_NEAREST);
-
-	currentPhysicalTarget = 0;
-
 	// initialize obstacles
-	currentObstacleTarget = 0;
 	obstaclesShader->bind();
-	obstaclesTargets[currentObstacleTarget]->bind();
+	obstaclesTargets->bind();
 	
 	glUniform2f(
 		glGetUniformLocation(obstaclesShader->getProgram(), "simulationSize"), 
@@ -43,11 +39,8 @@ FluidTexture::FluidTexture(glm::ivec2 simulationSize) :
 void FluidTexture::updateObstacles(float dt) {
 	obstaclesShader->bind();
 	
-	obstaclesTargets[currentObstacleTarget]->bindAsTexture("oldObstacles", obstaclesShader->getProgram());
-	
-	unsigned int targetIndex = (currentObstacleTarget + 1) % 2;
-	obstaclesTargets[targetIndex]->bind();
-	currentObstacleTarget = targetIndex;
+	obstaclesTargets->bindAsTexture("oldObstacles", obstaclesShader->getProgram());
+	obstaclesTargets->bind();
 	
 	glUniform2f(
 		glGetUniformLocation(obstaclesShader->getProgram(), "simulationSize"), 
@@ -65,8 +58,8 @@ void FluidTexture::updateObstacles(float dt) {
 void FluidTexture::updatePressure(float dt) {
 	fluidShader->bind();
 	
-	physicsTargets[currentPhysicalTarget]->bindAsTexture("velTexture", fluidShader->getProgram());
-	obstaclesTargets[currentObstacleTarget]->bindAsTexture("obstaclesTexture", fluidShader->getProgram(), 1);
+	physicsTargets->bindAsTexture("velTexture", fluidShader->getProgram());
+	obstaclesTargets->bindAsTexture("obstaclesTexture", fluidShader->getProgram(), 1);
 
 	pressureTarget->bind();
 
@@ -81,13 +74,11 @@ void FluidTexture::updatePressure(float dt) {
 void FluidTexture::solve(float dt) {
 	gridSolveShader->bind();
 
-	physicsTargets[currentPhysicalTarget]->bindAsTexture("velTexture", gridSolveShader->getProgram());
-	obstaclesTargets[currentObstacleTarget]->bindAsTexture("obstaclesTexture", gridSolveShader->getProgram(), 1);
+	physicsTargets->bindAsTexture("velTexture", gridSolveShader->getProgram());
+	obstaclesTargets->bindAsTexture("obstaclesTexture", gridSolveShader->getProgram(), 1);
 	pressureTarget->bindAsTexture("pressureTexture", gridSolveShader->getProgram(), 2);
 
-	unsigned int targetIndex = (currentPhysicalTarget + 1) % 2;
-	physicsTargets[targetIndex]->bind();
-	currentPhysicalTarget = targetIndex;
+	physicsTargets->bind();
 
 	glUniform2f(
 		glGetUniformLocation(gridSolveShader->getProgram(), "simulationSize"), 
@@ -98,18 +89,33 @@ void FluidTexture::solve(float dt) {
 }
 
 void FluidTexture::advect(float dt) {
-	advectShader->bind();
+	// advect velocity
+	advectVelocityShader->bind();
 
-	physicsTargets[currentPhysicalTarget]->bindAsTexture("velTexture", advectShader->getProgram());
-	obstaclesTargets[currentObstacleTarget]->bindAsTexture("obstaclesTexture", advectShader->getProgram(), 1);
+	physicsTargets->bindAsTexture("velTexture", advectVelocityShader->getProgram());
+	obstaclesTargets->bindAsTexture("obstaclesTexture", advectVelocityShader->getProgram(), 1);
 
-	unsigned int targetIndex = (currentPhysicalTarget + 1) % 2;
-	physicsTargets[targetIndex]->bind();
-	currentPhysicalTarget = targetIndex;
+	physicsTargets->bind();
 
 	glUniform2f(
-		glGetUniformLocation(advectShader->getProgram(), "simulationSize"), 
+		glGetUniformLocation(advectVelocityShader->getProgram(), "simulationSize"), 
 		simulationSize.x + 1, simulationSize.y + 1
+	);
+	
+	RenderTarget::renderQuad();
+
+	// advect density
+	advectDensityShader->bind();
+
+	physicsTargets->bindAsTexture("velTexture", advectDensityShader->getProgram());
+	obstaclesTargets->bindAsTexture("obstaclesTexture", advectDensityShader->getProgram(), 1);
+	densityTargets->bindAsTexture("densityTexture", advectDensityShader->getProgram(), 3);
+
+	densityTargets->bind();
+
+	glUniform2f(
+		glGetUniformLocation(advectDensityShader->getProgram(), "simulationSize"), 
+		simulationSize.x, simulationSize.y
 	);
 	
 	RenderTarget::renderQuad();
@@ -134,9 +140,10 @@ void FluidTexture::render() {
 
 	visualShader->bind();
 
-	physicsTargets[currentPhysicalTarget]->bindAsTexture("velTexture", visualShader->getProgram());
-	obstaclesTargets[currentObstacleTarget]->bindAsTexture("obstaclesTexture", visualShader->getProgram(), 1);
+	physicsTargets->bindAsTexture("velTexture", visualShader->getProgram());
+	obstaclesTargets->bindAsTexture("obstaclesTexture", visualShader->getProgram(), 1);
 	pressureTarget->bindAsTexture("pressureTexture", visualShader->getProgram(), 2);
+	densityTargets->bindAsTexture("densityTexture", visualShader->getProgram(), 3);
 
 	glUniform2f(
 		glGetUniformLocation(visualShader->getProgram(), "simulationSize"), 

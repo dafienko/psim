@@ -7,7 +7,7 @@
 #include "text.h"
 
 #define W 1000
-#define H 1000
+#define H 500
 
 static void error_callback(int error, const char* description)
 {

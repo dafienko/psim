@@ -22,11 +22,13 @@ float getO(ivec2 p) {
 	return texelFetch(obstaclesTexture, p, 0).x;
 }
 
+int centerY = int(simulationSize.y - 1) / 2;
 vec2 getVel(ivec2 p) {
 	vec2 vel = texelFetch(velTexture, p, 0).xy;
 
-	if (p.x == 1 && p.y >= int(simulationSize.y - 1) / 2 - 3 && p.y <= int(simulationSize.y - 1) / 2 + 3) {
-		vel.x = 39;
+	int dy = abs(centerY - p.y);
+	if (p.x == 1 && dy / 4 % 4 == 0) {
+		vel.x = 40;
 	} 
 
 	return vel;
