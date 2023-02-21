@@ -8,6 +8,7 @@
 #include "rendertarget.h"
 #include "shader.h"
 #include "text.h"
+#include "fluidTexture.h"
 
 unsigned int Core::screenWidth, Core::screenHeight;
 
@@ -16,6 +17,7 @@ GLuint vao;
 GLint mvp_location, vpos_location, vcol_location;
 std::unique_ptr<ShaderProgram> shaderProgram;
 std::unique_ptr<RenderTarget> offScreenTarget;
+std::unique_ptr<FluidTexture> fluid;
 
 glm::mat4x4 p, mvp;
 glm::mat4x4 m = glm::identity<glm::mat4x4>();
@@ -41,6 +43,8 @@ void Core::init(unsigned int width, unsigned int height) {
 	RenderTarget::init();
 	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vsh", "shaders/triangle.fs");
 	offScreenTarget = std::make_unique<RenderTarget>(width, height);
+	int x = 100;
+	fluid = std::make_unique<FluidTexture>(glm::ivec2(x, x));
 
 	GLuint program = shaderProgram->getProgram();
 	mvp_location = glGetUniformLocation(program, "MVP");
@@ -84,10 +88,12 @@ void Core::update(float dt) {
 	m = glm::rotate(m, dt, glm::vec3(0, 0, 1));
 	mvp = p * m;
 
+	fluid->update(dt);
+
 	elapsedTime += dt;
 	elapsedFrames += 1;
 	
-	if (elapsedTime > .5f) {
+	if (elapsedTime > .25f) {
 		floatFPS = elapsedFrames / elapsedTime;
 		averageFrameTime = elapsedTime / elapsedFrames;
 		elapsedTime = 0.0f;
@@ -105,8 +111,10 @@ void Core::render() {
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLES, 0, 3); 
 
+	fluid->render();
+
 	std::string frameTimeStr =  std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
-	Text::renderText(frameTimeStr, glm::ivec2(20, 30), FontFace::Consola, 24, glm::vec3(0.0f, 1.0f, 0.0f));
+	Text::renderText(frameTimeStr, glm::ivec2(20, Core::screenHeight - 15), FontFace::Consola, 24, glm::vec3(0.0f, 1.0f, 0.0f));
 	
 	RenderTarget::bindDefault();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,6 +123,7 @@ void Core::render() {
 
 void Core::destroy() {
 	shaderProgram.release();
+	fluid.release();
 	RenderTarget::destroy();
 }
 

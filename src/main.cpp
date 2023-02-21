@@ -16,6 +16,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	} else if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
+		Core::update(1.0 / 120.0);
 	}
 }
 
@@ -32,7 +34,7 @@ GLFWwindow* createWindow(const char* windowTitle) {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(640, 480, windowTitle, NULL, NULL);
+	window = glfwCreateWindow(600, 600, windowTitle, NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -72,6 +74,7 @@ int main(int argc, char** argv)
 
 		Core::resize(width, height);
 		Core::update(dt);
+		
 		Core::render();
 
 		glfwSwapBuffers(window);

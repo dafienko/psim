@@ -208,12 +208,12 @@ function advect(dt) {
 
 	for (let y = 0; y <= GRID_HEIGHT; y++) {
 		for (let x = 0; x <= GRID_WIDTH; x++) {
-			u = [uGrid[y][x], sampleV(x, y+.5)];
+			let u = [uGrid[y][x], sampleV(x, y+.5)];
 			if (get(oGrid, Math.round(x - u[0] * dt), Math.round(y+.5 - u[1] * dt)) != 0) { 
 				newU[y][x] = sampleU(x - u[0] * dt, y+.5 - u[1] * dt)
 			}
 
-			v = [sampleU(x+.5, y), vGrid[y][x]];
+			let v = [sampleU(x+.5, y), vGrid[y][x]];
 			if (get(oGrid, Math.round(x+.5 - v[0] * dt), Math.round(y - v[1] * dt)) != 0) {
 				newV[y][x] = sampleV(x+.5 - v[0] * dt, y - v[1] * dt)
 			}

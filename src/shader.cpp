@@ -35,6 +35,10 @@ void checkShaderErrors(const std::string &filename, GLuint shader) {
 	}
 }
 
+ShaderProgram::ShaderProgram(const char* vs_filename, const char* fs_filename) : 
+	ShaderProgram(std::string(vs_filename), std::string(fs_filename)) 
+{}
+
 ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &fs_filename) {
 	std::string vertex_source, fragment_source;
 	getFileSource(vs_filename, vertex_source);

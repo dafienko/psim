@@ -41,7 +41,6 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 				unsigned char* bmpRowStart = bitmapBuffer + y * bitmapWidth;
 				memcpy(glyphRowStart, bmpRowStart, bitmapWidth * sizeof(unsigned char));
 			}
-		
 
 			return glm::vec4(
 				(float)(glyphSheetPos.x * glyphWidth) / width, (float)(glyphSheetPos.y * glyphHeight) / height, 

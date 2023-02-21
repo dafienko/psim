@@ -11,7 +11,7 @@ static constexpr glm::vec2 QUAD_VERTICES[4] = {
 	glm::vec2(1.0f, 1.0f), // top right
 };
 
-static constexpr glm::vec2 TEX_COORDS[4] = {
+static constexpr glm::vec2 QUAD_TEX_COORDS[4] = {
 	glm::vec2(0.0f, 1.0f), 
 	glm::vec2(0.0f, 0.0f),
 	glm::vec2(1.0f, 0.0f),
@@ -41,9 +41,9 @@ void RenderTarget::init() {
 
 	glGenBuffers(1, &tposVBO); 
 	glBindBuffer(GL_ARRAY_BUFFER, tposVBO); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(TEX_COORDS), &TEX_COORDS[0].x, GL_STATIC_DRAW); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(QUAD_TEX_COORDS), &QUAD_TEX_COORDS[0].x, GL_STATIC_DRAW); 
 	glEnableVertexAttribArray(1); 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(TEX_COORDS[0]), (void*) 0); 
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(QUAD_TEX_COORDS[0]), (void*) 0); 
 
 	glGenBuffers(1, &iVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iVBO);
@@ -51,6 +51,12 @@ void RenderTarget::init() {
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void RenderTarget::renderQuad() {
+	glBindVertexArray(quadVAO); 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iVBO);
+	glDrawElements(GL_TRIANGLES, sizeof(QUAD_INDICES) / sizeof(QUAD_INDICES[0]), GL_UNSIGNED_INT, (void*)0); 
 }
 
 void RenderTarget::clear(int buffersToClear) {
@@ -68,16 +74,16 @@ void RenderTarget::destroy() {
 	glDeleteBuffers(1, &posVBO);
 }
 
-RenderTarget::RenderTarget(int width, int height) : width(width), height(height) {
+RenderTarget::RenderTarget(int width, int height, GLint internalFormat, GLint texFilterType) : width(width), height(height) {
 	glGenFramebuffers(1, &fbo);
 
 	bind();
 
 	glGenTextures(1, &textureColorbuffer);
 	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texFilterType);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texFilterType);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0); 
@@ -97,22 +103,30 @@ RenderTarget::RenderTarget(int width, int height) : width(width), height(height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);  
 }
 
+RenderTarget::RenderTarget(int width, int height) : RenderTarget(width, height, GL_RGBA, GL_LINEAR) {};
+
 void RenderTarget::bind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glViewport(0, 0, width, height);
+}
+
+void RenderTarget::bindAsTexture(const char* textureName, GLuint shaderProgram, GLint location) {
+	glActiveTexture(GL_TEXTURE0 + location); 
+	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+	glUniform1i(glGetUniformLocation(shaderProgram, textureName), location);
+}
+
+void RenderTarget::bindAsTexture(const char* textureName, GLuint shaderProgram) {
+	bindAsTexture(textureName, shaderProgram, 0);
 }
 
 void RenderTarget::renderToQuad() {
 	quadShaderProgram->bind(); 
 	glDisable(GL_DEPTH_TEST);
 
-	glActiveTexture(GL_TEXTURE0); 
-	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-	glUniform1i(glGetUniformLocation(quadShaderProgram->getProgram(), "screenTexture"), 0);
+	bindAsTexture("screenTexture", quadShaderProgram->getProgram());
 	
-	glBindVertexArray(quadVAO); 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iVBO);
-	glDrawElements(GL_TRIANGLES, sizeof(QUAD_INDICES) / sizeof(QUAD_INDICES[0]), GL_UNSIGNED_INT, (void*)0); 
+	RenderTarget::renderQuad();
 }
 
 RenderTarget::~RenderTarget() {
