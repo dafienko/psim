@@ -28,14 +28,14 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 			buffer = new unsigned char[width * height]();
 		}
 
-		glm::vec4 bufferGlyphBitmap(unsigned char c, unsigned char* bitmapBuffer, int bitmapWidth, int bitmapHeight) {
+		glm::vec4 bufferGlyphBitmap(unsigned char c, unsigned char* bitmapBuffer, unsigned int bitmapWidth, unsigned int bitmapHeight) {
 			assert(bitmapWidth <= glyphWidth);
 			assert(bitmapHeight <= glyphHeight);
 			assert((int)c < 128);
 
 			glm::ivec2 glyphSheetPos((int)c % GLYPH_SHEET_COLS, (int)c / GLYPH_SHEET_COLS);
 
-			for (int y = 0; y < bitmapHeight; y++) {
+			for (unsigned int y = 0; y < bitmapHeight; y++) {
 				int bufferRow = glyphSheetPos.y * glyphHeight + y; 
 				unsigned char* glyphRowStart = buffer + bufferRow * width + glyphSheetPos.x * glyphWidth;
 				unsigned char* bmpRowStart = bitmapBuffer + y * bitmapWidth;

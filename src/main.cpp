@@ -34,7 +34,7 @@ GLFWwindow* createWindow(const char* windowTitle) {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(600, 600, windowTitle, NULL, NULL);
+	window = glfwCreateWindow(1200, 1200, windowTitle, NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
