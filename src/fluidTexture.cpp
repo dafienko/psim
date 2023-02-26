@@ -24,6 +24,11 @@ FluidTexture::FluidTexture(glm::ivec2 simulationSize) :
 	obstaclesTargets->bind();
 	
 	glUniform2f(
+		glGetUniformLocation(obstaclesShader->getProgram(), "gridSize"), 
+		simulationSize.x, simulationSize.y
+	);
+
+	glUniform2f(
 		glGetUniformLocation(obstaclesShader->getProgram(), "simulationSize"), 
 		simulationSize.x, simulationSize.y
 	);
@@ -42,6 +47,11 @@ void FluidTexture::updateObstacles(float dt) {
 	obstaclesTargets->bindAsTexture("oldObstacles", obstaclesShader->getProgram());
 	obstaclesTargets->bind();
 	
+	glUniform2f(
+		glGetUniformLocation(obstaclesShader->getProgram(), "gridSize"), 
+		simulationSize.x, simulationSize.y
+	);
+
 	glUniform2f(
 		glGetUniformLocation(obstaclesShader->getProgram(), "simulationSize"), 
 		simulationSize.x, simulationSize.y
@@ -64,6 +74,11 @@ void FluidTexture::updatePressure(float dt) {
 	pressureTarget->bind();
 
 	glUniform2f(
+		glGetUniformLocation(fluidShader->getProgram(), "gridSize"), 
+		simulationSize.x, simulationSize.y
+	);
+
+	glUniform2f(
 		glGetUniformLocation(fluidShader->getProgram(), "simulationSize"), 
 		simulationSize.x, simulationSize.y
 	);
@@ -81,8 +96,13 @@ void FluidTexture::solve(float dt) {
 	physicsTargets->bind();
 
 	glUniform2f(
-		glGetUniformLocation(gridSolveShader->getProgram(), "simulationSize"), 
+		glGetUniformLocation(gridSolveShader->getProgram(), "gridSize"), 
 		simulationSize.x + 1, simulationSize.y + 1
+	);
+
+	glUniform2f(
+		glGetUniformLocation(gridSolveShader->getProgram(), "simulationSize"), 
+		simulationSize.x, simulationSize.y
 	);
 	
 	RenderTarget::renderQuad();
@@ -98,8 +118,13 @@ void FluidTexture::advect(float dt) {
 	physicsTargets->bind();
 
 	glUniform2f(
-		glGetUniformLocation(advectVelocityShader->getProgram(), "simulationSize"), 
+		glGetUniformLocation(advectVelocityShader->getProgram(), "gridSize"), 
 		simulationSize.x + 1, simulationSize.y + 1
+	);
+
+	glUniform2f(
+		glGetUniformLocation(advectVelocityShader->getProgram(), "simulationSize"), 
+		simulationSize.x, simulationSize.y
 	);
 	
 	RenderTarget::renderQuad();
@@ -112,6 +137,11 @@ void FluidTexture::advect(float dt) {
 	densityTargets->bindAsTexture("densityTexture", advectDensityShader->getProgram(), 3);
 
 	densityTargets->bind();
+
+	glUniform2f(
+		glGetUniformLocation(advectDensityShader->getProgram(), "gridSize"), 
+		simulationSize.x, simulationSize.y
+	);
 
 	glUniform2f(
 		glGetUniformLocation(advectDensityShader->getProgram(), "simulationSize"), 
@@ -144,6 +174,11 @@ void FluidTexture::render() {
 	obstaclesTargets->bindAsTexture("obstaclesTexture", visualShader->getProgram(), 1);
 	pressureTarget->bindAsTexture("pressureTexture", visualShader->getProgram(), 2);
 	densityTargets->bindAsTexture("densityTexture", visualShader->getProgram(), 3);
+
+	glUniform2f(
+		glGetUniformLocation(visualShader->getProgram(), "gridSize"), 
+		simulationSize.x, simulationSize.y
+	);
 
 	glUniform2f(
 		glGetUniformLocation(visualShader->getProgram(), "simulationSize"), 

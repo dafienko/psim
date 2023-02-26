@@ -43,8 +43,7 @@ void Core::init(unsigned int width, unsigned int height) {
 	RenderTarget::init();
 	shaderProgram = std::make_unique<ShaderProgram>("shaders/triangle.vsh", "shaders/triangle.fs");
 	offScreenTarget = std::make_unique<RenderTarget>(width, height);
-	// int x = (int)width / 2;
-	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 4, height / 4));
+	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
 
 	GLuint program = shaderProgram->getProgram();
 	mvp_location = glGetUniformLocation(program, "MVP");

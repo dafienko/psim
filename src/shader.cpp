@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 #include "shader.h"
 
@@ -9,8 +10,30 @@ void getFileSource(const std::string &filename, std::string &source_text) {
 	
 	if (file) {
 		std::string line;
+		int lno = 0;
 		while (std::getline(file, line)) {
-			source_text += line + "\n";
+			lno++;
+
+			if (line.find("#include") != std::string::npos) {
+				int firstQuote = line.find('"');
+				if (firstQuote == std::string::npos) {
+					std::cerr << filename << ": error at line " << lno << std::endl;
+					exit(EXIT_FAILURE);
+				}
+
+				int secondQuote = line.find('"', firstQuote + 1);
+				if (secondQuote == std::string::npos) {
+					std::cerr << filename << ": error at line " << lno << std::endl;
+					exit(EXIT_FAILURE);
+				}
+
+				std::string filename = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
+				std::string includeSource;
+				getFileSource(filename, includeSource);
+				source_text += includeSource + "\n";
+			} else {
+				source_text += line + "\n";
+			}
 		}
 	} else {
 		std::cerr << "could not find file " << filename << std::endl;
@@ -18,11 +41,19 @@ void getFileSource(const std::string &filename, std::string &source_text) {
 	}
 }
 
-void checkShaderErrors(const std::string &filename, GLuint shader) {
+void checkShaderErrors(const std::string &filename, GLuint shader, std::string source) {
 	GLint isCompiled = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
 	if(isCompiled == GL_FALSE)
 	{
+		std::string result;
+		std::istringstream iss(source);
+		int lno = 1;
+		for (std::string line; std::getline(iss, line); lno++)
+		{
+			std::cerr << lno << "   " << line << std::endl;
+		}
+
 		GLint maxLength = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
 
@@ -48,13 +79,13 @@ ShaderProgram::ShaderProgram(const std::string &vs_filename, const std::string &
 	const char* p = vertex_source.c_str();
 	glShaderSource(vertex_shader, 1, &p, NULL);
 	glCompileShader(vertex_shader);
-	checkShaderErrors(vs_filename, vertex_shader);
+	checkShaderErrors(vs_filename, vertex_shader, vertex_source);
 
 	fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	p = fragment_source.c_str();
 	glShaderSource(fragment_shader, 1, &p, NULL);
 	glCompileShader(fragment_shader);
-	checkShaderErrors(fs_filename, fragment_shader);
+	checkShaderErrors(fs_filename, fragment_shader, fragment_source);
 
 	program = glCreateProgram();
 	glAttachShader(program, vertex_shader);

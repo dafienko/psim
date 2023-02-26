@@ -5,19 +5,20 @@ out float result;
 in vec2 texCoords;
 in vec2 pixelPos;
 
+uniform vec2 gridSize;
+
 uniform sampler2D oldObstacles;
 
-uniform vec2 simulationSize;
 uniform bool init;
 
 void main() {
-	vec2 fp = texCoords * simulationSize;
+	vec2 fp = texCoords * gridSize;
 	ivec2 p = ivec2(fp);
 
 	if (init) {
-		if (p.x == 0 || p.y == 0 || p.x == simulationSize.x - 1 || p.y == simulationSize.y - 1) {
+		if (p.x == 0 || p.y == 0 || p.y == gridSize.y - 1) {
 			result = 0.0;
-		} else if (length(fp - vec2(simulationSize / 2)) < 4) {
+		} else if (length(fp - vec2(gridSize / 2)) < 4) {
 			result = 0.0;
 		} else {
 			result = 1.0;

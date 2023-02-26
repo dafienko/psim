@@ -6,8 +6,8 @@
 #include "core.h"
 #include "text.h"
 
-#define W 1000
-#define H 500
+#define W 800
+#define H 400
 
 static void error_callback(int error, const char* description)
 {
@@ -60,7 +60,7 @@ void destroyWindow(GLFWwindow* window) {
 
 int main(int argc, char** argv)
 {
-	GLFWwindow* window = createWindow(*argv);
+	GLFWwindow* window = createWindow("psim");
 
 	Core::init(W, H);
 	Text::init();
