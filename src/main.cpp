@@ -1,92 +1,34 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "window.h"
 #include "shader.h"
 #include "core.h"
 #include "text.h"
 
 #define W 800
-#define H 400
+#define H 600
+#define WINDOW_TITLE "psim"
 
-static void error_callback(int error, const char* description)
-{
-	std::cerr << "Error: " << description << std::endl;
-	exit(EXIT_FAILURE);
-}
- 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-	} else if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
-		Core::update(1.0 / 120.0);
-	}
-}
-
-GLFWwindow* createWindow(const char* windowTitle) {
-	GLFWwindow* window;
-	glfwSetErrorCallback(error_callback);
- 
-	if (!glfwInit()) {
-		exit(EXIT_FAILURE);
-	}
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	window = glfwCreateWindow(W, H, windowTitle, NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-	}
- 
-	glfwSetKeyCallback(window, key_callback);
- 
-	glfwMakeContextCurrent(window);
-	glewInit();
-	glfwSwapInterval(1);
-
-	return window;
-}
-
-void destroyWindow(GLFWwindow* window) {
-	glfwDestroyWindow(window);
-	glfwTerminate();
-}
-
-int main(int argc, char** argv)
-{
-	GLFWwindow* window = createWindow("psim");
-
+int main(int argc, char** argv) {
+	Window::init(W, H, WINDOW_TITLE);
 	Core::init(W, H);
 	Text::init();
 
-	float last = (float)glfwGetTime();
-	while (!glfwWindowShouldClose(window))
-	{
-		float t = (float)glfwGetTime();
-		float dt = t - last;
-		last = t;
+	Window::setKeyCallback([&] (int key, int action, int mods) {
+		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
+			Core::update(1.0 / 120.0);
+		}
+	});
 
-		int width, height;
-		glfwGetFramebufferSize(window, &width, &height);
-
+	Window::loop([&] (int width, int height, float dt) {
 		Core::resize(width, height);
 		Core::update(dt);
-		
 		Core::render();
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+	});
  
 	Text::destroy();
 	Core::destroy();
-	destroyWindow(window);
+	Window::destroy();
 
 	exit(EXIT_SUCCESS);
 }

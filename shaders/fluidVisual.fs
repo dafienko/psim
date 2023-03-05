@@ -13,9 +13,9 @@ void main() {
 	thisVel = vec2(thisVel.x + rightVel.x, thisVel.y + upVel.y) / 2;
 
 	float o = getO(pos);
-	result = vec4(abs(thisVel.x) / 20, thisVel.y / 20, thisVel.y / -20, 1.0);
+	result = vec4(abs(thisVel.x) / 60, thisVel.y / 20, thisVel.y / -20, 1.0);
 	result = vec4(ds.x / 1.0, 0, -ds.x / 1.0, 1);	
-	// result = vec4(getDensity(pos).xyz, 1);
+	result = vec4(getDensity(pos).xyz, 1);
 
 	if (o == 0.0) {
 		result = vec4(1.0, 1.0, 1.0, 1.0);

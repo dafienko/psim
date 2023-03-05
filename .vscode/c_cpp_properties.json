@@ -6,7 +6,8 @@
                 "/opt/homebrew/include/"
             ],
             "compilerPath": "/usr/bin/clang++",
-            "configurationProvider": "ms-vscode.makefile-tools"
+            "configurationProvider": "ms-vscode.makefile-tools",
+			"intelliSenseMode": "macos-clang-arm64"
         }
     ],
     "version": 4

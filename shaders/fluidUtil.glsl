@@ -26,7 +26,7 @@ vec2 getVel(ivec2 p) {
 	vec2 vel = texelFetch(velTexture, p, 0).xy;
 
 	int dy = abs(centerY - p.y);
-	if (p.x == 1 && dy / 4 % 4 == 0) {
+	if (p.x == 1 && dy / 3 % 9 == 0) {
 		vel.x = 40;
 	} 
 
@@ -37,7 +37,7 @@ vec3 WHITE = vec3(1, 1, 1);
 vec3 BLUE = vec3(0, .92, 1);
 vec3 getDensity(ivec2 p) {
 	int dy = abs(centerY - p.y);
-	if (p.x == 1 && dy / 4 % 4 == 0) {
+	if (p.x == 1 && dy / 3 % 9 == 0) {
 		float alpha = 1 - (float(dy) / 3.0);
 		return mix(BLUE, WHITE, alpha);
 	} else {
