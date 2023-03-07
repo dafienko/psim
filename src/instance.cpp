@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "instance.h"
 
 Instance::Instance(InstanceClass type, std::string name) : 

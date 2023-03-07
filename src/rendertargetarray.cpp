@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "rendertargetarray.h"
 
 RenderTargetArray::RenderTargetArray(unsigned int nTargets, int width, int height, GLint internalFormat, GLint texFilterType) : 
@@ -8,7 +10,7 @@ N_TARGETS(nTargets)
 	lastTargetIndex = 0;
 	currentTargetIndex = 1;
 
-	for (int i = 0; i < N_TARGETS; i++) {
+	for (unsigned int i = 0; i < N_TARGETS; i++) {
 		targets.push_back(std::make_unique<RenderTarget>(width, height, internalFormat, texFilterType));
 	}
 }

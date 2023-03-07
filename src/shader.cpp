@@ -15,13 +15,13 @@ void getFileSource(const std::string &filename, std::string &source_text) {
 			lno++;
 
 			if (line.find("#include") != std::string::npos) {
-				int firstQuote = line.find('"');
+				std::size_t firstQuote = line.find('"');
 				if (firstQuote == std::string::npos) {
 					std::cerr << filename << ": error at line " << lno << std::endl;
 					exit(EXIT_FAILURE);
 				}
 
-				int secondQuote = line.find('"', firstQuote + 1);
+				std::size_t secondQuote = line.find('"', firstQuote + 1);
 				if (secondQuote == std::string::npos) {
 					std::cerr << filename << ": error at line " << lno << std::endl;
 					exit(EXIT_FAILURE);
