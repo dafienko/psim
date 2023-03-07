@@ -1,11 +1,7 @@
 #include <iostream>
 
 #include "window.h"
-#include "shader.h"
 #include "core.h"
-#include "text.h"
-#include "quad.h"
-#include "rendertarget.h"
 
 #define W 800
 #define H 600
@@ -13,9 +9,6 @@
 
 int main(int argc, char** argv) {
 	Window::init(W, H, WINDOW_TITLE);
-	RenderTarget::init();
-	Quad::init();
-	Text::init();
 	Core::init(W, H);
 
 	Window::setKeyCallback([&] (int key, int action, int mods) {
@@ -31,9 +24,6 @@ int main(int argc, char** argv) {
 	});
  
 	Core::destroy();
-	Text::destroy();
-	Quad::destroy();
-	RenderTarget::destroy();
 	Window::destroy();
 
 	exit(EXIT_SUCCESS);

@@ -8,7 +8,9 @@
 #include "rendertarget.h"
 #include "shader.h"
 #include "text.h"
+#include "quad.h"
 #include "fluidTexture.h"
+#include "ui.h"
 
 unsigned int Core::screenWidth, Core::screenHeight;
 
@@ -17,6 +19,10 @@ std::unique_ptr<FluidTexture> fluid;
 void Core::init(unsigned int width, unsigned int height) {
 	screenWidth = width;
 	screenHeight = height;
+
+	RenderTarget::init();
+	Quad::init();
+	Text::init();
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -66,6 +72,9 @@ void Core::render() {
 
 void Core::destroy() {
 	fluid.release();
+	Text::destroy();
+	Quad::destroy();
+	RenderTarget::destroy();
 }
 
 void checkGLErrors(const std::string &file, int line) {
