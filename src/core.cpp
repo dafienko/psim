@@ -20,7 +20,6 @@ void Core::init(unsigned int width, unsigned int height) {
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	RenderTarget::init();
 	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
 }
 
@@ -67,7 +66,6 @@ void Core::render() {
 
 void Core::destroy() {
 	fluid.release();
-	RenderTarget::destroy();
 }
 
 void checkGLErrors(const std::string &file, int line) {

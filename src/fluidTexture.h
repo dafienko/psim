@@ -7,8 +7,9 @@
 #include "rendertarget.h"
 #include "rendertargetarray.h"
 #include "shader.h"
+#include "renderable.h"
 
-class FluidTexture {
+class FluidTexture: public Renderable {
 	private: 
 		std::unique_ptr<ShaderProgram> fluidShader;
 		std::unique_ptr<ShaderProgram> gridSolveShader;
@@ -35,5 +36,5 @@ class FluidTexture {
 		~FluidTexture();
 
 		void update(float dt);
-		void render();
+		void render() override;
 };
