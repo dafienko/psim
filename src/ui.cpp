@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "ui.h"
 #include "uiobject.h"
 #include "core.h"
@@ -22,6 +24,10 @@ void UI::renderUIObjectChildren(Instance* parent, glm::vec2 parentPos, glm::vec2
 UI::UI() : 
 	Instance(InstanceClass::IC_UI, "UI"),
 	rendered(true)
+{}
+
+UI::UI(json& data) :
+	UI()
 {}
 
 void UI::render() {

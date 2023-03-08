@@ -1,9 +1,12 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 
 #include "event.h"
+
+using json = nlohmann::json; 
 
 class Instance {
 	public:
@@ -13,6 +16,7 @@ class Instance {
 			IC_UIFrame,
 		};
 
+		static Instance* fromJSON(const std::string path);
 	private:
 		std::vector<Instance*> children;
 		Instance* parent;

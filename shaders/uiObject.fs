@@ -2,9 +2,9 @@
 
 out vec4 color;
 
-uniform vec3 backgroundColor;
+uniform vec4 backgroundColor;
 
 void main()
 {
-	color = vec4(backgroundColor.xyz, 1);
+	color = backgroundColor;
 }

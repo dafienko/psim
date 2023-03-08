@@ -1,0 +1,39 @@
+{
+	"type": "UI",
+	"name": "mainUI",
+	"children": [
+		{
+			"type": "UIFrame",
+			"name": "frame",
+			"backgroundTransparency": 0.5,
+			"backgroundColor": [1.0, 0.0, 0.0],
+			"anchorPoint": [0.5, 0.5],
+			"size": {
+				"scale": [0.0, 0.0],
+				"offset": [300.0, 300.0]
+			},
+			"position": {
+				"scale": [0.5, 0.5],
+				"offset": [0.0, 0.0]
+			},
+
+			"children": [
+				{
+					"type": "UIFrame",
+					"name": "nested",
+					"backgroundTransparency": 0.5,
+					"backgroundColor": [0.0, 0.0, 1.0],
+					"anchorPoint": [1.0, 1.0],
+					"size": {
+						"scale": [0.4, 0.4],
+						"offset": [0.0, 0.0]
+					},
+					"position": {
+						"scale": [1.0, 1.0],
+						"offset": [-10.0, -10.0]
+					}
+				}
+			]
+		}
+	]
+}

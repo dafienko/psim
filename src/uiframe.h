@@ -5,5 +5,6 @@
 class UIFrame: public UIObject {
 	public: 
 		UIFrame();
+		UIFrame(json& data);
 
 };

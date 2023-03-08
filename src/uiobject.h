@@ -24,6 +24,7 @@ class UIObject: public Instance, Renderable {
 
 	protected:
 		UIObject(InstanceClass type, const std::string name);
+		UIObject(InstanceClass type, const std::string name, json& data);
 
 		void render(glm::vec2 parentPos, glm::vec2 parentSize);
 
@@ -34,6 +35,7 @@ class UIObject: public Instance, Renderable {
 		glm::vec2 anchorPoint;
 		UICoord position;
 		UICoord size;
+		float backgroundTransparency;
 
 		void render() override;
 
