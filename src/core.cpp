@@ -11,10 +11,12 @@
 #include "quad.h"
 #include "fluidTexture.h"
 #include "ui.h"
+#include "uiframe.h"
 
 unsigned int Core::screenWidth, Core::screenHeight;
 
 std::unique_ptr<FluidTexture> fluid;
+std::unique_ptr<UI> ui;
 
 void Core::init(unsigned int width, unsigned int height) {
 	screenWidth = width;
@@ -23,10 +25,30 @@ void Core::init(unsigned int width, unsigned int height) {
 	RenderTarget::init();
 	Quad::init();
 	Text::init();
+	UI::init();
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
+	
+	ui = std::make_unique<UI>();
+
+	UIFrame* frame = new UIFrame();
+	frame->size.scale = glm::vec2(0, 0);
+	frame->size.offset = glm::vec2(300, 300);
+	frame->anchorPoint = glm::vec2(.5, .5);
+	frame->position.scale = glm::vec2(.5, .5);
+	frame->backgroundColor = glm::vec3(0, 1, 0);
+	frame->setParent(ui.get());
+
+	UIFrame* nested = new UIFrame();
+	nested->size.scale = glm::vec2(0.5, 0.5);
+	nested->size.offset = glm::vec2(0, 0);
+	nested->anchorPoint = glm::vec2(1, 1);
+	nested->position.scale = glm::vec2(1, 1);
+	nested->backgroundColor = glm::vec3(0, 0, 1);
+	nested->setParent(frame);
+
 }
 
 void Core::resize(unsigned int width, unsigned int height) {
@@ -68,10 +90,15 @@ void Core::render() {
 		FontFace::Consola, 28, 
 		glm::vec3(0.0f, 1.0f, 0.0f)
 	);
+
+	ui->render();
 }
 
 void Core::destroy() {
 	fluid.release();
+	ui.release();
+
+	UI::destroy();
 	Text::destroy();
 	Quad::destroy();
 	RenderTarget::destroy();

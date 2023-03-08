@@ -3,16 +3,22 @@
 #include "instance.h"
 
 Instance::Instance(InstanceClass type, std::string name) : 
+	childAdded(),
+	childRemoved(),
 	type(type), 
-	name(name) 
+	name(name)
 {}
 
 void Instance::addChild(Instance& child) {
 	children.push_back(&child);
+
+	childAdded.fire(*this, child); 
 }
 
 void Instance::removeChild(Instance& child) {
 	children.erase(std::find(children.begin(), children.end(), &child));
+
+	childRemoved.fire(*this, child);
 }
 
 void Instance::setParent(Instance* newParent) {

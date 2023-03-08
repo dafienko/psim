@@ -1,7 +1,27 @@
 #include "ui.h"
+#include "uiobject.h"
+#include "core.h"
+
+void UI::init() {
+	UIObject::init();
+}
+
+void UI::destroy() {
+	UIObject::destroy();
+}
+
+void UI::renderUIObjectChildren(Instance* parent, glm::vec2 parentPos, glm::vec2 parentSize) {
+	for (Instance* child : parent->getChildren()) {
+		UIObject* uiObject = dynamic_cast<UIObject*>(child);
+		if (uiObject) {
+			uiObject->render(parentPos, parentSize);
+		}
+	}
+}
 
 UI::UI() : 
-Instance(InstanceClass::UI, "UI")
+	Instance(InstanceClass::IC_UI, "UI"),
+	rendered(true)
 {}
 
 void UI::render() {
@@ -9,5 +29,6 @@ void UI::render() {
 		return;
 	}
 
-	
+	glm::vec2 screenSize((float)Core::screenWidth, (float)Core::screenHeight);
+	UI::renderUIObjectChildren(dynamic_cast<Instance*>(this), glm::vec2(0.0f, 0.0f), screenSize);
 }

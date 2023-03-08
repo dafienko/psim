@@ -56,8 +56,6 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 	GLint tcLoc = glGetUniformLocation(glyphShader->getProgram(), "textColor");
 	glUniform3fv(tcLoc, 1, &textColor.r);
 
-	
-	
 	glm::ivec2 textPos = pos;
 	for (char c : text) {
 		const Glyph glyph = font.getGlyph(c);
