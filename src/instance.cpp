@@ -5,6 +5,7 @@
 #include "instance.h"
 #include "ui.h"
 #include "uiframe.h"
+#include "uitext.h"
 
 Instance* createInstanceFromJSON(json& data) {
 	std::string type = data["type"];
@@ -14,6 +15,8 @@ Instance* createInstanceFromJSON(json& data) {
 		instance = new UI(data);
 	} else if (type == "UIFrame") {
 		instance = new UIFrame(data);
+	} else if (type == "UIText") {
+		instance = new UIText(data);
 	} else {
 		std::cerr << "invalid instance type " << type;
 		exit(-1);

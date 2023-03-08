@@ -4,13 +4,18 @@
 	"children": [
 		{
 			"type": "UIFrame",
-			"name": "frame",
-			"backgroundTransparency": 0.5,
-			"backgroundColor": [1.0, 0.0, 0.0],
+			"name": "main",
+			
+			"backgroundTransparency": 0.2,
+			"backgroundColor": [0.05, 0.05, 0.05],
+			
+			"borderThickness": 1,
+			"borderColor": [1.0, 1.0, 1.0],
+			
 			"anchorPoint": [0.5, 0.5],
 			"size": {
 				"scale": [0.0, 0.0],
-				"offset": [300.0, 300.0]
+				"offset": [800.0, 1100.0]
 			},
 			"position": {
 				"scale": [0.5, 0.5],
@@ -19,18 +24,24 @@
 
 			"children": [
 				{
-					"type": "UIFrame",
-					"name": "nested",
-					"backgroundTransparency": 0.5,
+					"type": "UIText",
+					"name": "title",
+					
+					"text": "Simulation Configuration",
+					"textSize": 35,
+					"textAnchorPoint": [0.5, 0.5],
+					
+					"backgroundTransparency": 1,
 					"backgroundColor": [0.0, 0.0, 1.0],
-					"anchorPoint": [1.0, 1.0],
+					
+					"anchorPoint": [0.5, 0.0],
 					"size": {
-						"scale": [0.4, 0.4],
-						"offset": [0.0, 0.0]
+						"scale": [1.0, 0.0],
+						"offset": [0.0, 55.0]
 					},
 					"position": {
-						"scale": [1.0, 1.0],
-						"offset": [-10.0, -10.0]
+						"scale": [0.5, 0.0],
+						"offset": [0.0, 20.0]
 					}
 				}
 			]

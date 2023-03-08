@@ -31,7 +31,7 @@ UIObject::UIObject(InstanceClass type, const std::string name, json& data) :
 		const auto& value = item.value();
 
         if (key == "backgroundColor") {
-			backgroundColor = glm::vec3(value[0], value[1], value[2]);	
+			backgroundColor = glm::vec3(value[0], value[1], value[2]);
 		} else if (key == "backgroundTransparency") {
 			backgroundTransparency = value;
 		} else if (key == "size") {
@@ -50,6 +50,12 @@ UIObject::UIObject(InstanceClass type, const std::string name, json& data) :
 			}
 		} else if (key == "anchorPoint") {
 			anchorPoint = glm::vec2(value[0], value[1]);
+		} else if (key == "borderThickness") {
+			borderThickness = value;
+		} else if (key == "borderTransparency") {
+			borderTransparency = value;
+		} else if (key == "borderColor") {
+			borderColor = glm::vec3(value[0], value[1], value[2]);
 		}
     }
 }
@@ -81,10 +87,6 @@ void UIObject::render(glm::vec2 parentPos, glm::vec2 parentSize) {
 }
 
 void UIObject::render() {
-	if (backgroundTransparency >= 1) {
-		return;
-	}
-
 	uiShader->bind();
 
 	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::screenWidth, (float)Core::screenHeight, 0.0f);
@@ -97,8 +99,26 @@ void UIObject::render() {
 	);
 	glUniform4fv(glGetUniformLocation(uiShader->getProgram(), "backgroundColor"), 1, &colorWithAlpha[0]);
 
-	Quad::render(
-		absolutePosition,
-		absolutePosition + absoluteSize
+	glm::vec4 borderColorWithAlpha = glm::vec4(
+		borderColor.x, borderColor.y, borderColor.z, 
+		1 - borderTransparency
 	);
+	glUniform4fv(glGetUniformLocation(uiShader->getProgram(), "borderColor"), 1, &borderColorWithAlpha[0]);
+
+	glm::vec2 borderOffset = glm::vec2(borderThickness);
+	glm::vec2 borderFraction = borderOffset / (absoluteSize + borderOffset * 2.0f);
+	glUniform2fv(glGetUniformLocation(uiShader->getProgram(), "borderRelPosStart"), 1, &borderFraction[0]);
+
+	Quad::render(
+		absolutePosition - borderOffset,
+		absolutePosition + absoluteSize + borderOffset
+	);
+}
+
+glm::vec2 UIObject::getAbsolutePosition() {
+	return absolutePosition;
+}
+
+glm::vec2 UIObject::getAbosluteSize() {
+	return absoluteSize;
 }

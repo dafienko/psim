@@ -7,7 +7,7 @@
 #include <GL/glew.h>
 
 enum FontFace {
-	Consola
+	Consola,
 };
 
 struct Glyph {

@@ -14,6 +14,7 @@ class Instance {
 			IC_UI,
 			IC_UIObject,
 			IC_UIFrame,
+			IC_UIText,
 		};
 
 		static Instance* fromJSON(const std::string path);

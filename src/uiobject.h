@@ -31,13 +31,21 @@ class UIObject: public Instance, Renderable {
 	public: 
 		bool visible;
 
+		float backgroundTransparency;
 		glm::vec3 backgroundColor;
+		
+		int borderThickness;
+		float borderTransparency;
+		glm::vec3 borderColor;
+		
 		glm::vec2 anchorPoint;
 		UICoord position;
 		UICoord size;
-		float backgroundTransparency;
-
+		
 		void render() override;
+
+		glm::vec2 getAbsolutePosition();
+		glm::vec2 getAbosluteSize();
 
 	friend class UI;
 };

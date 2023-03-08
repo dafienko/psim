@@ -30,30 +30,8 @@ void Core::init(unsigned int width, unsigned int height) {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
-	
-	//ui = std::make_unique<UI>();
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
-
-	/*
-	UIFrame* frame = new UIFrame();
-	frame->size.scale = glm::vec2(1, 1);
-	frame->size.offset = glm::vec2(0, 0);
-	frame->anchorPoint = glm::vec2(.5, .5);
-	frame->position.scale = glm::vec2(.5, .5);
-	frame->backgroundColor = glm::vec3(0, 1, 0);
-	frame->backgroundTransparency = .5f;
-	frame->setParent(ui.get());
-
-	UIFrame* nested = new UIFrame();
-	nested->size.scale = glm::vec2(0.5, 0.5);
-	nested->size.offset = glm::vec2(0, 0);
-	nested->anchorPoint = glm::vec2(1, 1);
-	nested->position.scale = glm::vec2(1, 1);
-	nested->backgroundColor = glm::vec3(0, 0, 1);
-	nested->backgroundTransparency = .5f;
-	nested->setParent(frame);
-	*/
 
 }
 
