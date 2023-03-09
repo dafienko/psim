@@ -1,3 +1,5 @@
+#pragma once
+
 #include <functional>
 
 #include <GL/glew.h> // glew MUST be included before glfw

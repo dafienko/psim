@@ -46,7 +46,7 @@ class Event {
 			listeners.push_back(new EventListener(*this, callback));
 		}
 
-		void fire(Args && ...args) {
+		void fire(Args & ...args) {
 			for (EventListener* listener : listeners) {
 				listener->fire(std::forward<Args>(args)...);
 			}

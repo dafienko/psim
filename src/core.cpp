@@ -1,19 +1,22 @@
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 #include <memory>
 #include <string>
 #include <iostream>
 
 #include "core.h"
-#include "rendertarget.h"
-#include "shader.h"
-#include "text.h"
 #include "quad.h"
+#include "text.h"
+#include "rendertarget.h"
 #include "fluidTexture.h"
 #include "ui.h"
 #include "uiframe.h"
+#include "uitext.h"
 
 unsigned int Core::screenWidth, Core::screenHeight;
+
+std::unique_ptr<Event<int, int, int>> Core::keyEvent;
 
 std::unique_ptr<FluidTexture> fluid;
 std::unique_ptr<UI> ui;
@@ -21,6 +24,8 @@ std::unique_ptr<UI> ui;
 void Core::init(unsigned int width, unsigned int height) {
 	screenWidth = width;
 	screenHeight = height;
+
+	keyEvent = std::make_unique<Event<int, int, int>>();
 
 	RenderTarget::init();
 	Quad::init();
@@ -32,7 +37,18 @@ void Core::init(unsigned int width, unsigned int height) {
 	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
+	ui->rendered = false;
 
+	keyEvent->bind([&] (int key, int action, int mods) {
+		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
+			Core::update(1.0 / 120.0);
+		} 
+		if (action == GLFW_PRESS) {
+			if (key == GLFW_KEY_M) {
+				ui->rendered = !ui->rendered;
+			}	
+		}
+	});
 }
 
 void Core::resize(unsigned int width, unsigned int height) {
@@ -67,13 +83,8 @@ void Core::render() {
 
 	fluid->render();
 
-	std::string frameTimeStr =  std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
-	Text::renderText(
-		frameTimeStr, 
-		glm::ivec2(20, Core::screenHeight - 15), 
-		FontFace::Consola, 28, 
-		glm::vec3(0.0f, 1.0f, 0.0f)
-	);
+	UIText* fpsLabel = dynamic_cast<UIText*>(ui->findChild("main")->findChild("fps"));
+	fpsLabel->text = std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
 
 	ui->render();
 }

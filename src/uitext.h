@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glm/ext.hpp>
 
 #include "uiobject.h"

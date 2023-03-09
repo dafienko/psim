@@ -87,6 +87,8 @@ void UIObject::render(glm::vec2 parentPos, glm::vec2 parentSize) {
 }
 
 void UIObject::render() {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 	uiShader->bind();
 
 	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::screenWidth, (float)Core::screenHeight, 0.0f);

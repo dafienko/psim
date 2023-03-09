@@ -9,13 +9,13 @@
 			"backgroundTransparency": 0.2,
 			"backgroundColor": [0.05, 0.05, 0.05],
 			
-			"borderThickness": 1,
-			"borderColor": [1.0, 1.0, 1.0],
+			"borderThickness": 0,
+			"borderColor": [0.0, 1.0, 0.0],
 			
 			"anchorPoint": [0.5, 0.5],
 			"size": {
-				"scale": [0.0, 0.0],
-				"offset": [800.0, 1100.0]
+				"scale": [1.0, 1.0],
+				"offset": [0.0, 0.0]
 			},
 			"position": {
 				"scale": [0.5, 0.5],
@@ -30,9 +30,10 @@
 					"text": "Simulation Configuration",
 					"textSize": 35,
 					"textAnchorPoint": [0.5, 0.5],
+					"textColor": [0.0, 1.0, 0.0],
 					
-					"backgroundTransparency": 1,
-					"backgroundColor": [0.0, 0.0, 1.0],
+					"backgroundTransparency": 1.0,
+					"backgroundColor": [1.0, 0.0, 0.0],
 					
 					"anchorPoint": [0.5, 0.0],
 					"size": {
@@ -42,6 +43,28 @@
 					"position": {
 						"scale": [0.5, 0.0],
 						"offset": [0.0, 20.0]
+					}
+				},
+
+				{
+					"type": "UIText",
+					"name": "fps",
+					
+					"text": "fps: ",
+					"textSize": 24,
+					"textAnchorPoint": [0.0, 0.5],
+					"textColor": [0.0, 1.0, 0.0],
+					
+					"backgroundTransparency": 1,
+					
+					"anchorPoint": [0.0, 1.0],
+					"size": {
+						"scale": [1.0, 0.0],
+						"offset": [0.0, 30.0]
+					},
+					"position": {
+						"scale": [0.0, 1.0],
+						"offset": [20.0, -20.0]
 					}
 				}
 			]

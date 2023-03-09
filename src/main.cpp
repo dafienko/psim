@@ -12,9 +12,7 @@ int main(int argc, char** argv) {
 	Core::init(W, H);
 
 	Window::setKeyCallback([&] (int key, int action, int mods) {
-		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
-			Core::update(1.0 / 120.0);
-		}
+		Core::keyEvent->fire(key, action, mods);
 	});
 
 	Window::loop([&] (int width, int height, float dt) {

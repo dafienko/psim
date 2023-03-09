@@ -1,7 +1,13 @@
 #pragma once
 
+#include <memory>
+
+#include "event.h"
+
 namespace Core {	
 	extern unsigned int screenWidth, screenHeight;
+
+	extern std::unique_ptr<Event<int, int, int>> keyEvent;
 
 	void init(unsigned int width, unsigned int height);
 	void update(float dt);

@@ -8,6 +8,7 @@
 		}
 	],
 	"files.associations": {
+		"*.vsh": "glsl",
 		"iostream": "cpp",
 		"iosfwd": "cpp",
 		"fstream": "cpp",
@@ -78,6 +79,12 @@
 		"map": "cpp",
 		"__tree": "cpp",
 		"bit": "cpp",
-		"charconv": "cpp"
+		"charconv": "cpp",
+		"any": "cpp",
+		"forward_list": "cpp",
+		"numeric": "cpp",
+		"ranges": "cpp",
+		"span": "cpp",
+		"valarray": "cpp"
 	}
 }
