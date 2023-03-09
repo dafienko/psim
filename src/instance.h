@@ -20,7 +20,7 @@ class Instance {
 		static Instance* fromJSON(const std::string path);
 	private:
 		std::vector<Instance*> children;
-		Instance* parent;
+		Instance* parent = nullptr;
 
 		Event<Instance&, Instance&> childAdded;
 		Event<Instance&, Instance&> childRemoved;

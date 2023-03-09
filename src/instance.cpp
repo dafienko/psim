@@ -39,7 +39,7 @@ Instance* createInstanceFromJSON(json& data) {
 	return instance;
 }
 
-Instance* Instance::fromJSON(const std::string path) {
+Instance* Instance::fromJSON(const std::string path) { // 
 	std::ifstream file(path, std::ifstream::in);
 	if (file) {
 		json data = json::parse(file);
@@ -48,7 +48,7 @@ Instance* Instance::fromJSON(const std::string path) {
 	} else {
 		std::cerr << "invalid file: " << path << std::endl;
 		exit(-1);
-	}
+	} //
 }
 
 Instance::Instance(InstanceClass type, std::string name) : 

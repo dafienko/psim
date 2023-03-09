@@ -4,8 +4,8 @@
 #include "core.h"
 
 #define W 800
-#define H 600
-#define WINDOW_TITLE "psim"
+#define H 600 
+#define WINDOW_TITLE "psim" 
 
 int main(int argc, char** argv) {
 	Window::init(W, H, WINDOW_TITLE);

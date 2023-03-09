@@ -41,7 +41,7 @@ void Window::init(int width, int height, const char* title) {
  
 	glfwMakeContextCurrent(window);
 	glewInit();
-	glfwSwapInterval(0);
+	glfwSwapInterval(1);
 }
 
 void Window::setKeyCallback(std::function<void(int, int, int)> callback) {
