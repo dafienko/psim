@@ -29,18 +29,18 @@ class UIObject: public Instance, Renderable {
 		void render(glm::vec2 parentPos, glm::vec2 parentSize);
 
 	public: 
-		bool visible;
+		bool visible = true;
 
-		float backgroundTransparency;
-		glm::vec3 backgroundColor;
+		float backgroundTransparency = 0;
+		glm::vec3 backgroundColor = glm::vec3(1);
 		
-		int borderThickness;
-		float borderTransparency;
-		glm::vec3 borderColor;
+		int borderThickness = 0;
+		float borderTransparency = 0;
+		glm::vec3 borderColor = glm::vec3(1);
 		
-		glm::vec2 anchorPoint;
-		UICoord position;
-		UICoord size;
+		glm::vec2 anchorPoint = glm::vec2(0);
+		UICoord position = {glm::vec2(0), glm::vec2(0)};
+		UICoord size = {glm::vec2(0), glm::vec2(0)};
 		
 		void render() override;
 

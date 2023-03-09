@@ -30,7 +30,7 @@ class Instance {
 		
 	public:
 		const InstanceClass type;
-		std::string name;
+		std::string name = "";
 
 		void onChildAdded(std::function<void(Instance&, Instance&)> callback);
 		void onChildRemoved(std::function<void(Instance&, Instance&)> callback);

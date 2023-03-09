@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
+#include <iostream>
 
 #include "uiobject.h"
 #include "shader.h"
@@ -17,9 +18,7 @@ void UIObject::destroy() {
 }
 
 UIObject::UIObject(InstanceClass type, const std::string name) : 
-	Instance(type, name),
-	visible(true),
-	backgroundColor(glm::vec3(1, 1, 1))
+	Instance(type, name)
 {}
 
 UIObject::UIObject(InstanceClass type, const std::string name, json& data) : 

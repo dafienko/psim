@@ -10,13 +10,13 @@ class UIText: public UIObject {
 		UIText();
 		UIText(json& data);
 
-		std::string text;
-		glm::vec3 textColor;
-		float textTransparency;
-		FontFace font;
-		unsigned int textSize;
-		glm::vec2 textAnchorPoint;
-		glm::vec2 textPadding;
+		std::string text = "";
+		glm::vec3 textColor = glm::vec3(1);
+		float textTransparency = 0;
+		FontFace font = FontFace::Consola;
+		unsigned int textSize = 20;
+		glm::vec2 textAnchorPoint = glm::vec2(.5);
+		glm::vec2 textPadding = glm::vec2(0);
 
 		void render() override;
 };

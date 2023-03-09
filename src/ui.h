@@ -18,7 +18,7 @@ class UI: public Renderable, public Instance {
 		static void renderUIObjectChildren(Instance* parent, glm::vec2 parentPos, glm::vec2 parentSize);
 
 	public: 
-		bool rendered;
+		bool rendered = true;
 
 		UI();
 		UI(json& data);

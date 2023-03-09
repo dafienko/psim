@@ -22,8 +22,7 @@ void UI::renderUIObjectChildren(Instance* parent, glm::vec2 parentPos, glm::vec2
 }
 
 UI::UI() : 
-	Instance(InstanceClass::IC_UI, "UI"),
-	rendered(true)
+	Instance(InstanceClass::IC_UI, "UI")
 {}
 
 UI::UI(json& data) :

@@ -3,8 +3,8 @@
 #include "window.h"
 #include "core.h"
 
-#define W 800
-#define H 600 
+#define W 1200
+#define H 700 
 #define WINDOW_TITLE "psim" 
 
 int main(int argc, char** argv) {
@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
 		Core::resize(width, height);
 		Core::update(dt);
 		Core::render();
+		CHECK_GL_ERRORS;
 	});
  
 	Core::destroy();
