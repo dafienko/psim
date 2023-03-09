@@ -29,7 +29,7 @@ $(BIN): $(OBJ_FILES)
 	$(CC) $(CCFLAGS) $(OBJ_FILES) -o $@ $(LDFLAGS)
 
 $(BUILD)/%.o: $(SRC)/%.cpp $(DEP)/%.d | $(DEP)
-	$(CC) $(DEPFLAGS) $(CCFLAGS) -c $< -o $@
+	$(CC) $(DEPFLAGS) $(CCFLAGS) $(CINCLUDE) -c $< -o $@
 
 $(BUILD): 
 	mkdir "$@"
