@@ -5,11 +5,12 @@
 #include <string>
 #include <iostream>
 
+#include "simulation.h"
 #include "core.h"
 #include "quad.h"
 #include "text.h"
 #include "rendertarget.h"
-#include "fluidTexture.h"
+#include "fluidsimulator.h"
 #include "ui.h"
 #include "uiframe.h"
 #include "uitext.h"
@@ -18,7 +19,7 @@ unsigned int Core::screenWidth, Core::screenHeight;
 
 std::unique_ptr<Event<int, int, int>> Core::keyEvent;
 
-std::unique_ptr<FluidTexture> fluid;
+std::unique_ptr<Simulation> simulation;
 std::unique_ptr<UI> ui;
 
 void Core::init(unsigned int width, unsigned int height) {
@@ -32,9 +33,7 @@ void Core::init(unsigned int width, unsigned int height) {
 	Text::init();
 	UI::init();
 
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
-	fluid = std::make_unique<FluidTexture>(glm::ivec2(width / 5, height / 5));
+	simulation = std::make_unique<Simulation>(glm::ivec2(width / 5, height / 5));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	ui->rendered = false;
@@ -64,7 +63,7 @@ static float elapsedTime, floatFPS, averageFrameTime;
 static int elapsedFrames;
 
 void Core::update(float dt) {
-	fluid->update(dt);
+	simulation->update(dt);
 
 	elapsedTime += dt;
 	elapsedFrames += 1;
@@ -81,7 +80,7 @@ void Core::render() {
 	RenderTarget::bindDefault();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	fluid->render();
+	simulation->render();
 
 	UIText* fpsLabel = dynamic_cast<UIText*>(ui->findChild("main")->findChild("fps"));
 	fpsLabel->text = std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
@@ -90,7 +89,7 @@ void Core::render() {
 }
 
 void Core::destroy() {
-	fluid.release();
+	simulation.release();
 	ui.release();
 
 	UI::destroy();

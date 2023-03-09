@@ -5,7 +5,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug (Mac)",
-			"preLaunchTask": "build",
+			"preLaunchTask": "all",
 			"program": "${workspaceFolder}/main",
 			"args": [],
 			"cwd": "${workspaceFolder}"
@@ -17,7 +17,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/main", 
             "args": [],
-			"preLaunchTask": "build",
+			"preLaunchTask": "all",
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,

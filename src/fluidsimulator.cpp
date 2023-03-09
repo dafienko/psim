@@ -1,8 +1,8 @@
-#include "fluidTexture.h"
+#include "fluidsimulator.h"
 #include "core.h"
 #include <iostream>
 
-FluidTexture::FluidTexture(glm::ivec2 simulationSize) : 
+FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) : 
 	simulationSize(simulationSize)
 {
 	fluidShader = std::make_unique<ShaderProgram>("shaders/grid.vsh", "shaders/fluid.fs");
@@ -41,7 +41,7 @@ FluidTexture::FluidTexture(glm::ivec2 simulationSize) :
 	RenderTarget::renderQuad();
 }
 
-void FluidTexture::updateObstacles(float dt) {
+void FluidSimulator::updateObstacles(float dt) {
 	obstaclesShader->bind();
 	
 	obstaclesTargets->bindAsTexture("oldObstacles", obstaclesShader->getProgram());
@@ -65,7 +65,7 @@ void FluidTexture::updateObstacles(float dt) {
 	RenderTarget::renderQuad();
 }
 
-void FluidTexture::updatePressure(float dt) {
+void FluidSimulator::updatePressure(float dt) {
 	fluidShader->bind();
 	
 	physicsTargets->bindAsTexture("velTexture", fluidShader->getProgram());
@@ -86,7 +86,7 @@ void FluidTexture::updatePressure(float dt) {
 	RenderTarget::renderQuad();
 }
 
-void FluidTexture::solve(float dt) {
+void FluidSimulator::solve(float dt) {
 	gridSolveShader->bind();
 
 	physicsTargets->bindAsTexture("velTexture", gridSolveShader->getProgram());
@@ -108,7 +108,7 @@ void FluidTexture::solve(float dt) {
 	RenderTarget::renderQuad();
 }
 
-void FluidTexture::advect(float dt) {
+void FluidSimulator::advect(float dt) {
 	// advect velocity
 	advectVelocityShader->bind();
 
@@ -151,7 +151,7 @@ void FluidTexture::advect(float dt) {
 	RenderTarget::renderQuad();
 }
 
-void FluidTexture::update(float dt) {
+void FluidSimulator::update(float dt) {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
@@ -165,7 +165,7 @@ void FluidTexture::update(float dt) {
 	
 }
 
-void FluidTexture::render() {
+void FluidSimulator::render() {
 	glDisable(GL_DEPTH_TEST);
 
 	visualShader->bind();
@@ -186,8 +186,4 @@ void FluidTexture::render() {
 	);
 
 	RenderTarget::renderQuad();
-}
-
-FluidTexture::~FluidTexture() {
-	
 }

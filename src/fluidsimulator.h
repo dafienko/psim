@@ -9,7 +9,7 @@
 #include "shader.h"
 #include "renderable.h"
 
-class FluidTexture: public Renderable {
+class FluidSimulator: public Renderable {
 	private: 
 		std::unique_ptr<ShaderProgram> fluidShader;
 		std::unique_ptr<ShaderProgram> gridSolveShader;
@@ -32,8 +32,7 @@ class FluidTexture: public Renderable {
 	public:
 		const glm::ivec2 simulationSize;
 
-		FluidTexture(glm::ivec2 simulationSize);
-		~FluidTexture();
+		FluidSimulator(glm::ivec2 simulationSize);
 
 		void update(float dt);
 		void render() override;
