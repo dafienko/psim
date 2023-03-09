@@ -16,5 +16,5 @@ void main() {
 		result = sampleDensity(advectFrom);
 	}
 
-	result = mix(result, vec3(0), 1 - pow(.94, dt));
+	result = mix(result, vec3(0), 1 - pow(.99, dt));
 }
