@@ -3,61 +3,7 @@
 
 #include "core.h"
 #include "rendertarget.h"
-
-static constexpr glm::vec2 QUAD_VERTICES[4] = {
-	glm::vec2(-1.0f, 1.0f), // top left
-	glm::vec2(-1.0f, -1.0f), // bottom left
-	glm::vec2(1.0f, -1.0f), // bottom right
-	glm::vec2(1.0f, 1.0f), // top right
-};
-
-static constexpr glm::vec2 QUAD_TEX_COORDS[4] = {
-	glm::vec2(0.0f, 1.0f), 
-	glm::vec2(0.0f, 0.0f),
-	glm::vec2(1.0f, 0.0f),
-	glm::vec2(1.0f, 1.0f),
-};
-
-static constexpr unsigned int QUAD_INDICES[] = {
-	0, 1, 2,
-	2, 3, 0
-};
-
-GLuint RenderTarget::quadVAO, RenderTarget::posVBO, RenderTarget::tposVBO, RenderTarget::iVBO;
-std::unique_ptr<ShaderProgram> RenderTarget::quadShaderProgram;
-
-void RenderTarget::init() {
-	quadShaderProgram = std::make_unique<ShaderProgram>("shaders/quad.vsh", "shaders/quad.fs");
-	quadShaderProgram->bind();
-
-	glGenVertexArrays(1, &quadVAO);
-	glBindVertexArray(quadVAO);
-
-	glGenBuffers(1, &posVBO); 
-	glBindBuffer(GL_ARRAY_BUFFER, posVBO); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(QUAD_VERTICES), &QUAD_VERTICES[0].x, GL_STATIC_DRAW); 
-	glEnableVertexAttribArray(0); 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(QUAD_VERTICES[0]), (void*) 0); 
-
-	glGenBuffers(1, &tposVBO); 
-	glBindBuffer(GL_ARRAY_BUFFER, tposVBO); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(QUAD_TEX_COORDS), &QUAD_TEX_COORDS[0].x, GL_STATIC_DRAW); 
-	glEnableVertexAttribArray(1); 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(QUAD_TEX_COORDS[0]), (void*) 0); 
-
-	glGenBuffers(1, &iVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iVBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(QUAD_INDICES), QUAD_INDICES, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void RenderTarget::renderQuad() {
-	glBindVertexArray(quadVAO); 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iVBO);
-	glDrawElements(GL_TRIANGLES, sizeof(QUAD_INDICES) / sizeof(QUAD_INDICES[0]), GL_UNSIGNED_INT, (void*)0); 
-}
+#include "quad.h"
 
 void RenderTarget::clear(int buffersToClear) {
 	glClear(buffersToClear); 
@@ -66,12 +12,6 @@ void RenderTarget::clear(int buffersToClear) {
 void RenderTarget::bindDefault() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Core::screenWidth, Core::screenHeight);
-}
-
-void RenderTarget::destroy() {
-	quadShaderProgram.release();
-	glDeleteVertexArrays(1, &quadVAO);
-	glDeleteBuffers(1, &posVBO);
 }
 
 RenderTarget::RenderTarget(int width, int height, GLint internalFormat, GLint texFilterType) : width(width), height(height) {
@@ -121,12 +61,12 @@ void RenderTarget::bindAsTexture(const char* textureName, GLuint shaderProgram) 
 }
 
 void RenderTarget::renderToQuad() {
-	quadShaderProgram->bind(); 
+	Quad::quadShaderProgram->bind(); 
 	glDisable(GL_DEPTH_TEST);
 
-	bindAsTexture("screenTexture", quadShaderProgram->getProgram());
+	bindAsTexture("screenTexture", Quad::quadShaderProgram->getProgram());
 	
-	RenderTarget::renderQuad();
+	Quad::render();
 }
 
 RenderTarget::~RenderTarget() {

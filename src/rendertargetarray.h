@@ -19,4 +19,7 @@ class RenderTargetArray {
 		void bind();
 		void bindAsTexture(const char* textureName, GLuint program);
 		void bindAsTexture(const char* textureName, GLuint program, GLint location);
+		
+		RenderTarget& getLast();
+		RenderTarget& getCurrent();
 };

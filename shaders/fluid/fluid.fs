@@ -1,6 +1,6 @@
 #version 410
 
-#include "shaders/fluidUtil.glsl"
+#include "shaders/fluid/fluidUtil.glsl"
 
 out vec4 result;
 

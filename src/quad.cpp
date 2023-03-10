@@ -4,7 +4,11 @@
 
 GLuint quadVAO, positionsVBO, relPositionsVBO;
 
+std::unique_ptr<ShaderProgram> Quad::quadShaderProgram;
+
 void Quad::init() {
+	quadShaderProgram = std::make_unique<ShaderProgram>("shaders/quad.vsh", "shaders/quad.fs");
+
 	const float relPositions[4][2] = {
 		{0, 0},
 		{1, 0},
@@ -50,7 +54,16 @@ void Quad::render(glm::vec2 tl, glm::vec2 br) {
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+void Quad::render() {
+	Quad::render(
+		glm::vec2(-1, -1),
+		glm::vec2(1, 1)
+	);
+}
+
 void Quad::destroy() {
+	quadShaderProgram.release();
+	
 	glDeleteVertexArrays(1, &quadVAO);
 	glDeleteBuffers(1, &positionsVBO);
 }

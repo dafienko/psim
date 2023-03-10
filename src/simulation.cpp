@@ -7,11 +7,11 @@ Simulation::Simulation(glm::ivec2 simulationSize) :
 {}
 
 void Simulation::update(float dt) {
-	//fluidSimulator.update(dt);
+	// fluidSimulator.update(dt);
 	particleSimulator.update(dt);
 }
 
 void Simulation::render() {
-	//fluidSimulator.render();
+	// fluidSimulator.render();
 	particleSimulator.render();
 }

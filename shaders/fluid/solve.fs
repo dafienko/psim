@@ -2,7 +2,7 @@
 
 out vec4 result;
 
-#include "shaders/fluidUtil.glsl"
+#include "shaders/fluid/fluidUtil.glsl"
 
 float dt = .49;
 

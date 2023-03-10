@@ -34,3 +34,11 @@ void RenderTargetArray::bind() {
 
 	targets.at(currentTargetIndex)->bind();
 }
+
+RenderTarget& RenderTargetArray::getCurrent() {
+	return *targets.at(currentTargetIndex).get();
+}
+
+RenderTarget& RenderTargetArray::getLast() {
+	return *targets.at(lastTargetIndex).get();
+}

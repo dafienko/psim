@@ -17,9 +17,8 @@ int main(int argc, char** argv) {
 
 	Window::loop([&] (int width, int height, float dt) {
 		Core::resize(width, height);
-		Core::update(dt);
+		// Core::update(dt);
 		Core::render();
-		CHECK_GL_ERRORS;
 	});
  
 	Core::destroy();

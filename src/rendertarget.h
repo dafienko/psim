@@ -6,13 +6,7 @@
 #include "shader.h"
 
 class RenderTarget {
-	private:
-		static GLuint quadVAO, posVBO, tposVBO, iVBO;
-		static std::unique_ptr<ShaderProgram> quadShaderProgram;
 	public: 
-		static void init();
-		static void renderQuad();
-		static void destroy();
 		static void bindDefault();
 
 	private:

@@ -28,12 +28,11 @@ void Core::init(unsigned int width, unsigned int height) {
 
 	keyEvent = std::make_unique<Event<int, int, int>>();
 
-	RenderTarget::init();
 	Quad::init();
 	Text::init();
 	UI::init();
 
-	simulation = std::make_unique<Simulation>(glm::ivec2(width / 5, height / 5));
+	simulation = std::make_unique<Simulation>(glm::ivec2(5, 10));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	ui->rendered = false;
@@ -95,15 +94,14 @@ void Core::destroy() {
 	UI::destroy();
 	Text::destroy();
 	Quad::destroy();
-	RenderTarget::destroy();
 }
 
 void checkGLErrors(const std::string &file, int line) {
 	GLenum err;
 	while((err = glGetError()) != GL_NO_ERROR)
 	{
-		std::cerr << file << " at line "  << line << " ";
-		std::cerr << err << std::endl;
+		std::cerr << file << " at line "  << line << " " << std::endl;
+		std::cerr << "error: " << err << std::endl;
 		exit(EXIT_FAILURE);
 	}
 }

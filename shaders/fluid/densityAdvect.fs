@@ -2,7 +2,7 @@
 
 out vec3 result;
 
-#include "shaders/advectUtil.glsl"
+#include "shaders/fluid/advectUtil.glsl"
 
 void main() {
 	vec2 fPos = texCoords * gridSize;

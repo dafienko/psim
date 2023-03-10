@@ -11,19 +11,19 @@
 
 class FluidSimulator: public Renderable {
 	private: 
-		std::unique_ptr<ShaderProgram> fluidShader;
-		std::unique_ptr<ShaderProgram> gridSolveShader;
-		std::unique_ptr<ShaderProgram> advectVelocityShader;
-		std::unique_ptr<ShaderProgram> advectDensityShader;
-		std::unique_ptr<ShaderProgram> obstaclesShader;
-		std::unique_ptr<ShaderProgram> visualShader;
+		ShaderProgram fluidShader;
+		ShaderProgram gridSolveShader;
+		ShaderProgram advectVelocityShader;
+		ShaderProgram advectDensityShader;
+		ShaderProgram obstaclesShader;
+		ShaderProgram visualShader;
 
-		std::unique_ptr<RenderTargetArray> physicsTargets;
-		std::unique_ptr<RenderTargetArray> obstaclesTargets;
-		std::unique_ptr<RenderTargetArray> densityTargets;
+		RenderTargetArray physicsTargets;
+		RenderTargetArray obstaclesTargets;
+		RenderTargetArray densityTargets;
 
-		std::unique_ptr<RenderTarget> pressureTarget;
-		std::unique_ptr<RenderTarget> visualTarget;
+		RenderTarget pressureTarget;
+		RenderTarget visualTarget;
 		
 		void updateObstacles(float dt);
 		void updatePressure(float dt);

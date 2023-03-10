@@ -1,6 +1,6 @@
 float dt = .025;
 
-#include "shaders/fluidUtil.glsl"
+#include "shaders/fluid/fluidUtil.glsl"
 
 float bilinear(float A, float B, float C, float D, vec2 alpha) {
 	float u = mix(A, B, alpha.x);
