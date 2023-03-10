@@ -10,14 +10,12 @@
 class ParticleSimulator {
 	private: 
 		struct Particle {
-			glm::ivec2 position;
-			unsigned char type;
-			
+			unsigned int type;
 		};
 
 	private:
 		std::unique_ptr<Particle> grid;
-		std::unique_ptr<unsigned char> byteBuffer;
+		std::unique_ptr<unsigned int> byteBuffer;
 
 		ShaderProgram particlesShader;
 		RenderTargetArray particlesTargets;

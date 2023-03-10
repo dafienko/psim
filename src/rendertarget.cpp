@@ -11,7 +11,7 @@ void RenderTarget::clear(int buffersToClear) {
 
 void RenderTarget::bindDefault() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, Core::screenWidth, Core::screenHeight);
+	glViewport(0, 0, Core::getWindowSize().x, Core::getWindowSize().y);
 }
 
 RenderTarget::RenderTarget(int width, int height, GLint internalFormat, GLint texFilterType) : width(width), height(height) {

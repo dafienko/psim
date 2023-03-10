@@ -4,6 +4,8 @@
 
 GLFWwindow* window;
 std::function<void(int, int, int)> keyCallback = [] (int a, int b, int c) {};
+std::function<void(double, double)> mousePosCallback = [] (double a, double b) {};
+std::function<void(int, int, int)> mouseButtonCallback = [] (int a, int b, int c) {};
 
 static void error_callback(int error, const char* description) {
 	std::cerr << "Error: " << description << std::endl;
@@ -16,6 +18,16 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	}
 
 	keyCallback(key, action, mods);
+}
+
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	mousePosCallback(xpos, ypos);
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	mouseButtonCallback(button, action, mods);
 }
 
 void Window::init(int width, int height, const char* title) {
@@ -38,6 +50,8 @@ void Window::init(int width, int height, const char* title) {
 	}
  
 	glfwSetKeyCallback(window, key_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
  
 	glfwMakeContextCurrent(window);
 	glewInit();
@@ -46,6 +60,20 @@ void Window::init(int width, int height, const char* title) {
 
 void Window::setKeyCallback(std::function<void(int, int, int)> callback) {
 	keyCallback = callback;
+}
+
+void Window::setMousePosCallback(std::function<void(double, double)> callback) {
+	mousePosCallback = callback;
+}
+
+void Window::setMouseButtonCallback(std::function<void(int, int, int)> callback) {
+	mouseButtonCallback = callback;
+}
+
+glm::vec2 Window::getMousePosition() {
+	double x, y;
+	glfwGetCursorPos(window, &x, &y);
+	return glm::vec2((float)x, (float)y);
 }
 
 void Window::loop(std::function<void(int, int, float)> loopCallback) {

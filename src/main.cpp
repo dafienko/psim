@@ -15,9 +15,17 @@ int main(int argc, char** argv) {
 		Core::keyEvent->fire(key, action, mods);
 	});
 
+	Window::setMousePosCallback([&] (double x, double y) {
+		Core::mouseMoveEvent->fire(x, y);
+	});
+
+	Window::setMouseButtonCallback([&] (int key, int action, int mods) {
+		Core::mouseButtonEvent->fire(key, action, mods);
+	});
+
 	Window::loop([&] (int width, int height, float dt) {
 		Core::resize(width, height);
-		// Core::update(dt);
+		Core::update(dt);
 		Core::render();
 	});
  

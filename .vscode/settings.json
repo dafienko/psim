@@ -85,6 +85,14 @@
 		"numeric": "cpp",
 		"ranges": "cpp",
 		"span": "cpp",
-		"valarray": "cpp"
+		"valarray": "cpp",
+		"*.tcc": "cpp",
+		"codecvt": "cpp",
+		"functional": "cpp",
+		"iterator": "cpp",
+		"random": "cpp",
+		"utility": "cpp",
+		"numbers": "cpp",
+		"cinttypes": "cpp"
 	}
 }

@@ -50,7 +50,7 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 	glBindTexture(GL_TEXTURE_2D, font.getGlyphTexture());
 
-	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::screenWidth, (float)Core::screenHeight, 0.0f);
+	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::getWindowSize().x, (float)Core::getWindowSize().y, 0.0f);
 	GLint projLoc = glGetUniformLocation(glyphShader->getProgram(), "projection");
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, &ortho[0][0]);
 

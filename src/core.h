@@ -1,19 +1,22 @@
 #pragma once
 
+#include <glm/ext.hpp>
 #include <memory>
 #include <string>
 
 #include "event.h"
 
 namespace Core {	
-	extern unsigned int screenWidth, screenHeight;
-
 	extern std::unique_ptr<Event<int, int, int>> keyEvent;
+	extern std::unique_ptr<Event<double, double>> mouseMoveEvent;
+	extern std::unique_ptr<Event<int, int, int>> mouseButtonEvent;
 
 	void init(unsigned int width, unsigned int height);
 	void update(float dt);
 	void render();
-	void resize(unsigned int widht, unsigned int height);
+	void resize(unsigned int width, unsigned int height);
+	glm::ivec2 getWindowSize();
+	glm::vec2 getMousePosition();
 	void destroy();
 };
 

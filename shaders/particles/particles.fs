@@ -15,8 +15,7 @@ const uint Particle2 = 0x02u;
 const uint Particle3 = 0x03u;
 
 void main() {
-	ivec2 pos = ivec2(texCoords * gridSize);
-	uint v = texelFetch(particlesTexture, pos, 0).r;
+	uint v = texture(particlesTexture, texCoords).r;
 
 	switch (v) {
 	case Particle1:

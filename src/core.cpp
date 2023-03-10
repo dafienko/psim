@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 
+#include "window.h"
 #include "simulation.h"
 #include "core.h"
 #include "quad.h"
@@ -15,24 +16,27 @@
 #include "uiframe.h"
 #include "uitext.h"
 
-unsigned int Core::screenWidth, Core::screenHeight;
+glm::ivec2 windowSize;
 
 std::unique_ptr<Event<int, int, int>> Core::keyEvent;
+std::unique_ptr<Event<double, double>> Core::mouseMoveEvent;
+std::unique_ptr<Event<int, int, int>> Core::mouseButtonEvent;
 
 std::unique_ptr<Simulation> simulation;
 std::unique_ptr<UI> ui;
 
 void Core::init(unsigned int width, unsigned int height) {
-	screenWidth = width;
-	screenHeight = height;
+	windowSize = glm::ivec2((int)width, (int)height);
 
 	keyEvent = std::make_unique<Event<int, int, int>>();
+	mouseMoveEvent = std::make_unique<Event<double, double>>();
+	mouseButtonEvent = std::make_unique<Event<int, int, int>>();
 
 	Quad::init();
 	Text::init();
 	UI::init();
 
-	simulation = std::make_unique<Simulation>(glm::ivec2(5, 10));
+	simulation = std::make_unique<Simulation>(glm::ivec2(width / 5, height / 5));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	ui->rendered = false;
@@ -41,6 +45,7 @@ void Core::init(unsigned int width, unsigned int height) {
 		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
 			Core::update(1.0 / 120.0);
 		} 
+		
 		if (action == GLFW_PRESS) {
 			if (key == GLFW_KEY_M) {
 				ui->rendered = !ui->rendered;
@@ -49,13 +54,16 @@ void Core::init(unsigned int width, unsigned int height) {
 	});
 }
 
-void Core::resize(unsigned int width, unsigned int height) {
-	if (width == screenWidth && height == screenHeight) {
-		return;
-	}
+glm::vec2 Core::getMousePosition() {
+	return Window::getMousePosition();
+}
 
-	screenWidth = width;
-	screenHeight = height;
+glm::ivec2 Core::getWindowSize() {
+	return windowSize;
+}
+
+void Core::resize(unsigned int width, unsigned int height) {
+	windowSize = glm::ivec2((int)width, (int)height);
 }
 
 static float elapsedTime, floatFPS, averageFrameTime;
@@ -88,6 +96,9 @@ void Core::render() {
 }
 
 void Core::destroy() {
+	keyEvent.release();
+	mouseMoveEvent.release();
+
 	simulation.release();
 	ui.release();
 

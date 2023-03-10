@@ -34,6 +34,6 @@ void UI::render() {
 		return;
 	}
 
-	glm::vec2 screenSize((float)Core::screenWidth, (float)Core::screenHeight);
-	UI::renderUIObjectChildren(dynamic_cast<Instance*>(this), glm::vec2(0.0f, 0.0f), screenSize);
+	glm::vec2 windowSize((float)Core::getWindowSize().x, (float)Core::getWindowSize().y);
+	UI::renderUIObjectChildren(dynamic_cast<Instance*>(this), glm::vec2(0.0f, 0.0f), windowSize);
 }
