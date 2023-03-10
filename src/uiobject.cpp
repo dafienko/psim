@@ -102,7 +102,7 @@ void UIObject::render() {
 
 	glm::vec4 borderColorWithAlpha = glm::vec4(
 		borderColor.x, borderColor.y, borderColor.z, 
-		1 - borderTransparency
+		borderThickness > 0 ? 1.0f - borderTransparency : 0.0f
 	);
 	glUniform4fv(glGetUniformLocation(uiShader->getProgram(), "borderColor"), 1, &borderColorWithAlpha[0]);
 

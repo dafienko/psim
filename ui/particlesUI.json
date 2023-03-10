@@ -5,7 +5,7 @@
 		{
 			"type": "UIText",
 			"name": "particleType",
-			
+
 			"text": "Particle Type",
 			"textSize": 35,
 			"textAnchorPoint": [0.5, 0.5],

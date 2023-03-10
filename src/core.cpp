@@ -28,8 +28,8 @@ std::unique_ptr<UI> ui;
 bool mouse1Down = false;
 bool mouse2Down = false;
 
-void Core::init(unsigned int width, unsigned int height) {
-	windowSize = glm::ivec2((int)width, (int)height);
+void Core::init(int width, int height) {
+	windowSize = glm::ivec2(width, height);
 
 	keyEvent = std::make_unique<Event<int, int, int>>();
 	mouseMoveEvent = std::make_unique<Event<double, double>>();
@@ -95,8 +95,8 @@ bool Core::isMouse2Down() {
 	return mouse2Down;
 }
 
-void Core::resize(unsigned int width, unsigned int height) {
-	windowSize = glm::ivec2((int)width, (int)height);
+void Core::resize(int width, int height) {
+	windowSize = glm::ivec2(width, height);
 }
 
 static float elapsedTime, floatFPS, averageFrameTime;

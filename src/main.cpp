@@ -3,13 +3,13 @@
 #include "window.h"
 #include "core.h"
 
-#define W 1200
-#define H 700 
+#define W 800
+#define H 400 
 #define WINDOW_TITLE "psim" 
 
 int main(int argc, char** argv) {
 	Window::init(W, H, WINDOW_TITLE);
-	Core::init(W, H);
+	Core::init(Window::getWindowFramebufferSize().x, Window::getWindowFramebufferSize().y);
 
 	Window::setKeyCallback([&] (int key, int action, int mods) {
 		Core::keyEvent->fire(key, action, mods);
@@ -23,8 +23,12 @@ int main(int argc, char** argv) {
 		Core::mouseButtonEvent->fire(key, action, mods);
 	});
 
-	Window::loop([&] (int width, int height, float dt) {
-		Core::resize(width, height);
+	Window::setWindowResizeCallback([&] (int width, int height) {
+		Core::resize(Window::getWindowFramebufferSize().x, Window::getWindowFramebufferSize().y);
+		Core::render();
+	});
+
+	Window::loop([&] (float dt) {
 		Core::update(dt);
 		Core::render();
 	});
@@ -32,5 +36,5 @@ int main(int argc, char** argv) {
 	Core::destroy();
 	Window::destroy();
 
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS); 
 }
