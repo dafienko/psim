@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "fluidsimulator.h"
 #include "core.h"
 #include "quad.h"
@@ -9,61 +12,36 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 	gridSolveShader("shaders/grid.vsh", "shaders/fluid/solve.fs"),
 	advectVelocityShader("shaders/grid.vsh", "shaders/fluid/velocityAdvect.fs"),
 	advectDensityShader("shaders/grid.vsh", "shaders/fluid/densityAdvect.fs"),
-	obstaclesShader("shaders/grid.vsh", "shaders/fluid/obstacles.fs"),
 	visualShader("shaders/grid.vsh", "shaders/fluid/fluidVisual.fs"),
 	
 	physicsTargets(2, simulationSize.x + 1, simulationSize.y + 1, GL_RGBA32F, GL_NEAREST),
 	obstaclesTargets(2, simulationSize.x, simulationSize.y, GL_RED, GL_NEAREST),
-	densityTargets(2, simulationSize.x, simulationSize.y, GL_RGB, GL_NEAREST),
+	densityTargets(2, simulationSize.x, simulationSize.y, GL_RGB32F, GL_NEAREST),
 	
 	pressureTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
 	visualTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
 	
 	simulationSize(simulationSize)
 {
-	obstaclesShader.bind();
-	obstaclesTargets.bind();
-	
-	glUniform2f(
-		glGetUniformLocation(obstaclesShader.getProgram(), "gridSize"), 
-		simulationSize.x, simulationSize.y
-	);
-
-	glUniform2f(
-		glGetUniformLocation(obstaclesShader.getProgram(), "simulationSize"), 
-		simulationSize.x, simulationSize.y
-	);
-
-	glUniform1i(
-		glGetUniformLocation(obstaclesShader.getProgram(), "init"),
-		1
-	);
-
-	Quad::render();
+	Core::keyEvent->bind([&] (int key, int action, int mods) {
+		if (action == GLFW_PRESS) {
+			if (key == GLFW_KEY_UP) {
+				fluidRenderMode += 1;
+				fluidRenderMode %= 3;
+			} else if (key == GLFW_KEY_DOWN) {
+				fluidRenderMode -= 1;
+				fluidRenderMode %= 3;
+			}
+		}
+	});
 }
 
-void FluidSimulator::updateObstacles(float dt) {
-	obstaclesShader.bind();
-	
-	obstaclesTargets.bindAsTexture("oldObstacles", obstaclesShader.getProgram());
+void FluidSimulator::bindObstaclesTexture() {
 	obstaclesTargets.bind();
-	
-	glUniform2f(
-		glGetUniformLocation(obstaclesShader.getProgram(), "gridSize"), 
-		simulationSize.x, simulationSize.y
-	);
-
-	glUniform2f(
-		glGetUniformLocation(obstaclesShader.getProgram(), "simulationSize"), 
-		simulationSize.x, simulationSize.y
-	);
-
-	glUniform1i(
-		glGetUniformLocation(obstaclesShader.getProgram(), "init"),
-		0
-	);
-
-	Quad::render();
+	glClearColor(1, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
 }
 
 void FluidSimulator::updatePressure(float dt) {
@@ -156,7 +134,6 @@ void FluidSimulator::update(float dt) {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	updateObstacles(dt);
 	for (int i = 0; i < 40; i++) {
 		updatePressure(dt);
 		solve(dt);
@@ -184,6 +161,11 @@ void FluidSimulator::render() {
 	glUniform2f(
 		glGetUniformLocation(visualShader.getProgram(), "simulationSize"), 
 		simulationSize.x, simulationSize.y
+	);
+
+	glUniform1i(
+		glGetUniformLocation(visualShader.getProgram(), "renderMode"), 
+		fluidRenderMode
 	);
 
 	Quad::render();

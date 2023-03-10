@@ -39,7 +39,7 @@ Instance* createInstanceFromJSON(json& data) {
 	return instance;
 }
 
-Instance* Instance::fromJSON(const std::string path) { // 
+Instance* Instance::fromJSON(const std::string path) { 
 	std::ifstream file(path, std::ifstream::in);
 	if (file) {
 		json data = json::parse(file);
@@ -48,7 +48,7 @@ Instance* Instance::fromJSON(const std::string path) { //
 	} else {
 		std::cerr << "invalid file: " << path << std::endl;
 		exit(-1);
-	} //
+	} 
 }
 
 Instance::Instance(InstanceClass type, std::string name) : 
@@ -93,6 +93,16 @@ Instance* Instance::findChild(const std::string name) const {
 	}
 
 	return nullptr;
+}
+
+Instance* Instance::getChild(const std::string name) const {
+	Instance* child = findChild(name);
+	if (!child) {
+		std::cerr << "'" << name << "' is not a child of '" << this->name << "'" << std::endl;
+		exit(-1);
+	}
+
+	return child;
 }
 
 // deleting an instance deletes all descendants of that instance

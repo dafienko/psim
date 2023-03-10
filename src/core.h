@@ -15,8 +15,13 @@ namespace Core {
 	void update(float dt);
 	void render();
 	void resize(unsigned int width, unsigned int height);
+
 	glm::ivec2 getWindowSize();
 	glm::vec2 getMousePosition();
+
+	bool isMouse1Down();
+	bool isMouse2Down();
+
 	void destroy();
 };
 

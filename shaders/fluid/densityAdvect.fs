@@ -14,7 +14,9 @@ void main() {
 	vec2 advectFrom = fPos - vel * dt;
 	if (getO(ivec2(advectFrom)) > 0) {
 		result = sampleDensity(advectFrom);
+	} else {
+		result = vec3(0, 0, 0);
 	}
 
-	result = mix(result, vec3(0), 1 - pow(.99, dt));
+	result = mix(result, vec3(0), 1 - pow(.9, dt));
 }

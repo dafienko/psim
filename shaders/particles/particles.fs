@@ -9,19 +9,16 @@ uniform usampler2D particlesTexture;
 
 out vec4 FragColor;
 
-
-const uint Particle1 = 0x01u;
-const uint Particle2 = 0x02u;
-const uint Particle3 = 0x03u;
+#include "shaders/particles/particleTypes.glsl"
 
 void main() {
-	uint v = texture(particlesTexture, texCoords).r;
+	uint particleType = texture(particlesTexture, texCoords).r;
 
-	switch (v) {
-	case Particle1:
+	switch (particleType) {
+	case Wall:
 		FragColor = vec4(1, 0, 0, 1);
 		break;
-	case Particle2:
+	case Sand:
 		FragColor = vec4(0, 0, 1, 1);
 		break;
 	case Particle3:

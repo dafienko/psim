@@ -15,7 +15,6 @@ class FluidSimulator: public Renderable {
 		ShaderProgram gridSolveShader;
 		ShaderProgram advectVelocityShader;
 		ShaderProgram advectDensityShader;
-		ShaderProgram obstaclesShader;
 		ShaderProgram visualShader;
 
 		RenderTargetArray physicsTargets;
@@ -25,7 +24,8 @@ class FluidSimulator: public Renderable {
 		RenderTarget pressureTarget;
 		RenderTarget visualTarget;
 		
-		void updateObstacles(float dt);
+		int fluidRenderMode = 0;
+
 		void updatePressure(float dt);
 		void solve(float dt);
 		void advect(float dt);
@@ -35,5 +35,6 @@ class FluidSimulator: public Renderable {
 		FluidSimulator(glm::ivec2 simulationSize);
 
 		void update(float dt);
+		void bindObstaclesTexture();
 		void render() override;
 };

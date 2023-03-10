@@ -25,6 +25,9 @@ std::unique_ptr<Event<int, int, int>> Core::mouseButtonEvent;
 std::unique_ptr<Simulation> simulation;
 std::unique_ptr<UI> ui;
 
+bool mouse1Down = false;
+bool mouse2Down = false;
+
 void Core::init(unsigned int width, unsigned int height) {
 	windowSize = glm::ivec2((int)width, (int)height);
 
@@ -52,6 +55,28 @@ void Core::init(unsigned int width, unsigned int height) {
 			}	
 		}
 	});
+
+	mouseButtonEvent->bind([&] (int key, int action, int mods) {
+		if (action == GLFW_PRESS) {
+			switch(key) {
+			case GLFW_MOUSE_BUTTON_1:
+				mouse1Down = true;
+				break;
+			case GLFW_MOUSE_BUTTON_2:
+				mouse2Down = true;
+				break;
+			}
+		} else if (action == GLFW_RELEASE) {
+			switch(key) {
+			case GLFW_MOUSE_BUTTON_1:
+				mouse1Down = false;
+				break;
+			case GLFW_MOUSE_BUTTON_2:
+				mouse2Down = false;
+				break;
+			}
+		}
+	});
 }
 
 glm::vec2 Core::getMousePosition() {
@@ -60,6 +85,14 @@ glm::vec2 Core::getMousePosition() {
 
 glm::ivec2 Core::getWindowSize() {
 	return windowSize;
+}
+
+bool Core::isMouse1Down() {
+	return mouse1Down;
+}
+
+bool Core::isMouse2Down() {
+	return mouse2Down;
 }
 
 void Core::resize(unsigned int width, unsigned int height) {
@@ -89,7 +122,7 @@ void Core::render() {
 
 	simulation->render();
 
-	UIText* fpsLabel = dynamic_cast<UIText*>(ui->findChild("main")->findChild("fps"));
+	UIText* fpsLabel = dynamic_cast<UIText*>(ui->getChild("main")->getChild("fps"));
 	fpsLabel->text = std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
 
 	ui->render();

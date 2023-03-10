@@ -24,11 +24,14 @@ void main() {
 	float u = thisVel.x;
 	float v = thisVel.y;
 
-	u += -DS.x * getForceFraction(lo, DS.y) * dt;
-	v += -DS.x * getForceFraction(bo, DS.y) * dt;
 	
+	u += -DS.x * getForceFraction(lo, DS.y) * dt;
 	u += lDS.x * getForceFraction(o, lDS.y) * dt;
+	u *= min(1, max(0, o + lo - 1));
+	
 	v += bDS.x * getForceFraction(o, bDS.y) * dt;
+	v += -DS.x * getForceFraction(bo, DS.y) * dt;
+	v *= min(1, max(0, o + bo - 1));
 
 	result = vec4(u, v, 0.0, 1.0);
 }

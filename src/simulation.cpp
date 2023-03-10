@@ -1,4 +1,5 @@
 #include "simulation.h"
+#include "core.h"
 
 Simulation::Simulation(glm::ivec2 simulationSize) : 
 	fluidSimulator(simulationSize),
@@ -7,11 +8,17 @@ Simulation::Simulation(glm::ivec2 simulationSize) :
 {}
 
 void Simulation::update(float dt) {
-	// fluidSimulator.update(dt);
+
 	particleSimulator.update(dt);
+
+	fluidSimulator.bindObstaclesTexture();
+	particleSimulator.renderObstacles();
+
+	fluidSimulator.update(dt);
 }
 
 void Simulation::render() {
-	// fluidSimulator.render();
+	fluidSimulator.render();
 	particleSimulator.render();
+	CHECK_GL_ERRORS;
 }

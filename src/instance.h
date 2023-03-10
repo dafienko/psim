@@ -42,6 +42,7 @@ class Instance {
 
 		std::vector<Instance*> getChildren() const;
 		Instance* findChild(std::string name) const;
+		Instance* getChild(std::string name) const;
 
 		virtual ~Instance();
 };
