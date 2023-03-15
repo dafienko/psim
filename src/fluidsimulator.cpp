@@ -20,6 +20,8 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 	
 	pressureTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
 	visualTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
+
+	velocityBuffer(new float[(simulationSize.x + 1) * 3 * (simulationSize.y + 1)]),
 	
 	simulationSize(simulationSize)
 {
@@ -34,6 +36,13 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 			}
 		}
 	});
+}
+
+float* FluidSimulator::getVelocityBuffer() {
+	physicsTargets.bindAsTexture();
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, (void*)velocityBuffer.get());
+
+	return velocityBuffer.get();
 }
 
 void FluidSimulator::bindObstaclesTexture() {

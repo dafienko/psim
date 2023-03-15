@@ -60,6 +60,10 @@ void RenderTarget::bindAsTexture(const char* textureName, GLuint shaderProgram) 
 	bindAsTexture(textureName, shaderProgram, 0);
 }
 
+void RenderTarget::bindAsTexture() {
+	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+}
+
 void RenderTarget::renderToQuad() {
 	Quad::quadShaderProgram->bind(); 
 	glDisable(GL_DEPTH_TEST);

@@ -39,7 +39,7 @@ void Core::init(int width, int height) {
 	Text::init();
 	UI::init();
 
-	simulation = std::make_unique<Simulation>(glm::ivec2(width / 5, height / 5));
+	simulation = std::make_unique<Simulation>(glm::ivec2(width / 10, height / 10));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	ui->rendered = false;
@@ -118,6 +118,7 @@ void Core::update(float dt) {
 
 void Core::render() {
 	RenderTarget::bindDefault();
+	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	simulation->render();

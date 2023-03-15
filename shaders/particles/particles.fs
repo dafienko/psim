@@ -16,13 +16,19 @@ void main() {
 
 	switch (particleType) {
 	case Wall:
-		FragColor = vec4(1, 0, 0, 1);
+		FragColor = vec4(.6, .6, .6, 1);
 		break;
 	case Sand:
+		FragColor = vec4(1, 206.0/255.0, 107.0/255.0, 1);
+		break;
+	case Water:
 		FragColor = vec4(0, 0, 1, 1);
 		break;
-	case Particle3:
-		FragColor = vec4(0, 1, 0, 1);
+	case Particle4:
+		FragColor = vec4(1, 1, 1, .5);
+		break;
+	case Particle5:
+		FragColor = vec4(.1, .5, 1, 1);
 		break;
 	default:
 		FragColor = vec4(0, 0, 0, 0);	

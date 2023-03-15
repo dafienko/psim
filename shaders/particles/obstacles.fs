@@ -18,7 +18,7 @@ void main() {
 	if (p.x == 0 || p.y == 0 || p.y == gridSize.y - 1) {
 		result = 0.0;
 	} else {
-		if (particleType == Wall) {
+		if (particleType != Air && particleType != Particle4) {
 			result = 0.0;
 		} else {
 			result = 1.0;

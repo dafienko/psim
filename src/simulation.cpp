@@ -8,8 +8,8 @@ Simulation::Simulation(glm::ivec2 simulationSize) :
 {}
 
 void Simulation::update(float dt) {
-
-	particleSimulator.update(dt);
+	float* velBuffer = fluidSimulator.getVelocityBuffer();
+	particleSimulator.update(dt, velBuffer);
 
 	fluidSimulator.bindObstaclesTexture();
 	particleSimulator.renderObstacles();

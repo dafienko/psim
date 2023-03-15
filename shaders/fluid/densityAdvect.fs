@@ -18,5 +18,5 @@ void main() {
 		result = vec3(0, 0, 0);
 	}
 
-	result = mix(result, vec3(0), 1 - pow(.9, dt));
+	result = mix(result, vec3(0), 1 - pow(.92, dt));
 }

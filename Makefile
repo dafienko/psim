@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT) # windows
 	BIN = main.exe
 else # mac
     CC = clang++
-	CINCLUDE = -isystem /opt/homebrew/include/ -isystem /opt/homebrew/include/freetype2/
+	CINCLUDE = -isystem /opt/homebrew/include/ -isystem /opt/homebrew/include/freetype2/ -isystem /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include
 	LDFLAGS = -L /opt/homebrew/lib/ -lglfw -lglew -lfreetype -framework OpenGL
 	RMDIR = rm -rf
 	RM = rm -f

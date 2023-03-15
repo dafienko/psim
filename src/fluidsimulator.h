@@ -24,6 +24,8 @@ class FluidSimulator: public Renderable {
 		RenderTarget pressureTarget;
 		RenderTarget visualTarget;
 		
+		std::unique_ptr<float> velocityBuffer;
+
 		int fluidRenderMode = 0;
 
 		void updatePressure(float dt);
@@ -36,5 +38,6 @@ class FluidSimulator: public Renderable {
 
 		void update(float dt);
 		void bindObstaclesTexture();
+		float* getVelocityBuffer();
 		void render() override;
 };

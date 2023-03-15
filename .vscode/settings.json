@@ -99,6 +99,7 @@
 		"list": "cpp",
 		"set": "cpp",
 		"strstream": "cpp",
-		"typeindex": "cpp"
+		"typeindex": "cpp",
+		"__availability": "cpp"
 	}
 }

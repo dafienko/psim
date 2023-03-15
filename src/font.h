@@ -1,5 +1,8 @@
 #pragma once
 
+#include <ft2build.h>
+#include FT_FREETYPE_H  
+
 #include <glm/ext.hpp>
 #include <memory>
 #include <string>
@@ -25,7 +28,7 @@ class Font {
 		const unsigned int fontSize;
 		const FontFace fontFace;
 
-		Font(FontFace fontFace, unsigned int fontSize);
+		Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft);
 		~Font();
 
 		Glyph getGlyph(char c) const;

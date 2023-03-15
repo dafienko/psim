@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <cstdlib>
 
 #include "particlesimulator.h"
 #include "quad.h"
@@ -41,6 +42,8 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 				selectParticleType(Sand);
 			} else if (key == GLFW_KEY_2) {
 				selectParticleType(Wall);
+			} else if (key == GLFW_KEY_3) {
+				selectParticleType(Water);
 			}
 		}
 	});
@@ -60,6 +63,13 @@ void ParticleSimulator::selectParticleType(ParticleType type) {
 
 	case Sand:
 		particleName = "Sand";
+		break;
+	
+	case Water:
+		particleName = "Water";
+		break;
+
+	case Test:
 		break;
 	}
 
@@ -91,35 +101,93 @@ glm::ivec2 ParticleSimulator::screenPosToGridPos(glm::vec2 screenPos) {
 	);
 }
 
-void ParticleSimulator::updateParticles() {
-	static const glm::ivec2 DIRECTIONS[3] = {
-		glm::ivec2(0, -1),
-		glm::ivec2(1, -1),
-		glm::ivec2(-1, -1)
+glm::vec2 ParticleSimulator::sampleVelocityBuffer(float* fluidVelocityBuffer, glm::ivec2 pos) {
+	float* thisVel = fluidVelocityBuffer + pos.y * (simulationSize.x + 1) * 3 + pos.x * 3;
+	float* rightVel = fluidVelocityBuffer + pos.y * (simulationSize.x + 1) * 3 + (pos.x+1) * 3;
+	float* upVel = fluidVelocityBuffer + (pos.y+1) * (simulationSize.x + 1) * 3 + pos.x * 3;
+
+	return glm::vec2(
+		(*(thisVel + 0) + *(rightVel + 0)) / 2.0f,
+		(*(thisVel + 1) + *(upVel + 1)) / 2.0f
+	);
+}
+
+void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
+	static const glm::ivec2 DOWN = glm::ivec2(0, -1);
+	static const glm::ivec2 LEFT = glm::ivec2(-1, 0);
+	static const glm::ivec2 RIGHT = glm::ivec2(1, 0);
+	static const glm::ivec2 DOWNLEFT = glm::ivec2(-1, -1);
+	static const glm::ivec2 DOWNRIGHT = glm::ivec2(1, -1);
+	static bool reverse = false;
+	reverse = !reverse;
+
+	static auto checkDir = [&] (glm::ivec2 pos, glm::ivec2 dir) {
+		glm::ivec2 searchAt = pos + dir;
+		Particle particle = particleGet(pos);
+		particle.updated = true;
+
+		if (isEmpty(searchAt)) {
+			particleSet(pos, {});
+			particleSet(searchAt, particle);
+
+			return true;
+		}
+
+		return false;
+	};
+
+	static auto checkSymmetricalDirs = [&] (glm::ivec2 pos, glm::ivec2 dirA, glm::ivec2 dirB) {
+		if (rand() % 2 == 0) {
+			if (checkDir(pos, dirA)) { return true; }
+			if (checkDir(pos, dirB)) { return true; }
+		} else {
+			if (checkDir(pos, dirB)) { return true; }
+			if (checkDir(pos, dirA)) { return true; }
+		}
+
+		return false;
 	};
 
 	for (int y = 0; y < simulationSize.y; y++) {
 		for (int x = 0; x < simulationSize.x; x++) {
 			glm::ivec2 pos(x, y);
-			Particle p = particleGet(pos);
-			
-			switch (p.type) {
-			case Air:
-				break;
+			Particle particle = particleGet(pos);
+			particle.updated = false;
+			particleSet(pos, particle);
+		}
+	}
 
+	for (int y = 0; y < simulationSize.y; y++) {
+		for (int i = 0; i < simulationSize.x; i++) {
+			int x = reverse ? (simulationSize.x - 1) - i : i;
+
+			glm::ivec2 pos(x, y);
+			glm::vec2 vel = sampleVelocityBuffer(fluidVelocityBuffer, pos);
+
+			Particle particle = particleGet(pos);
+			if (particle.updated) {
+				continue;
+			}
+
+			switch (particle.type) {
+			case Air:
+			case Test:
 			case Wall:
 				break;
 
 			case Sand:
-				for (glm::ivec2 dir : DIRECTIONS) {
-					glm::ivec2 searchAt = pos + dir;
-					if (isEmpty(searchAt)) {
-						particleSet(pos, {});
-						particleSet(searchAt, p);
-						break;
-					}
-				}
+				if (checkDir(pos, DOWN)) { break; }	
+				if (checkSymmetricalDirs(pos, DOWNLEFT, DOWNRIGHT)) { break; }
+
 				break;
+
+			case Water:
+				if (checkDir(pos, DOWN)) { break; }
+				if (checkSymmetricalDirs(pos, DOWNLEFT, DOWNRIGHT)) { break; }
+				if (checkSymmetricalDirs(pos, LEFT, RIGHT)) { break; }
+
+				break;
+
 			}
 		}
 	}
@@ -171,8 +239,8 @@ void ParticleSimulator::updateParticlesTexture() {
 	Quad::render();
 }
 
-void ParticleSimulator::update(float dt) {
-	updateParticles();
+void ParticleSimulator::update(float dt, float* fluidVelocityBuffer) {
+	updateParticles(fluidVelocityBuffer);
 	updateParticlesTexture();
 }
 

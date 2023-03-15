@@ -26,6 +26,10 @@ void RenderTargetArray::bindAsTexture(const char* textureName, GLuint program) {
 	targets.at(currentTargetIndex)->bindAsTexture(textureName, program);
 }
 
+void RenderTargetArray::bindAsTexture() {
+	targets.at(currentTargetIndex)->bindAsTexture();
+}
+
 void RenderTargetArray::bind() {
 	int newIndex = currentTargetIndex + 1;
 	newIndex %= N_TARGETS;

@@ -20,6 +20,7 @@ class RenderTarget {
 
 		void setSize(int width, int height);
 		void bind();
+		void bindAsTexture();
 		void bindAsTexture(const char* textureName, GLuint program);
 		void bindAsTexture(const char* textureName, GLuint program, GLint location);
 		void clear(int buffersToClear);

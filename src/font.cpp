@@ -3,8 +3,6 @@
 #include "font.h"
 #include "text.h"
 
-extern FT_Library Text::ft;
-
 static std::string FONT_FACE_FILENAMES[] = {
 	"fonts/MesloLGS NF Regular.ttf"
 };
@@ -59,14 +57,14 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 
 
 
-Font::Font(FontFace fontFace, unsigned int fontSize) : 
+Font::Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft) : 
 	fontSize(fontSize), 
 	fontFace(fontFace) 
 {
 	const std::string &filename = FONT_FACE_FILENAMES[fontFace];
 
 	FT_Face face;
-	if (FT_New_Face(Text::ft, filename.c_str(), 0, &face))
+	if (FT_New_Face(ft, filename.c_str(), 0, &face))
 	{
 		std::cerr << "Freetype failed to load font " << filename << std::endl;  
 		exit(EXIT_FAILURE);

@@ -13,11 +13,14 @@ class ParticleSimulator {
 		enum ParticleType {
 			Air,
 			Wall,
-			Sand
+			Sand,
+			Water,
+			Test
 		};
 
 		struct Particle {
 			ParticleType type;
+			bool updated;
 		};
 
 	private:
@@ -31,10 +34,10 @@ class ParticleSimulator {
 
 		GLuint textureColorBuffer;
 
-		int brushRadius = 3;
+		int brushRadius = 5;
 		ParticleType selectedParticleType = Sand;
 
-		void updateParticles();
+		void updateParticles(float* fluidVelocityBuffer);
 		void updateParticlesTexture();
 
 		bool inBounds(glm::ivec2 pos);
@@ -44,6 +47,7 @@ class ParticleSimulator {
 		void particleSet(glm::ivec2 pos, Particle particle);
 
 		glm::ivec2 screenPosToGridPos(glm::vec2 screenPos);
+		glm::vec2 sampleVelocityBuffer(float* fluidVelocityBuffer, glm::ivec2 pos);
 
 		void selectParticleType(ParticleType type);
 	public: 
@@ -51,7 +55,7 @@ class ParticleSimulator {
 
 		ParticleSimulator(glm::ivec2 simulationSize);
 
-		void update(float dt);
+		void update(float dt, float* fluidVelocityBuffer);
 		void renderObstacles();
 		void render();
 

@@ -3,8 +3,8 @@
 #include "window.h"
 #include "core.h"
 
-#define W 800
-#define H 400 
+#define W 1000
+#define H 800 
 #define WINDOW_TITLE "psim" 
 
 int main(int argc, char** argv) {

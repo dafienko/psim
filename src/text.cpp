@@ -8,7 +8,7 @@
 #include "core.h"
 #include "shader.h"
 
-FT_Library Text::ft;
+static FT_Library ft;
 
 std::unique_ptr<std::unordered_map<int, std::map<unsigned int, std::unique_ptr<Font>>>> fonts;
 std::unique_ptr<ShaderProgram> glyphShader;
@@ -32,7 +32,7 @@ const Font& getFont(FontFace fontFace, unsigned int fontSize) {
 	try {
 		return *fontSizes.at(fontSize).get();
 	} catch (...) {
-		fontSizes[fontSize] = std::make_unique<Font>(fontFace, fontSize);
+		fontSizes[fontSize] = std::make_unique<Font>(fontFace, fontSize, ft);
 		return *fontSizes[fontSize].get();
 	}
 }
