@@ -6,9 +6,10 @@
 
 #include "shader.h"
 #include "rendertargetarray.h"
+#include "renderable.h"
 #include "ui.h"
 
-class ParticleSimulator {
+class ParticleSimulator : public Renderable {
 	private: 
 		enum ParticleType {
 			Air,
@@ -57,7 +58,7 @@ class ParticleSimulator {
 
 		void update(float dt, float* fluidVelocityBuffer);
 		void renderObstacles();
-		void render();
+		void render() override;
 
 		~ParticleSimulator();
 };

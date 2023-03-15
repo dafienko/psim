@@ -1,9 +1,10 @@
 <map id="Renderable" name="Renderable">
-<area shape="rect" id="node1" title=" " alt="" coords="285,5,401,97"/>
+<area shape="rect" id="node1" title=" " alt="" coords="373,5,489,97"/>
 <area shape="rect" id="node2" href="$class_fluid_simulator.html" title=" " alt="" coords="5,226,173,362"/>
-<area shape="rect" id="node3" href="$class_simulation.html" title=" " alt="" coords="198,241,317,347"/>
-<area shape="rect" id="node4" href="$class_u_i.html" title=" " alt="" coords="341,219,518,369"/>
-<area shape="rect" id="node5" href="$class_u_i_object.html" title=" " alt="" coords="542,145,722,443"/>
-<area shape="rect" id="node6" href="$class_u_i_frame.html" title=" " alt="" coords="516,542,609,634"/>
-<area shape="rect" id="node7" href="$class_u_i_text.html" title=" " alt="" coords="634,491,769,685"/>
+<area shape="rect" id="node3" href="$class_particle_simulator.html" title=" " alt="" coords="197,226,347,362"/>
+<area shape="rect" id="node4" href="$class_simulation.html" title=" " alt="" coords="371,241,490,347"/>
+<area shape="rect" id="node5" href="$class_u_i.html" title=" " alt="" coords="514,219,691,369"/>
+<area shape="rect" id="node6" href="$class_u_i_object.html" title=" " alt="" coords="715,145,895,443"/>
+<area shape="rect" id="node7" href="$class_u_i_frame.html" title=" " alt="" coords="689,542,783,634"/>
+<area shape="rect" id="node8" href="$class_u_i_text.html" title=" " alt="" coords="807,491,942,685"/>
 </map>

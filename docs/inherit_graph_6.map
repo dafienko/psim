@@ -1,10 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_instance.html" title=" " alt="" coords="13,19,85,44"/>
-<area shape="rect" id="node2" href="$class_u_i.html" title=" " alt="" coords="175,5,213,31"/>
-<area shape="rect" id="node3" href="$class_u_i_object.html" title=" " alt="" coords="157,55,231,80"/>
-<area shape="rect" id="node4" href="$class_u_i_frame.html" title=" " alt="" coords="295,31,368,56"/>
-<area shape="rect" id="node5" href="$class_u_i_text.html" title=" " alt="" coords="301,80,362,105"/>
-<area shape="rect" id="node6" href="$class_renderable.html" title=" " alt="" coords="5,80,93,105"/>
-<area shape="rect" id="node7" href="$class_fluid_simulator.html" title=" " alt="" coords="141,104,247,129"/>
-<area shape="rect" id="node8" href="$class_simulation.html" title=" " alt="" coords="153,153,235,179"/>
+<area shape="rect" id="node1" href="$class_instance.html" title=" " alt="" coords="13,55,85,80"/>
+<area shape="rect" id="node2" href="$class_u_i.html" title=" " alt="" coords="183,79,221,104"/>
+<area shape="rect" id="node3" href="$class_u_i_object.html" title=" " alt="" coords="165,29,239,55"/>
+<area shape="rect" id="node4" href="$class_u_i_frame.html" title=" " alt="" coords="311,5,384,31"/>
+<area shape="rect" id="node5" href="$class_u_i_text.html" title=" " alt="" coords="317,55,378,80"/>
+<area shape="rect" id="node6" href="$class_renderable.html" title=" " alt="" coords="5,128,93,153"/>
+<area shape="rect" id="node7" href="$class_fluid_simulator.html" title=" " alt="" coords="149,128,255,153"/>
+<area shape="rect" id="node8" href="$class_particle_simulator.html" title=" " alt="" coords="141,177,263,203"/>
+<area shape="rect" id="node9" href="$class_simulation.html" title=" " alt="" coords="161,227,243,252"/>
 </map>
