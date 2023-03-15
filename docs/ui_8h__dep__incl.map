@@ -1,0 +1,16 @@
+<map id="src/ui.h" name="src/ui.h">
+<area shape="rect" id="node1" title=" " alt="" coords="593,5,658,31"/>
+<area shape="rect" id="node2" href="$core_8cpp.html" title=" " alt="" coords="345,225,439,251"/>
+<area shape="rect" id="node3" href="$instance_8cpp.html" title=" " alt="" coords="726,225,845,251"/>
+<area shape="rect" id="node4" href="$particlesimulator_8h.html" title=" " alt="" coords="187,79,336,104"/>
+<area shape="rect" id="node8" href="$ui_8cpp.html" title=" " alt="" coords="797,152,875,177"/>
+<area shape="rect" id="node9" href="$uiobject_8h.html" title=" " alt="" coords="575,79,675,104"/>
+<area shape="rect" id="node5" href="$particlesimulator_8cpp.html" title=" " alt="" coords="5,225,168,251"/>
+<area shape="rect" id="node6" href="$simulation_8h.html" title=" " alt="" coords="204,152,319,177"/>
+<area shape="rect" id="node7" href="$simulation_8cpp.html" title=" " alt="" coords="192,225,320,251"/>
+<area shape="rect" id="node10" href="$uiframe_8h.html" title=" " alt="" coords="535,152,633,177"/>
+<area shape="rect" id="node12" href="$uiobject_8cpp.html" title=" " alt="" coords="657,152,772,177"/>
+<area shape="rect" id="node13" href="$uitext_8h.html" title=" " alt="" coords="423,152,510,177"/>
+<area shape="rect" id="node11" href="$uiframe_8cpp.html" title=" " alt="" coords="589,225,701,251"/>
+<area shape="rect" id="node14" href="$uitext_8cpp.html" title=" " alt="" coords="464,225,565,251"/>
+</map>

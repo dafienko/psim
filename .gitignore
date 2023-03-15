@@ -3,4 +3,3 @@ main
 *.dSYM
 *.exe
 build
-doxygenBuild
