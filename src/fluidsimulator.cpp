@@ -40,7 +40,7 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 
 float* FluidSimulator::getVelocityBuffer() {
 	physicsTargets.bindAsTexture();
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, (void*)velocityBuffer.get());
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, velocityBuffer.get());
 
 	return velocityBuffer.get();
 }
@@ -48,7 +48,7 @@ float* FluidSimulator::getVelocityBuffer() {
 void FluidSimulator::bindObstaclesTexture() {
 	obstaclesTargets.bind();
 	glClearColor(1, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
+	obstaclesTargets.clear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 }

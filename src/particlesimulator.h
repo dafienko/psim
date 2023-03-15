@@ -54,7 +54,7 @@ class ParticleSimulator : public Renderable {
 	public: 
 		const glm::ivec2 simulationSize;
 
-		ParticleSimulator(glm::ivec2 simulationSize);
+		explicit ParticleSimulator(glm::ivec2 simulationSize);
 
 		void update(float dt, float* fluidVelocityBuffer);
 		void renderObstacles();

@@ -27,9 +27,9 @@ void getFileSource(const std::string &filename, std::string &source_text) {
 					exit(EXIT_FAILURE);
 				}
 
-				std::string filename = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
+				std::string includeFileName = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
 				std::string includeSource;
-				getFileSource(filename, includeSource);
+				getFileSource(includeFileName, includeSource);
 				source_text += includeSource + "\n";
 			} else {
 				source_text += line + "\n";
@@ -46,7 +46,6 @@ void checkShaderErrors(const std::string &filename, GLuint shader, std::string s
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
 	if(isCompiled == GL_FALSE)
 	{
-		std::string result;
 		std::istringstream iss(source);
 		int lno = 1;
 		for (std::string line; std::getline(iss, line); lno++)

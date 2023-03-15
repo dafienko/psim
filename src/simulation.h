@@ -14,7 +14,7 @@ class Simulation: public Renderable {
 	public: 
 		const glm::ivec2 simulationSize;
 
-		Simulation(glm::ivec2 simulationSize);
+		explicit Simulation(glm::ivec2 simulationSize);
 
 		void update(float dt);
 		void render() override;

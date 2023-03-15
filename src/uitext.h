@@ -8,7 +8,7 @@
 class UIText: public UIObject {
 	public: 
 		UIText();
-		UIText(json& data);
+		explicit UIText(json& data);
 
 		std::string text = "";
 		glm::vec3 textColor = glm::vec3(1);

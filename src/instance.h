@@ -17,7 +17,7 @@ class Instance {
 			IC_UIText,
 		};
 
-		static Instance* fromJSON(const std::string path);
+		static Instance* fromJSON(const std::string& path);
 	private:
 		std::vector<Instance*> children;
 		Instance* parent = nullptr;
@@ -36,13 +36,13 @@ class Instance {
 		void onChildRemoved(std::function<void(Instance&, Instance&)> callback);
 
 	public:
-		Instance(InstanceClass type, std::string name);
+		Instance(InstanceClass type, const std::string& name);
 
 		void setParent(Instance* parent);
 
 		std::vector<Instance*> getChildren() const;
-		Instance* findChild(std::string name) const;
-		Instance* getChild(std::string name) const;
+		Instance* findChild(const std::string& name) const;
+		Instance* getChild(const std::string& name) const;
 
 		virtual ~Instance();
 };

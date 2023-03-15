@@ -222,10 +222,11 @@ void ParticleSimulator::updateParticlesTexture() {
 	particlesShader.bind();
 	particlesTargets.bind();
 	
+	glClearColor(0, 0, 0, 0);
+	particlesTargets.clear(GL_COLOR_BUFFER_BIT);
+	
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
 
 	glActiveTexture(GL_TEXTURE0); 
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);

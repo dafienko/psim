@@ -8,23 +8,24 @@ static std::string FONT_FACE_FILENAMES[] = {
 };
 
 class Glyphsheet { // 16x8 spritesheet for character glyphs
-	private:
-		unsigned char* buffer;
 	public: 
 		const static int GLYPH_SHEET_ROWS = 8;
 		const static int GLYPH_SHEET_COLS = 16;
 
-		const unsigned int glyphWidth, glyphHeight;
 		const unsigned int width, height;
+		const unsigned int glyphWidth, glyphHeight;
 
+	private:
+		std::unique_ptr<unsigned char> buffer;
+
+	public:
 		Glyphsheet(unsigned int glyphWidth, unsigned int glyphHeight) : 
+			width(glyphWidth * GLYPH_SHEET_COLS),
+			height(glyphHeight * GLYPH_SHEET_ROWS),
 			glyphWidth(glyphWidth), 
 			glyphHeight(glyphHeight),
-			width(glyphWidth * GLYPH_SHEET_COLS),
-			height(glyphHeight * GLYPH_SHEET_ROWS)
-		{
-			buffer = new unsigned char[width * height]();
-		}
+			buffer(new unsigned char[width * height])
+		{}
 
 		glm::vec4 bufferGlyphBitmap(unsigned char c, unsigned char* bitmapBuffer, unsigned int bitmapWidth, unsigned int bitmapHeight) {
 			assert(bitmapWidth <= glyphWidth);
@@ -35,7 +36,7 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 
 			for (unsigned int y = 0; y < bitmapHeight; y++) {
 				int bufferRow = glyphSheetPos.y * glyphHeight + y; 
-				unsigned char* glyphRowStart = buffer + bufferRow * width + glyphSheetPos.x * glyphWidth;
+				unsigned char* glyphRowStart = buffer.get() + bufferRow * width + glyphSheetPos.x * glyphWidth;
 				unsigned char* bmpRowStart = bitmapBuffer + y * bitmapWidth;
 				memcpy(glyphRowStart, bmpRowStart, bitmapWidth * sizeof(unsigned char));
 			}
@@ -47,11 +48,7 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 		}
 
 		unsigned char* getBuffer() {
-			return buffer;
-		}
-
-		~Glyphsheet() {
-			delete[] buffer;
+			return buffer.get();
 		}
 };
 

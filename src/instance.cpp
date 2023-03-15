@@ -39,7 +39,7 @@ Instance* createInstanceFromJSON(json& data) {
 	return instance;
 }
 
-Instance* Instance::fromJSON(const std::string path) { 
+Instance* Instance::fromJSON(const std::string& path) { 
 	std::ifstream file(path, std::ifstream::in);
 	if (file) {
 		json data = json::parse(file);
@@ -51,7 +51,7 @@ Instance* Instance::fromJSON(const std::string path) {
 	} 
 }
 
-Instance::Instance(InstanceClass type, std::string name) : 
+Instance::Instance(InstanceClass type, const std::string& name) : 
 	childAdded(),
 	childRemoved(),
 	type(type), 
@@ -85,7 +85,7 @@ std::vector<Instance*> Instance::getChildren() const {
 	return std::vector<Instance*>(children);
 }
 
-Instance* Instance::findChild(const std::string name) const {
+Instance* Instance::findChild(const std::string& name) const {
 	for (Instance* child : children) {
 		if (child->name == name) {
 			return child;
@@ -95,7 +95,7 @@ Instance* Instance::findChild(const std::string name) const {
 	return nullptr;
 }
 
-Instance* Instance::getChild(const std::string name) const {
+Instance* Instance::getChild(const std::string& name) const {
 	Instance* child = findChild(name);
 	if (!child) {
 		std::cerr << "'" << name << "' is not a child of '" << this->name << "'" << std::endl;

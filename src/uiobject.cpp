@@ -17,11 +17,11 @@ void UIObject::destroy() {
 	uiShader.release();
 }
 
-UIObject::UIObject(InstanceClass type, const std::string name) : 
+UIObject::UIObject(InstanceClass type, const std::string& name) : 
 	Instance(type, name)
 {}
 
-UIObject::UIObject(InstanceClass type, const std::string name, json& data) : 
+UIObject::UIObject(InstanceClass type, const std::string& name, json& data) : 
 	UIObject(type, name)
 {
 	for (const auto& item : data.items())

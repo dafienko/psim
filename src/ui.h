@@ -21,7 +21,7 @@ class UI: public Renderable, public Instance {
 		bool rendered = true;
 
 		UI();
-		UI(json& data);
+		explicit UI(json& data);
 
 		void render() override;
 

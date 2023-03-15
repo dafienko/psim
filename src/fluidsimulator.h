@@ -34,7 +34,7 @@ class FluidSimulator: public Renderable {
 	public:
 		const glm::ivec2 simulationSize;
 
-		FluidSimulator(glm::ivec2 simulationSize);
+		explicit FluidSimulator(glm::ivec2 simulationSize);
 
 		void update(float dt);
 		void bindObstaclesTexture();

@@ -39,6 +39,10 @@ void RenderTargetArray::bind() {
 	targets.at(currentTargetIndex)->bind();
 }
 
+void RenderTargetArray::clear(int buffersToClear) {
+	targets.at(currentTargetIndex)->clear(buffersToClear);
+}
+
 RenderTarget& RenderTargetArray::getCurrent() {
 	return *targets.at(currentTargetIndex).get();
 }

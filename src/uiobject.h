@@ -23,8 +23,8 @@ class UIObject: public Instance, Renderable {
 		void updateRenderedDimensions(glm::vec2 parentPos, glm::vec2 parentSize);
 
 	protected:
-		UIObject(InstanceClass type, const std::string name);
-		UIObject(InstanceClass type, const std::string name, json& data);
+		UIObject(InstanceClass type, const std::string& name);
+		UIObject(InstanceClass type, const std::string& name, json& data);
 
 		void render(glm::vec2 parentPos, glm::vec2 parentSize);
 

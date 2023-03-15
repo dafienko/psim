@@ -6,6 +6,7 @@
 #include "quad.h"
 
 void RenderTarget::clear(int buffersToClear) {
+	bind();
 	glClear(buffersToClear); 
 }
 
