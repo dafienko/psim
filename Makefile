@@ -37,6 +37,14 @@ $(BUILD):
 $(DEP): | $(BUILD)
 	mkdir "$@"
 
+.PHONY: docs
+docs:
+	doxygen
+
+.PHONY: static
+static:
+	cppcheck src/ &> static-analysis-report.txt && cpplint src/*.cpp &> style-report.txt
+
 clean:
 	$(RMDIR) $(BUILD)
 	$(RM) $(BIN)

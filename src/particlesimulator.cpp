@@ -1,12 +1,19 @@
+#include "particlesimulator.h"
+
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cstdlib>
+#include <algorithm>
+#include <string>
+#include <optional>
 
-#include "particlesimulator.h"
 #include "quad.h"
 #include "core.h"
 #include "uitext.h"
+
+#define FLUID_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
+#define GRAVITY_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
 
 ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) : 
 	grid(new Particle[simulationSize.x * simulationSize.y]),
@@ -21,6 +28,9 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 		for (int x = 0; x < simulationSize.x; x++) {
 			Particle p = {};
 			p.type = Air;
+			p.simulateAsParticle = false;
+			p.cellularVelocity = glm::vec2(0.0f);
+			p.particleVelocity = glm::vec2(0.0f);
 			grid.get()[y * simulationSize.x + x] = p;
 		}
 	}
@@ -81,7 +91,7 @@ bool ParticleSimulator::inBounds(glm::ivec2 p) {
 	return p.x >= 0 && p.y >= 0 && p.x < simulationSize.x && p.y < simulationSize.y;
 }
 
-ParticleSimulator::Particle ParticleSimulator::particleGet(glm::ivec2 p) {
+ParticleSimulator::Particle& ParticleSimulator::particleGet(glm::ivec2 p) const {
 	return grid.get()[p.y * simulationSize.x + p.x];
 }
 
@@ -89,8 +99,28 @@ void ParticleSimulator::particleSet(glm::ivec2 p, Particle particle) {
 	grid.get()[p.y * simulationSize.x + p.x] = particle;
 }
 
+void ParticleSimulator::particleSwap(glm::ivec2 src, glm::ivec2 dest) {
+	if (src == dest) { return; }
+
+	Particle tmp = Particle(particleGet(dest));
+	tmp.updated = true;
+	particleSet(dest, particleGet(src));
+	particleSet(src, tmp);
+}
+
 bool ParticleSimulator::isEmpty(glm::ivec2 p) {
 	return inBounds(p) && particleGet(p).type == 0;
+}
+
+std::optional<ParticleSimulator::ParticleType> ParticleSimulator::isSwappable(glm::ivec2 p, ParticleType replacementType) {
+	if (inBounds(p)) {
+		ParticleType type = particleGet(p).type;
+		if (type == Air || (type == Water && replacementType == Sand)) {
+			return type;
+		}
+	}
+
+	return {};
 }
 
 glm::ivec2 ParticleSimulator::screenPosToGridPos(glm::vec2 screenPos) {
@@ -112,48 +142,126 @@ glm::vec2 ParticleSimulator::sampleVelocityBuffer(float* fluidVelocityBuffer, gl
 	);
 }
 
-void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
+const float GRAVITY_ACCEL = 0.1f;
+
+void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 	static const glm::ivec2 DOWN = glm::ivec2(0, -1);
 	static const glm::ivec2 LEFT = glm::ivec2(-1, 0);
 	static const glm::ivec2 RIGHT = glm::ivec2(1, 0);
 	static const glm::ivec2 DOWNLEFT = glm::ivec2(-1, -1);
 	static const glm::ivec2 DOWNRIGHT = glm::ivec2(1, -1);
-	static bool reverse = false;
-	reverse = !reverse;
 
 	static auto checkDir = [&] (glm::ivec2 pos, glm::ivec2 dir) {
 		glm::ivec2 searchAt = pos + dir;
-		Particle particle = particleGet(pos);
-		particle.updated = true;
 
-		if (isEmpty(searchAt)) {
-			particleSet(pos, {});
-			particleSet(searchAt, particle);
-
-			return true;
-		}
-
-		return false;
+		return isSwappable(searchAt, particleGet(pos).type);
 	};
 
 	static auto checkSymmetricalDirs = [&] (glm::ivec2 pos, glm::ivec2 dirA, glm::ivec2 dirB) {
 		if (rand() % 2 == 0) {
-			if (checkDir(pos, dirA)) { return true; }
-			if (checkDir(pos, dirB)) { return true; }
+			if (checkDir(pos, dirA)) { return dirA; }
+			if (checkDir(pos, dirB)) { return dirB; }
 		} else {
-			if (checkDir(pos, dirB)) { return true; }
-			if (checkDir(pos, dirA)) { return true; }
+			if (checkDir(pos, dirB)) { return dirB; }
+			if (checkDir(pos, dirA)) { return dirA; }
 		}
 
-		return false;
+		return glm::ivec2(0);
 	};
+	
+ 	Particle& particle = particleGet(pos);
+
+	if (FLUID_AFFECTS_PARTICLE_TYPE(particle.type)) {
+		if (glm::length(fluidVel) > 10) {
+			if (!particle.simulateAsParticle) {
+				// particle.simulateAsParticle = true;
+				particle.particleVelocity = glm::vec2(particle.cellularVelocity.x, particle.cellularVelocity.y);
+			}
+
+			particle.particleVelocity = glm::mix(particle.particleVelocity, fluidVel, .5f);
+		}
+	}
+
+	if (GRAVITY_AFFECTS_PARTICLE_TYPE(particle.type)) {
+		particle.particleVelocity += glm::vec2(0, -GRAVITY_ACCEL);
+		particle.cellularVelocity += glm::vec2(0, -GRAVITY_ACCEL);
+	}
+
+	if (particle.simulateAsParticle) {
+		
+	} else {
+		switch (particle.type) {
+		case Air:
+		case Test:
+		case Wall: {
+			break;
+		}
+		case Sand: {
+			glm::ivec2 newPos = pos;
+			for (int y = 0; y > (int)particle.cellularVelocity.y - 1; y--) {
+				auto downMaterial = checkDir(newPos, DOWN);
+				if (downMaterial == Air) {
+					newPos += DOWN;
+				} else {
+					if (downMaterial == Water) {
+						newPos += DOWN;
+					} else {
+						newPos += checkSymmetricalDirs(newPos, DOWNLEFT, DOWNRIGHT);
+					}
+					
+					particle.cellularVelocity = glm::vec2(0, 0);
+					
+					break;
+				}
+			}
+
+			particleSwap(pos, newPos);
+
+			break;
+		}
+
+		case Water: {
+			glm::ivec2 newPos = pos;
+			for (int y = 0; y > std::min((int)particle.cellularVelocity.y, -1); y--) {
+				if (checkDir(newPos, DOWN)) {
+					newPos += DOWN;
+				} else {
+					glm::ivec2 fallDir = checkSymmetricalDirs(newPos, DOWNLEFT, DOWNRIGHT);
+					if (fallDir == glm::ivec2(0)) {
+						int spreadDir = rand() % 2 * 2 - 1;
+						for (int i = 0; i < 10; i++) {
+							glm::ivec2 dir(spreadDir, 0);
+							if (checkDir(newPos, dir)) {
+								newPos += dir;
+							} else {
+								break;
+							}
+						}
+					} else {
+						newPos += fallDir;
+					}
+
+					particle.cellularVelocity = glm::vec2(0, 0);
+					
+					break;
+				}
+			}
+
+			particleSwap(pos, newPos);
+
+			break;
+		}
+		}
+	}
+}
+
+void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
+	static bool reverse = false;
+	reverse = !reverse;
 
 	for (int y = 0; y < simulationSize.y; y++) {
 		for (int x = 0; x < simulationSize.x; x++) {
-			glm::ivec2 pos(x, y);
-			Particle particle = particleGet(pos);
-			particle.updated = false;
-			particleSet(pos, particle);
+			particleGet(glm::ivec2(x, y)).updated = false;
 		}
 	}
 
@@ -162,33 +270,15 @@ void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
 			int x = reverse ? (simulationSize.x - 1) - i : i;
 
 			glm::ivec2 pos(x, y);
-			glm::vec2 vel = sampleVelocityBuffer(fluidVelocityBuffer, pos);
-
 			Particle particle = particleGet(pos);
 			if (particle.updated) {
 				continue;
 			}
 
-			switch (particle.type) {
-			case Air:
-			case Test:
-			case Wall:
-				break;
-
-			case Sand:
-				if (checkDir(pos, DOWN)) { break; }	
-				if (checkSymmetricalDirs(pos, DOWNLEFT, DOWNRIGHT)) { break; }
-
-				break;
-
-			case Water:
-				if (checkDir(pos, DOWN)) { break; }
-				if (checkSymmetricalDirs(pos, DOWNLEFT, DOWNRIGHT)) { break; }
-				if (checkSymmetricalDirs(pos, LEFT, RIGHT)) { break; }
-
-				break;
-
-			}
+			updateParticle(
+				pos, 
+				sampleVelocityBuffer(fluidVelocityBuffer, pos)
+			);
 		}
 	}
 

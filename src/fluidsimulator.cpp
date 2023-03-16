@@ -1,9 +1,9 @@
-#include <iostream>
+#include "fluidsimulator.h"
 
+#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "fluidsimulator.h"
 #include "core.h"
 #include "quad.h"
 

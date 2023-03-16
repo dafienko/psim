@@ -8,7 +8,7 @@ var searchData=
   ['uiframe_5',['UIFrame',['../class_u_i_frame.html',1,'UIFrame'],['../class_u_i_frame.html#a30b41491df7a057c20f75ae1afeebd8f',1,'UIFrame::UIFrame()'],['../class_u_i_frame.html#a772dc73b1e0364b80b35c4b8c4ab0034',1,'UIFrame::UIFrame(json &amp;data)']]],
   ['uiframe_2ecpp_6',['uiframe.cpp',['../uiframe_8cpp.html',1,'']]],
   ['uiframe_2eh_7',['uiframe.h',['../uiframe_8h.html',1,'']]],
-  ['uiobject_8',['UIObject',['../class_u_i_object.html',1,'UIObject'],['../class_u_i.html#a8a416a6e2ad4c9290a90d2b020648783',1,'UI::UIObject()'],['../class_u_i_object.html#adc68b4d27f1c9aa171f54cc42580fb19',1,'UIObject::UIObject(InstanceClass type, const std::string name)'],['../class_u_i_object.html#a2b56feebe89449ebe982836b042d6b90',1,'UIObject::UIObject(InstanceClass type, const std::string name, json &amp;data)']]],
+  ['uiobject_8',['UIObject',['../class_u_i_object.html',1,'UIObject'],['../class_u_i.html#a8a416a6e2ad4c9290a90d2b020648783',1,'UI::UIObject()'],['../class_u_i_object.html#a2ad70636c0703593ce9fcaf8bd661a1d',1,'UIObject::UIObject(InstanceClass type, const std::string &amp;name)'],['../class_u_i_object.html#a27d4b087dd088223801895e1be8fcf95',1,'UIObject::UIObject(InstanceClass type, const std::string &amp;name, json &amp;data)']]],
   ['uiobject_2ecpp_9',['uiobject.cpp',['../uiobject_8cpp.html',1,'']]],
   ['uiobject_2eh_10',['uiobject.h',['../uiobject_8h.html',1,'']]],
   ['uishader_11',['uiShader',['../uiobject_8cpp.html#a7e2d01c2080a4d7dce3ef5af2743cc57',1,'uiobject.cpp']]],

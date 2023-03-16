@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 #include <memory>
+#include <vector>
+#include <optional>
 
 #include "shader.h"
 #include "rendertargetarray.h"
@@ -22,6 +24,12 @@ class ParticleSimulator : public Renderable {
 		struct Particle {
 			ParticleType type;
 			bool updated;
+
+			glm::vec2 cellularVelocity;
+
+			bool simulateAsParticle;
+			glm::vec2 particlePosition;
+			glm::vec2 particleVelocity;
 		};
 
 	private:
@@ -35,7 +43,7 @@ class ParticleSimulator : public Renderable {
 
 		GLuint textureColorBuffer;
 
-		int brushRadius = 5;
+		int brushRadius = 2;
 		ParticleType selectedParticleType = Sand;
 
 		void updateParticles(float* fluidVelocityBuffer);
@@ -43,14 +51,18 @@ class ParticleSimulator : public Renderable {
 
 		bool inBounds(glm::ivec2 pos);
 		bool isEmpty(glm::ivec2 pos);
+		std::optional<ParticleType> isSwappable(glm::ivec2 pos, ParticleType replacementType);
 
-		Particle particleGet(glm::ivec2 pos);
+		Particle& particleGet(glm::ivec2 pos) const;
 		void particleSet(glm::ivec2 pos, Particle particle);
+		void particleSwap(glm::ivec2 src, glm::ivec2 dest);
 
 		glm::ivec2 screenPosToGridPos(glm::vec2 screenPos);
 		glm::vec2 sampleVelocityBuffer(float* fluidVelocityBuffer, glm::ivec2 pos);
 
 		void selectParticleType(ParticleType type);
+
+		void updateParticle(glm::ivec2, glm::vec2 fluidVel);
 	public: 
 		const glm::ivec2 simulationSize;
 

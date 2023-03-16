@@ -1,6 +1,8 @@
+#include <iostream>
+#include <memory>
+#include <string>
 #include <GL/glew.h>
 #include <glm/ext.hpp>
-#include <iostream>
 
 #include "uiobject.h"
 #include "shader.h"

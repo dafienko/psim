@@ -9,8 +9,8 @@ static std::string FONT_FACE_FILENAMES[] = {
 
 class Glyphsheet { // 16x8 spritesheet for character glyphs
 	public: 
-		const static int GLYPH_SHEET_ROWS = 8;
-		const static int GLYPH_SHEET_COLS = 16;
+		static const int GLYPH_SHEET_ROWS = 8;
+		static const int GLYPH_SHEET_COLS = 16;
 
 		const unsigned int width, height;
 		const unsigned int glyphWidth, glyphHeight;

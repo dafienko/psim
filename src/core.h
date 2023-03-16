@@ -1,8 +1,8 @@
 #pragma once
 
-#include <glm/ext.hpp>
 #include <memory>
 #include <string>
+#include <glm/ext.hpp>
 
 #include "event.h"
 

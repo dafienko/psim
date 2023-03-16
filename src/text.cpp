@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <algorithm>
+#include <memory>
 #include <map>
 
 #include "quad.h"

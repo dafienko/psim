@@ -1,8 +1,10 @@
+#include "uitext.h"
+
 #include <memory>
 #include <iostream>
+#include <string>
 #include <sstream>
 
-#include "uitext.h"
 #include "text.h"
 
 UIText::UIText() :

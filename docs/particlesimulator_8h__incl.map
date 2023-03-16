@@ -1,17 +1,18 @@
 <map id="src/particlesimulator.h" name="src/particlesimulator.h">
-<area shape="rect" id="node1" title=" " alt="" coords="259,5,408,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="308,5,457,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="17,299,95,324"/>
-<area shape="rect" id="node3" title=" " alt="" coords="396,152,487,177"/>
-<area shape="rect" id="node4" title=" " alt="" coords="201,299,271,324"/>
-<area shape="rect" id="node5" href="$shader_8h.html" title=" " alt="" coords="21,225,91,251"/>
-<area shape="rect" id="node6" href="$rendertargetarray_8h.html" title=" " alt="" coords="269,79,398,104"/>
-<area shape="rect" id="node9" href="$renderable_8h.html" title=" " alt="" coords="617,152,711,177"/>
-<area shape="rect" id="node10" href="$ui_8h.html" title=" " alt="" coords="504,79,547,104"/>
-<area shape="rect" id="node7" title=" " alt="" coords="409,299,468,324"/>
-<area shape="rect" id="node8" href="$rendertarget_8h.html" title=" " alt="" coords="90,152,193,177"/>
-<area shape="rect" id="node11" href="$instance_8h.html" title=" " alt="" coords="511,152,593,177"/>
-<area shape="rect" id="node12" title=" " alt="" coords="591,225,721,251"/>
-<area shape="rect" id="node13" title=" " alt="" coords="461,225,515,251"/>
-<area shape="rect" id="node14" href="$event_8h.html" title=" " alt="" coords="319,225,385,251"/>
-<area shape="rect" id="node15" title=" " alt="" coords="306,299,385,324"/>
+<area shape="rect" id="node3" title=" " alt="" coords="420,152,511,177"/>
+<area shape="rect" id="node4" title=" " alt="" coords="228,299,297,324"/>
+<area shape="rect" id="node5" title=" " alt="" coords="353,299,412,324"/>
+<area shape="rect" id="node6" title=" " alt="" coords="588,79,655,104"/>
+<area shape="rect" id="node7" href="$shader_8h.html" title=" " alt="" coords="21,225,91,251"/>
+<area shape="rect" id="node8" href="$rendertargetarray_8h.html" title=" " alt="" coords="165,79,294,104"/>
+<area shape="rect" id="node10" href="$renderable_8h.html" title=" " alt="" coords="641,152,735,177"/>
+<area shape="rect" id="node11" href="$ui_8h.html" title=" " alt="" coords="471,79,513,104"/>
+<area shape="rect" id="node9" href="$rendertarget_8h.html" title=" " alt="" coords="90,152,193,177"/>
+<area shape="rect" id="node12" href="$instance_8h.html" title=" " alt="" coords="535,152,617,177"/>
+<area shape="rect" id="node13" title=" " alt="" coords="561,225,692,251"/>
+<area shape="rect" id="node14" title=" " alt="" coords="717,225,771,251"/>
+<area shape="rect" id="node15" href="$event_8h.html" title=" " alt="" coords="421,225,486,251"/>
+<area shape="rect" id="node16" title=" " alt="" coords="437,299,515,324"/>
 </map>

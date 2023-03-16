@@ -1,9 +1,10 @@
+#include "shader.h"
+
 #include <fstream>
 #include <vector>
 #include <iostream>
 #include <sstream>
-
-#include "shader.h"
+#include <string>
 
 void getFileSource(const std::string &filename, std::string &source_text) {
 	std::ifstream file(filename);

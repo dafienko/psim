@@ -3,7 +3,7 @@ var searchData=
   ['getaboslutesize_0',['getAbosluteSize',['../class_u_i_object.html#aefac4240f2ebde1f8ccf60c3c5e4f6bd',1,'UIObject']]],
   ['getabsoluteposition_1',['getAbsolutePosition',['../class_u_i_object.html#affc2dc3b363ff0a2e00ef97d2fa6006f',1,'UIObject']]],
   ['getbuffer_2',['getBuffer',['../class_glyphsheet.html#a504e182f518a28dbf4a38539d2c5a286',1,'Glyphsheet']]],
-  ['getchild_3',['getChild',['../class_instance.html#a04b7d6516185e8477b249c4e07fa6817',1,'Instance']]],
+  ['getchild_3',['getChild',['../class_instance.html#a3a518e38797de6c8588cf394e3f239ba',1,'Instance']]],
   ['getchildren_4',['getChildren',['../class_instance.html#a785f0f81050edd44387b09f30c68ecc5',1,'Instance']]],
   ['getcurrent_5',['getCurrent',['../class_render_target_array.html#ac4acd0a99b3eb23a94d72c66b7f08f97',1,'RenderTargetArray']]],
   ['getfilesource_6',['getFileSource',['../shader_8cpp.html#a09321ade9864875bd33a6bffe4720cec',1,'shader.cpp']]],

@@ -1,9 +1,9 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/ext.hpp>
 #include <memory>
 #include <string>
 #include <iostream>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/ext.hpp>
 
 #include "window.h"
 #include "simulation.h"
@@ -45,7 +45,7 @@ void Core::init(int width, int height) {
 	ui->rendered = false;
 
 	keyEvent->bind([&] (int key, int action, int mods) {
-		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS or action == GLFW_REPEAT)) {
+		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
 			Core::update(1.0 / 120.0);
 		} 
 		

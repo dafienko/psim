@@ -44,7 +44,7 @@ RenderTarget::RenderTarget(int width, int height, GLint internalFormat, GLint te
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);  
 }
 
-RenderTarget::RenderTarget(int width, int height) : RenderTarget(width, height, GL_RGBA, GL_LINEAR) {};
+RenderTarget::RenderTarget(int width, int height) : RenderTarget(width, height, GL_RGBA, GL_LINEAR) {}
 
 void RenderTarget::bind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);

@@ -101,5 +101,6 @@
 		"strstream": "cpp",
 		"typeindex": "cpp",
 		"__availability": "cpp"
-	}
+	},
+	"cmake.configureOnOpen": true
 }
