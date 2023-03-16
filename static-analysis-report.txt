@@ -5,10 +5,16 @@ Checking src/fluidsimulator.cpp ...
 Checking src/font.cpp ...
 3/18 files checked 25% done
 Checking src/instance.cpp ...
+src/instance.cpp:90:28: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+  if (child->name == name) {
+                           ^
 4/18 files checked 30% done
 Checking src/main.cpp ...
 5/18 files checked 32% done
 Checking src/particlesimulator.cpp ...
+src/particlesimulator.h:53:8: style: Unused private function: 'ParticleSimulator::isEmpty' [unusedPrivateFunction]
+  bool isEmpty(glm::ivec2 pos);
+       ^
 6/18 files checked 52% done
 Checking src/quad.cpp ...
 7/18 files checked 56% done
@@ -34,3 +40,14 @@ Checking src/uitext.cpp ...
 17/18 files checked 93% done
 Checking src/window.cpp ...
 18/18 files checked 100% done
+src/core.cpp:94:0: style: The function 'isMouse2Down' is never used. [unusedFunction]
+bool Core::isMouse2Down() {
+^
+src/particlesimulator.cpp:111:0: style: The function 'isEmpty' is never used. [unusedFunction]
+bool ParticleSimulator::isEmpty(glm::ivec2 p) {
+^
+src/rendertargetarray.cpp:50:0: style: The function 'getLast' is never used. [unusedFunction]
+RenderTarget& RenderTargetArray::getLast() {
+^
+nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingIncludeSystem]
+

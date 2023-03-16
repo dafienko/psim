@@ -43,7 +43,7 @@ docs:
 
 .PHONY: static
 static:
-	cppcheck src/ &> static-analysis-report.txt && cpplint src/*.cpp &> style-report.txt
+	cppcheck --enable=all src/ &> static-analysis-report.txt && cpplint src/*.cpp &> style-report.txt
 
 clean:
 	$(RMDIR) $(BUILD)
