@@ -8,7 +8,7 @@ std::function<void(double, double)> mousePosCallback = [] (double a, double b) {
 std::function<void(int, int, int)> mouseButtonCallback = [] (int a, int b, int c) {};
 std::function<void(int, int)> windowResizedCallback = [] (int a, int b) {};
 
-glm::vec2 contentScale(2.0f);
+glm::vec2 contentScale(1.0f);
 
 void Window::init(int width, int height, const char* title) {
 	glfwSetErrorCallback([] (int error, const char* description) {
@@ -57,7 +57,14 @@ void Window::init(int width, int height, const char* title) {
 		windowResizedCallback(width, height);
 		glfwSwapBuffers(window);
 	});
- 
+	
+	glfwGetWindowContentScale(window, &contentScale.x, &contentScale.y);
+	std::cout << contentScale.x << ", " << contentScale.y << std::endl;
+	glfwSetWindowContentScaleCallback(window, [] (GLFWwindow* window, float xscale, float yscale) {
+		contentScale = glm::vec2(xscale, yscale);
+		std::cout << contentScale.x << ", " << contentScale.y << std::endl;std::cout << contentScale.x << ", " << contentScale.y << std::endl;
+	});
+
 	glfwMakeContextCurrent(window);
 	glewInit();
 	glfwSwapInterval(1);
