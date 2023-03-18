@@ -25,7 +25,9 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 			glyphWidth(glyphWidth), 
 			glyphHeight(glyphHeight),
 			buffer(new unsigned char[width * height])
-		{}
+		{
+			memset(buffer.get(), 0, width * height * sizeof(unsigned char));
+		}
 
 		glm::vec4 bufferGlyphBitmap(unsigned char c, unsigned char* bitmapBuffer, unsigned int bitmapWidth, unsigned int bitmapHeight) {
 			assert(bitmapWidth <= glyphWidth);
@@ -57,7 +59,6 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 };
 
 
-
 Font::Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft) : 
 	fontSize(fontSize), 
 	fontFace(fontFace) 
@@ -75,7 +76,6 @@ Font::Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft) :
 		(face->bbox.xMax - face->bbox.xMin) >> 6,
 		(face->bbox.yMax - face->bbox.yMin) >> 6
 	);
-	// maxGlyphSize += glm::ivec2(4, 4);
 
 	Glyphsheet glyphsheet(maxGlyphSize.x, maxGlyphSize.y);
 	glyphsheetSize = glyphsheet.getSize();
@@ -88,12 +88,12 @@ Font::Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft) :
 			continue;
 		}
 
-		Glyph glyph;
+		Glyph glyph = {};
 		glyph.advance = (unsigned int)(face->glyph->advance.x >> 6);
 		glyph.tlOffset = glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top);
 		glyph.glyphSize = glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows);
 
-		FT_Bitmap bmp = face->glyph->bitmap;
+		FT_Bitmap& bmp = face->glyph->bitmap;
 		glm::vec4 bounds = glyphsheet.bufferGlyphBitmap(c, bmp.buffer, bmp.width, bmp.rows);
 		glyph.texTL = glm::vec2(bounds.x, bounds.y);
 		glyph.texBR = glm::vec2(bounds.z, bounds.w);

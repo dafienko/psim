@@ -28,8 +28,8 @@ std::unique_ptr<UI> ui;
 bool mouse1Down = false;
 bool mouse2Down = false;
 
-void Core::init(int width, int height) {
-	windowSize = glm::ivec2(width, height);
+void Core::init(glm::ivec2 simSize) {
+	windowSize = Window::getWindowFramebufferSize();
 
 	keyEvent = std::make_unique<Event<int, int, int>>();
 	mouseMoveEvent = std::make_unique<Event<double, double>>();
@@ -39,7 +39,7 @@ void Core::init(int width, int height) {
 	Text::init();
 	UI::init();
 
-	simulation = std::make_unique<Simulation>(glm::ivec2(width / 10, height / 10));
+	simulation = std::make_unique<Simulation>(simSize);
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	
@@ -97,8 +97,8 @@ bool Core::isMouse2Down() {
 	return mouse2Down;
 }
 
-void Core::resize(int width, int height) {
-	windowSize = glm::ivec2(width, height);
+void Core::resize(glm::ivec2 newWindowSize) {
+	windowSize = newWindowSize;
 }
 
 static float elapsedTime, floatFPS, averageFrameTime;

@@ -11,10 +11,10 @@ namespace Core {
 	extern std::unique_ptr<Event<double, double>> mouseMoveEvent;
 	extern std::unique_ptr<Event<int, int, int>> mouseButtonEvent;
 
-	void init(int width, int height);
+	void init(glm::ivec2 simSize);
 	void update(float dt);
 	void render();
-	void resize(int width, int height);
+	void resize(glm::ivec2 windowSize);
 
 	glm::ivec2 getWindowSize();
 	glm::vec2 getMousePosition();
