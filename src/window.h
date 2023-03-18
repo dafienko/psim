@@ -17,6 +17,7 @@ namespace Window {
 	glm::ivec2 getWindowFramebufferSize();
 	glm::ivec2 getWindowScreenCoordinateSize();
 	glm::vec2 getMousePosition();
+	glm::vec2 getContentScale();
 
 	void destroy();
 }

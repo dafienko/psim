@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 
+#include "window.h"
 #include "uiobject.h"
 #include "shader.h"
 #include "core.h"
@@ -62,14 +63,16 @@ UIObject::UIObject(InstanceClass type, const std::string& name, json& data) :
 }
 
 void UIObject::updateRenderedDimensions(glm::vec2 parentPos, glm::vec2 parentSize) {
+	const glm::vec2 contentScale = Window::getContentScale();
+
 	absoluteSize = glm::vec2(
-		parentSize.x * size.scale.x + size.offset.x, 
-		parentSize.y * size.scale.y + size.offset.y
+		parentSize.x * size.scale.x + size.offset.x * contentScale.x, 
+		parentSize.y * size.scale.y + size.offset.y * contentScale.y
 	);
 
 	glm::vec2 anchorPos = glm::vec2(
-		parentPos.x + parentSize.x * position.scale.x + position.offset.x,
-		parentPos.y + parentSize.y * position.scale.y + position.offset.y
+		parentPos.x + parentSize.x * position.scale.x + position.offset.x * contentScale.x,
+		parentPos.y + parentSize.y * position.scale.y + position.offset.y * contentScale.y
 	);
 
 	absolutePosition = anchorPos - absoluteSize * anchorPoint;

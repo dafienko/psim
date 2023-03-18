@@ -8,6 +8,8 @@ std::function<void(double, double)> mousePosCallback = [] (double a, double b) {
 std::function<void(int, int, int)> mouseButtonCallback = [] (int a, int b, int c) {};
 std::function<void(int, int)> windowResizedCallback = [] (int a, int b) {};
 
+glm::vec2 contentScale(2.0f);
+
 void Window::init(int width, int height, const char* title) {
 	glfwSetErrorCallback([] (int error, const char* description) {
 		std::cerr << "Error: " << description << std::endl;
@@ -112,6 +114,10 @@ void Window::loop(std::function<void(float)> loopCallback) {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+}
+
+glm::vec2 Window::getContentScale() {
+	return contentScale;
 }
 
 void Window::destroy() {

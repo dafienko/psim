@@ -28,7 +28,7 @@
 					"name": "title",
 					
 					"text": "Simulation Configuration",
-					"textSize": 35,
+					"textSize": 22,
 					"textAnchorPoint": [0.5, 0.5],
 					"textColor": [0.0, 1.0, 0.0],
 					
@@ -38,7 +38,7 @@
 					"anchorPoint": [0.5, 0.0],
 					"size": {
 						"scale": [1.0, 0.0],
-						"offset": [0.0, 55.0]
+						"offset": [0.0, 40.0]
 					},
 					"position": {
 						"scale": [0.5, 0.0],
@@ -53,7 +53,7 @@
 			"name": "fps",
 			
 			"text": "fps: ",
-			"textSize": 24,
+			"textSize": 14,
 			"textAnchorPoint": [0.0, 0.5],
 			"textColor": [0.0, 1.0, 0.0],
 			
@@ -62,11 +62,11 @@
 			"anchorPoint": [0.0, 1.0],
 			"size": {
 				"scale": [1.0, 0.0],
-				"offset": [0.0, 30.0]
+				"offset": [0.0, 20.0]
 			},
 			"position": {
 				"scale": [0.0, 1.0],
-				"offset": [20.0, -20.0]
+				"offset": [10.0, -10.0]
 			}
 		},
 
@@ -75,7 +75,7 @@
 			"name": "renderMode",
 			
 			"text": "Fluid Render Mode: Density",
-			"textSize": 24,
+			"textSize": 14,
 			"textAnchorPoint": [0.0, 0.5],
 			"textColor": [0.0, 1.0, 0.0],
 			
@@ -84,11 +84,11 @@
 			"anchorPoint": [0.0, 1.0],
 			"size": {
 				"scale": [1.0, 0.0],
-				"offset": [0.0, 30.0]
+				"offset": [0.0, 20.0]
 			},
 			"position": {
 				"scale": [0.0, 1.0],
-				"offset": [20.0, -60.0]
+				"offset": [10.0, -35.0]
 			}
 		}
 	]

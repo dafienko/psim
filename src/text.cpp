@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 
+#include "window.h"
 #include "quad.h"
 #include "text.h"
 #include "core.h"
@@ -40,6 +41,7 @@ const Font& getFont(FontFace fontFace, unsigned int fontSize) {
 
 void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, unsigned int fontSize, glm::vec3 textColor) {
 	const Font &font = getFont(fontFace, fontSize);
+	const glm::vec2 contentScale = Window::getContentScale();
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -66,13 +68,13 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 	glm::ivec2 textPos = pos;
 	for (char c : text) {
 		if (c == '\n') {
-			textPos.y += fontSize * 1.5;
+			textPos.y += fontSize * 1.5 * contentScale.y;
 			textPos.x = pos.x;
 		} else {
 			const Glyph glyph = font.getGlyph(c);
 
-			glm::ivec2 tl = textPos + glm::ivec2(glyph.tlOffset.x, -glyph.tlOffset.y);
-			glm::ivec2 size = glyph.glyphSize;
+			glm::vec2 tl = glm::vec2(textPos) + glm::vec2(glyph.tlOffset.x, -glyph.tlOffset.y) * contentScale;
+			glm::vec2 size = glm::vec2(glyph.glyphSize) * contentScale;
 
 			glm::vec2 tlf((float) tl.x, (float) tl.y);
 			glm::vec2 brf = tlf + glm::vec2((float) size.x, (float) size.y);
@@ -82,7 +84,7 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 			Quad::render(tlf, brf);
 
-			textPos += glm::ivec2(glyph.advance, 0);
+			textPos += glm::ivec2(glyph.advance * contentScale.x, 0);
 		}
 	}
 
@@ -91,17 +93,18 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 
 glm::ivec2 Text::getTextBounds(const std::string &text, FontFace fontFace, unsigned int fontSize) {
 	glm::ivec2 bounds(0, (int)fontSize);
+	const glm::vec2 contentScale = Window::getContentScale();
 
 	const Font &font = getFont(fontFace, fontSize);
 	int textPos = 0;
 	for (char c : text) {
 		if (c == '\n') {
-			bounds.y += fontSize * 1.5;
+			bounds.y += fontSize * 1.5 * contentScale.y;
 			textPos = 0;
 		} else {
 			const Glyph glyph = font.getGlyph(c);
-			bounds.x = std::max(bounds.x, textPos + glyph.glyphSize.x);
-			textPos += glyph.advance;
+			bounds.x = std::max(bounds.x, (int)(textPos + glyph.glyphSize.x * contentScale.x));
+			textPos += glyph.advance * contentScale.x;
 		}
 	}
 
