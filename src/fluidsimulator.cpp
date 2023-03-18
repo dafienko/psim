@@ -31,7 +31,7 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 				fluidRenderMode += 1;
 				fluidRenderMode %= 3;
 			} else if (key == GLFW_KEY_DOWN) {
-				fluidRenderMode -= 1;
+				fluidRenderMode += 2;
 				fluidRenderMode %= 3;
 			}
 		}

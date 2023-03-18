@@ -24,6 +24,7 @@ class Font {
 	private:
 		std::map<char, Glyph> glyphData;
 		GLuint glyphTexture;
+		glm::ivec2 glyphsheetSize;
 	public:
 		const unsigned int fontSize;
 		const FontFace fontFace;
@@ -33,4 +34,5 @@ class Font {
 
 		Glyph getGlyph(char c) const;
 		GLuint getGlyphTexture() const;
+		glm::ivec2 getGlyphsheetSize() const;
 };

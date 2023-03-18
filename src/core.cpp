@@ -42,16 +42,18 @@ void Core::init(int width, int height) {
 	simulation = std::make_unique<Simulation>(glm::ivec2(width / 10, height / 10));
 
 	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
-	ui->rendered = false;
+	
+	UIFrame* configMenu = dynamic_cast<UIFrame*>(ui->getChild("main"));
+	configMenu->visible = false;
 
-	keyEvent->bind([&] (int key, int action, int mods) {
+	keyEvent->bind([=] (int key, int action, int mods) {
 		if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
 			Core::update(1.0 / 120.0);
 		} 
 		
 		if (action == GLFW_PRESS) {
 			if (key == GLFW_KEY_M) {
-				ui->rendered = !ui->rendered;
+				configMenu->visible = !configMenu->visible;
 			}	
 		}
 	});
@@ -123,7 +125,7 @@ void Core::render() {
 
 	simulation->render();
 
-	UIText* fpsLabel = dynamic_cast<UIText*>(ui->getChild("main")->getChild("fps"));
+	UIText* fpsLabel = dynamic_cast<UIText*>(ui->getChild("fps"));
 	fpsLabel->text = std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
 
 	ui->render();

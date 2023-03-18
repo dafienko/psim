@@ -42,13 +42,17 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 			}
 
 			return glm::vec4(
-				(float)(glyphSheetPos.x * glyphWidth) / width, (float)(glyphSheetPos.y * glyphHeight) / height, 
-				(float)(glyphSheetPos.x * glyphWidth + bitmapWidth + 1) / width, (float)(glyphSheetPos.y * glyphHeight + bitmapHeight + 1) / height
+				glyphSheetPos.x * glyphWidth, glyphSheetPos.y * glyphHeight, 
+				glyphSheetPos.x * glyphWidth + bitmapWidth + 1, glyphSheetPos.y * glyphHeight + bitmapHeight + 1
 			);
 		}
 
-		unsigned char* getBuffer() {
+		unsigned char* getBuffer() const {
 			return buffer.get();
+		}
+
+		glm::ivec2 getSize() const {
+			return glm::ivec2(width, height);
 		}
 };
 
@@ -67,7 +71,14 @@ Font::Font(FontFace fontFace, unsigned int fontSize, FT_Library& ft) :
 		exit(EXIT_FAILURE);
 	}
 
-	Glyphsheet glyphsheet((face->bbox.xMax - face->bbox.xMin) >> 6, (face->bbox.yMax - face->bbox.yMin) >> 6);
+	glm::ivec2 maxGlyphSize(
+		(face->bbox.xMax - face->bbox.xMin) >> 6,
+		(face->bbox.yMax - face->bbox.yMin) >> 6
+	);
+	// maxGlyphSize += glm::ivec2(4, 4);
+
+	Glyphsheet glyphsheet(maxGlyphSize.x, maxGlyphSize.y);
+	glyphsheetSize = glyphsheet.getSize();
 
 	FT_Set_Pixel_Sizes(face, 0, fontSize);  
 	for (unsigned char c = 0; c < 128; c++) {
@@ -119,6 +130,10 @@ Glyph Font::getGlyph(char c) const {
 
 GLuint Font::getGlyphTexture() const {
 	return glyphTexture;
+}
+
+glm::ivec2 Font::getGlyphsheetSize() const {
+	return glyphsheetSize;
 }
 
 Font::~Font() {

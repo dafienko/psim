@@ -229,7 +229,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 					glm::ivec2 fallDir = checkSymmetricalDirs(newPos, DOWNLEFT, DOWNRIGHT);
 					if (fallDir == glm::ivec2(0)) {
 						int spreadDir = rand() % 2 * 2 - 1;
-						for (int i = 0; i < 10; i++) {
+						for (int i = 0; i < 2 + rand() % 8; i++) {
 							glm::ivec2 dir(spreadDir, 0);
 							if (checkDir(newPos, dir)) {
 								newPos += dir;

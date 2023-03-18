@@ -44,30 +44,52 @@
 						"scale": [0.5, 0.0],
 						"offset": [0.0, 20.0]
 					}
-				},
-
-				{
-					"type": "UIText",
-					"name": "fps",
-					
-					"text": "fps: ",
-					"textSize": 24,
-					"textAnchorPoint": [0.0, 0.5],
-					"textColor": [0.0, 1.0, 0.0],
-					
-					"backgroundTransparency": 1,
-					
-					"anchorPoint": [0.0, 1.0],
-					"size": {
-						"scale": [1.0, 0.0],
-						"offset": [0.0, 30.0]
-					},
-					"position": {
-						"scale": [0.0, 1.0],
-						"offset": [20.0, -20.0]
-					}
 				}
 			]
+		},
+
+		{
+			"type": "UIText",
+			"name": "fps",
+			
+			"text": "fps: ",
+			"textSize": 24,
+			"textAnchorPoint": [0.0, 0.5],
+			"textColor": [0.0, 1.0, 0.0],
+			
+			"backgroundTransparency": 1,
+			
+			"anchorPoint": [0.0, 1.0],
+			"size": {
+				"scale": [1.0, 0.0],
+				"offset": [0.0, 30.0]
+			},
+			"position": {
+				"scale": [0.0, 1.0],
+				"offset": [20.0, -20.0]
+			}
+		},
+
+		{
+			"type": "UIText",
+			"name": "renderMode",
+			
+			"text": "Fluid Render Mode: Density",
+			"textSize": 24,
+			"textAnchorPoint": [0.0, 0.5],
+			"textColor": [0.0, 1.0, 0.0],
+			
+			"backgroundTransparency": 1,
+			
+			"anchorPoint": [0.0, 1.0],
+			"size": {
+				"scale": [1.0, 0.0],
+				"offset": [0.0, 30.0]
+			},
+			"position": {
+				"scale": [0.0, 1.0],
+				"offset": [20.0, -60.0]
+			}
 		}
 	]
 }

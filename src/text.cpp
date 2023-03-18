@@ -41,15 +41,21 @@ const Font& getFont(FontFace fontFace, unsigned int fontSize) {
 void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace, unsigned int fontSize, glm::vec3 textColor) {
 	const Font &font = getFont(fontFace, fontSize);
 
-	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_DEPTH_TEST);
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 
+	
 	glyphShader->bind();
-
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, font.getGlyphTexture());
+	glUniform1i(glGetUniformLocation(glyphShader->getProgram(), "text"), 0);
+
+	glm::ivec2 glyphsheetSize = font.getGlyphsheetSize();
+	glUniform2f(
+		glGetUniformLocation(glyphShader->getProgram(), "glyphsheetSize"),
+		(float)glyphsheetSize.x, (float)glyphsheetSize.y
+	);
 
 	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::getWindowSize().x, (float)Core::getWindowSize().y, 0.0f);
 	GLint projLoc = glGetUniformLocation(glyphShader->getProgram(), "projection");
