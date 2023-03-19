@@ -24,7 +24,6 @@ void main() {
 	float u = thisVel.x;
 	float v = thisVel.y;
 
-	
 	u += -DS.x * getForceFraction(lo, DS.y) * dt;
 	u += lDS.x * getForceFraction(o, lDS.y) * dt;
 	u *= min(1, max(0, o + lo - 1));

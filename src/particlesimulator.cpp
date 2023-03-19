@@ -17,11 +17,18 @@
 
 ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) : 
 	grid(new Particle[simulationSize.x * simulationSize.y]),
+	
 	byteBuffer(new ParticleType[simulationSize.x * simulationSize.y]),
+	addedFluidVelocityBuffer(new float[(simulationSize.x + 1) * (simulationSize.y + 1) * 4]),
+	addedFluidDensityBuffer(new float[simulationSize.x * simulationSize.y * 4]),
+
 	ui(dynamic_cast<UI*>((Instance::fromJSON("ui/particlesUI.json")))),
+	
 	particlesShader("shaders/grid.vsh", "shaders/particles/particles.fs"),
 	obstaclesShader("shaders/grid.vsh", "shaders/particles/obstacles.fs"),
+	
 	particlesTargets(2, simulationSize.x, simulationSize.y, GL_RGBA, GL_NEAREST),
+	
 	simulationSize(simulationSize)
 {
 	for (int y = 0; y < simulationSize.y; y++) {
@@ -270,6 +277,11 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 		}
 		
 		case Fire: {
+			if (rand() % 2 == 0) { // smoke chance
+				addFluidVelocity(pos, 1, 10, 0, 2, -2);
+				setFluidDensity(pos, 3, glm::ivec4(.8, .8, .8, 1.0));
+			}
+
 			if (rand() % 5 == 0) { // spread chance
 				for (glm::ivec2 dir : DIRS) {
 					glm::ivec2 searchAt = pos + dir;
@@ -381,8 +393,117 @@ void ParticleSimulator::updateParticlesTexture() {
 	Quad::render();
 }
 
-void ParticleSimulator::update(float dt, float* fluidVelocityBuffer) {
+void addPixel(float* pixel, float r, float g, float b, float a) {
+	*(pixel + 0) += r;
+	*(pixel + 1) += g;
+	*(pixel + 2) += b;
+	*(pixel + 3) = a;
+}
+
+void addPixel(float* pixel, glm::ivec4 c) {
+	addPixel(pixel, c.r, c.g, c.b, c.a);
+}
+
+void setPixel(float* pixel, float r, float g, float b, float a) {
+	*(pixel + 0) = r;
+	*(pixel + 1) = g;
+	*(pixel + 2) = b;
+	*(pixel + 3) = a;
+}
+
+void setPixel(float* pixel, glm::ivec4 c) {
+	setPixel(pixel, c.r, c.g, c.b, c.a);
+}
+
+void ParticleSimulator::addFluidVelocity(glm::ivec2 pos, int r, float top, float bottom, float right, float left) {
+	int leftBound = pos.x - r;
+	int rightBound = pos.x + r + 1;
+	int topBound = pos.y + r + 1;
+	int bottomBound = pos.y + r;
+	for (int y = bottomBound; y <= topBound; y++) {
+		for (int x = leftBound; x <= (y == topBound ? rightBound - 1 : rightBound); x++) {
+			if (!(x > 0 && y > 0 and x <= simulationSize.x && y <= simulationSize.y)) {
+				continue;
+			}
+
+			float u = 0;
+			if (y < topBound) {
+				u = x <= pos.x ? left : right;
+			}
+
+			float v = 0;
+			if (x < rightBound) {
+				u = y <= pos.y ? bottom : top;
+			}
+
+			float* pixel = addedFluidVelocityBuffer.get() + 4 * (y * (simulationSize.x + 1) + x);
+			addPixel(pixel, glm::ivec4(
+				u,
+				v,
+				0,
+				1
+			));
+		}
+	}
+}
+
+void ParticleSimulator::setFluidDensity(glm::ivec2 pos, int r, glm::ivec4 col) {
+	for (int y = pos.y - r; y <= pos.y + r; y++) {
+		for (int x = pos.x - r; x <= pos.x + r; x++) {
+			if (!inBounds(pos)) {
+				continue;
+			}
+
+			float* pixel = addedFluidDensityBuffer.get() + 4 * (pos.y * simulationSize.x + pos.x);
+			setPixel(pixel, col);
+		}
+	}
+}
+
+void ParticleSimulator::updateFluidTextures(GLuint fluidVelocityTexture, GLuint fluidDensityTexture) {
+	glBindTexture(GL_TEXTURE_2D, fluidVelocityTexture);
+	glTexImage2D(
+		GL_TEXTURE_2D, 
+		0, 
+		GL_RGBA32F, 
+		simulationSize.x + 1, simulationSize.y + 1, 
+		0, GL_RGBA, GL_FLOAT, 
+		addedFluidVelocityBuffer.get()
+	);
+
+	glBindTexture(GL_TEXTURE_2D, fluidDensityTexture);
+	glTexImage2D(
+		GL_TEXTURE_2D, 
+		0, 
+		GL_RGBA32F, 
+		simulationSize.x, simulationSize.y, 
+		0, GL_RGBA, GL_FLOAT, 
+		addedFluidDensityBuffer.get()
+	);
+}
+
+void ParticleSimulator::clearFluidBuffers() {
+	for (int y = 0; y < simulationSize.y; y++) {
+		for (int x = 0; x < simulationSize.x; x++) {
+			float* pixel = addedFluidDensityBuffer.get() + 4 * (y * simulationSize.x + x);
+			setPixel(pixel, glm::ivec4(0, 0, 0, 0));
+		}
+	}
+
+	for (int y = 0; y <= simulationSize.y; y++) {
+		for (int x = 0; x <= simulationSize.x; x++) {
+			float* pixel = addedFluidVelocityBuffer.get() + 4 * (y * (simulationSize.x + 1) + x);
+			setPixel(pixel, glm::ivec4(0, 0, 0, 0));
+		}
+	}
+	// memset(addedFluidDensityBuffer.get(), 0, simulationSize.x * simulationSize.y * 4);
+	// memset(addedFluidVelocityBuffer.get(), 0, (simulationSize.x + 1) * (simulationSize.y + 1) * 4);
+}
+
+void ParticleSimulator::update(float dt, float* fluidVelocityBuffer, GLuint fluidVelocityTexture, GLuint fluidDensityTexture) {
+	clearFluidBuffers();
 	updateParticles(fluidVelocityBuffer);
+	updateFluidTextures(fluidVelocityTexture, fluidDensityTexture);
 	updateParticlesTexture();
 }
 

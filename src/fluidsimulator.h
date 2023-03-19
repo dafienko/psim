@@ -21,6 +21,9 @@ class FluidSimulator: public Renderable {
 		RenderTargetArray obstaclesTargets;
 		RenderTargetArray densityTargets;
 
+		RenderTarget particleDensityTarget;
+		RenderTarget particleVelocityTarget;
+
 		RenderTarget pressureTarget;
 		RenderTarget visualTarget;
 		
@@ -29,6 +32,7 @@ class FluidSimulator: public Renderable {
 		int fluidRenderMode = 0;
 
 		void updatePressure(float dt);
+		void addParticleTextures();
 		void solve(float dt);
 		void advect(float dt);
 	public:
@@ -38,6 +42,8 @@ class FluidSimulator: public Renderable {
 
 		void update(float dt);
 		void bindObstaclesTexture();
+		GLuint getParticleVelocityTexture();
+		GLuint getParticleDensityTexture();
 		float* getVelocityBuffer();
 		void render() override;
 };

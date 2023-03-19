@@ -19,6 +19,7 @@ class RenderTarget {
 		~RenderTarget();
 
 		void setSize(int width, int height);
+		GLuint getTexture() const;
 		void bind();
 		void bindAsTexture();
 		void bindAsTexture(const char* textureName, GLuint program);

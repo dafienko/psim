@@ -19,6 +19,9 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 	obstaclesTargets(2, simulationSize.x, simulationSize.y, GL_RED, GL_NEAREST),
 	densityTargets(2, simulationSize.x, simulationSize.y, GL_RGB32F, GL_NEAREST),
 	
+	particleDensityTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
+	particleVelocityTarget(simulationSize.x + 1, simulationSize.y + 1, GL_RGBA32F, GL_NEAREST),
+
 	pressureTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
 	visualTarget(simulationSize.x, simulationSize.y, GL_RGBA32F, GL_NEAREST),
 
@@ -55,12 +58,37 @@ float* FluidSimulator::getVelocityBuffer() {
 	return velocityBuffer.get();
 }
 
+GLuint FluidSimulator::getParticleVelocityTexture() {
+	return particleVelocityTarget.getTexture();
+}
+
+GLuint FluidSimulator::getParticleDensityTexture() {
+	return particleDensityTarget.getTexture();
+}
+
 void FluidSimulator::bindObstaclesTexture() {
 	obstaclesTargets.bind();
 	glClearColor(1, 0, 0, 1);
 	obstaclesTargets.clear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
+}
+
+void FluidSimulator::addParticleTextures() {
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+	
+	Quad::quadShaderProgram->bind();
+	physicsTargets.bindOld();
+	particleVelocityTarget.bindAsTexture("screenTexture", Quad::quadShaderProgram->getProgram(), 0);
+	Quad::render();
+
+	densityTargets.bindOld();
+	particleDensityTarget.bindAsTexture("screenTexture", Quad::quadShaderProgram->getProgram(), 0);
+	Quad::render();
+
+	RenderTarget::bindDefault();
 }
 
 void FluidSimulator::updatePressure(float dt) {
@@ -150,16 +178,19 @@ void FluidSimulator::advect(float dt) {
 }
 
 void FluidSimulator::update(float dt) {
+	addParticleTextures();
+
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
+	///*
 	for (int i = 0; i < 40; i++) {
 		updatePressure(dt);
 		solve(dt);
 	}
 	
 	advect(dt);
-	
+	//*/
 }
 
 void FluidSimulator::render() {

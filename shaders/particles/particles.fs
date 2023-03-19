@@ -22,7 +22,7 @@ void main() {
 		FragColor = RGB(160, 160, 160);
 		break;
 	case Sand:
-		FragColor = RGB(205, 205, 100);
+		FragColor = RGB(250, 202, 107);
 		break;
 	case Water:
 		FragColor = RGB(50, 50, 255);

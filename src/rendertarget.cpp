@@ -51,6 +51,10 @@ void RenderTarget::bind() {
 	glViewport(0, 0, width, height);
 }
 
+GLuint RenderTarget::getTexture() const {
+	return textureColorbuffer;
+}
+
 void RenderTarget::bindAsTexture(const char* textureName, GLuint shaderProgram, GLint location) {
 	glActiveTexture(GL_TEXTURE0 + location); 
 	glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
