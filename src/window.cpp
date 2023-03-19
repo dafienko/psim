@@ -59,10 +59,8 @@ void Window::init(int width, int height, const char* title) {
 	});
 	
 	glfwGetWindowContentScale(window, &contentScale.x, &contentScale.y);
-	std::cout << contentScale.x << ", " << contentScale.y << std::endl;
 	glfwSetWindowContentScaleCallback(window, [] (GLFWwindow* window, float xscale, float yscale) {
 		contentScale = glm::vec2(xscale, yscale);
-		std::cout << contentScale.x << ", " << contentScale.y << std::endl;std::cout << contentScale.x << ", " << contentScale.y << std::endl;
 	});
 
 	glfwMakeContextCurrent(window);

@@ -54,6 +54,10 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 				selectParticleType(Wall);
 			} else if (key == GLFW_KEY_3) {
 				selectParticleType(Water);
+			} else if (key == GLFW_KEY_4) {
+				selectParticleType(Wood);
+			} else if (key == GLFW_KEY_5) {
+				selectParticleType(Fire);
 			}
 		}
 	});
@@ -79,7 +83,12 @@ void ParticleSimulator::selectParticleType(ParticleType type) {
 		particleName = "Water";
 		break;
 
-	case Test:
+	case Wood:
+		particleName = "Wood";
+		break;
+	
+	case Fire:
+		particleName = "Fire";
 		break;
 	}
 
@@ -114,8 +123,12 @@ bool ParticleSimulator::isEmpty(glm::ivec2 p) {
 
 std::optional<ParticleSimulator::ParticleType> ParticleSimulator::isSwappable(glm::ivec2 p, ParticleType replacementType) {
 	if (inBounds(p)) {
-		ParticleType type = particleGet(p).type;
-		if (type == Air || (type == Water && replacementType == Sand)) {
+		Particle& dest = particleGet(p);
+		ParticleType type = dest.type;
+		if (type == Air || type == Fire || (type == Water && replacementType == Sand)) {
+			if (type == Fire) {
+				dest.type = Air;
+			}
 			return type;
 		}
 	}
@@ -146,10 +159,14 @@ const float GRAVITY_ACCEL = 0.1f;
 
 void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 	static const glm::ivec2 DOWN = glm::ivec2(0, -1);
+	static const glm::ivec2 UP = glm::ivec2(0, 1);
 	static const glm::ivec2 LEFT = glm::ivec2(-1, 0);
 	static const glm::ivec2 RIGHT = glm::ivec2(1, 0);
 	static const glm::ivec2 DOWNLEFT = glm::ivec2(-1, -1);
 	static const glm::ivec2 DOWNRIGHT = glm::ivec2(1, -1);
+	static const glm::ivec2 UPLEFT = glm::ivec2(-1, 1);
+	static const glm::ivec2 UPRIGHT = glm::ivec2(1, 1);
+	static const glm::ivec2 DIRS[] = {DOWN, UP, LEFT, RIGHT, DOWNLEFT, UPLEFT, DOWNRIGHT, UPRIGHT};
 
 	static auto checkDir = [&] (glm::ivec2 pos, glm::ivec2 dir) {
 		glm::ivec2 searchAt = pos + dir;
@@ -192,7 +209,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 	} else {
 		switch (particle.type) {
 		case Air:
-		case Test:
+		case Wood:
 		case Wall: {
 			break;
 		}
@@ -248,6 +265,40 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 			}
 
 			particleSwap(pos, newPos);
+
+			break;
+		}
+		
+		case Fire: {
+			if (rand() % 5 == 0) { // spread chance
+				for (glm::ivec2 dir : DIRS) {
+					glm::ivec2 searchAt = pos + dir;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Wood) {
+						Particle& near = particleGet(searchAt);
+						near.type = Fire;
+						near.updated = true;
+					}
+				}
+			}
+
+			if (rand() % 3 == 0) { // rise chance
+				if (rand() % 4 < 3) { // straight up
+					glm::ivec2 searchAt = pos + UP;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Air) {
+						particleSwap(pos, searchAt);
+					}
+				} else { // up diag
+					glm::ivec2 dir = rand() % 2 == 0 ? UPRIGHT : UPLEFT;
+					glm::ivec2 searchAt = pos + dir;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Air) {
+						particleSwap(pos, searchAt);
+					}
+				}
+			}
+
+			if (rand() % 20 == 0) { // die chance
+				particle.type = Air;
+			}
 
 			break;
 		}

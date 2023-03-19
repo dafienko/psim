@@ -6,6 +6,7 @@
 
 #include "core.h"
 #include "quad.h"
+#include "uitext.h"
 
 FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) : 
 	fluidShader("shaders/grid.vsh", "shaders/fluid/fluid.fs"),
@@ -34,6 +35,15 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 				fluidRenderMode += 2;
 				fluidRenderMode %= 3;
 			}
+
+			static const std::string MODE_LABELS[] = {
+				"Fluid Render Mode: Density",
+				"Fluid Render Mode: Pressure",
+				"Fluid Render Mode: Velocity"
+			};
+
+			UIText* renderModeLabel = dynamic_cast<UIText*>(Core::mainUI->getChild("renderMode"));
+			renderModeLabel->text = MODE_LABELS[fluidRenderMode];
 		}
 	});
 }

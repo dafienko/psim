@@ -5,11 +5,13 @@
 #include <glm/ext.hpp>
 
 #include "event.h"
+#include "ui.h"
 
 namespace Core {	
 	extern std::unique_ptr<Event<int, int, int>> keyEvent;
 	extern std::unique_ptr<Event<double, double>> mouseMoveEvent;
 	extern std::unique_ptr<Event<int, int, int>> mouseButtonEvent;
+	extern std::unique_ptr<UI> mainUI;
 
 	void init(glm::ivec2 simSize);
 	void update(float dt);

@@ -23,7 +23,8 @@ std::unique_ptr<Event<double, double>> Core::mouseMoveEvent;
 std::unique_ptr<Event<int, int, int>> Core::mouseButtonEvent;
 
 std::unique_ptr<Simulation> simulation;
-std::unique_ptr<UI> ui;
+
+std::unique_ptr<UI> Core::mainUI;
 
 bool mouse1Down = false;
 bool mouse2Down = false;
@@ -41,9 +42,9 @@ void Core::init(glm::ivec2 simSize) {
 
 	simulation = std::make_unique<Simulation>(simSize);
 
-	ui = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
+	mainUI = std::unique_ptr<UI>(dynamic_cast<UI*>((Instance::fromJSON("ui/main.json"))));
 	
-	UIFrame* configMenu = dynamic_cast<UIFrame*>(ui->getChild("main"));
+	UIFrame* configMenu = dynamic_cast<UIFrame*>(mainUI->getChild("main"));
 	configMenu->visible = false;
 
 	keyEvent->bind([=] (int key, int action, int mods) {
@@ -125,10 +126,10 @@ void Core::render() {
 
 	simulation->render();
 
-	UIText* fpsLabel = dynamic_cast<UIText*>(ui->getChild("fps"));
+	UIText* fpsLabel = dynamic_cast<UIText*>(mainUI->getChild("fps"));
 	fpsLabel->text = std::to_string(averageFrameTime * 1000.0f) + " ms (" + std::to_string(floatFPS) + " fps)";
 
-	ui->render();
+	mainUI->render();
 }
 
 void Core::destroy() {
@@ -136,7 +137,7 @@ void Core::destroy() {
 	mouseMoveEvent.release();
 
 	simulation.release();
-	ui.release();
+	mainUI.release();
 
 	UI::destroy();
 	Text::destroy();

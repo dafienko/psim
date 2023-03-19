@@ -18,7 +18,8 @@ class ParticleSimulator : public Renderable {
 			Wall,
 			Sand,
 			Water,
-			Test
+			Wood,
+			Fire
 		};
 
 		struct Particle {

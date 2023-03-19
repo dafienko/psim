@@ -11,24 +11,27 @@ out vec4 FragColor;
 
 #include "shaders/particles/particleTypes.glsl"
 
+#define COL(v) v / 255.0
+#define RGB(r, g, b) vec4(COL(r), COL(g), COL(b), 1.0)
+
 void main() {
 	uint particleType = texture(particlesTexture, texCoords).r;
 
 	switch (particleType) {
 	case Wall:
-		FragColor = vec4(.6, .6, .6, 1);
+		FragColor = RGB(160, 160, 160);
 		break;
 	case Sand:
-		FragColor = vec4(1, 206.0/255.0, 107.0/255.0, 1);
+		FragColor = RGB(205, 205, 100);
 		break;
 	case Water:
-		FragColor = vec4(0, 0, 1, 1);
+		FragColor = RGB(50, 50, 255);
 		break;
-	case Particle4:
-		FragColor = vec4(1, 1, 1, .5);
+	case Wood:
+		FragColor = RGB(117, 69, 26);
 		break;
-	case Particle5:
-		FragColor = vec4(.1, .5, 1, 1);
+	case Fire:
+		FragColor = RGB(255, 115, 0);
 		break;
 	default:
 		FragColor = vec4(0, 0, 0, 0);	
