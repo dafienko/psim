@@ -183,14 +183,12 @@ void FluidSimulator::update(float dt) {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	///*
 	for (int i = 0; i < 40; i++) {
 		updatePressure(dt);
 		solve(dt);
 	}
 	
 	advect(dt);
-	//*/
 }
 
 void FluidSimulator::render() {

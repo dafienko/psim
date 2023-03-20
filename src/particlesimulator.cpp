@@ -15,6 +15,10 @@
 #define FLUID_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
 #define GRAVITY_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
 
+float randf() {
+	return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+}
+
 ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) : 
 	grid(new Particle[simulationSize.x * simulationSize.y]),
 	
@@ -96,6 +100,9 @@ void ParticleSimulator::selectParticleType(ParticleType type) {
 	
 	case Fire:
 		particleName = "Fire";
+		break;
+	
+	default:
 		break;
 	}
 
@@ -220,6 +227,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 		case Wall: {
 			break;
 		}
+
 		case Sand: {
 			glm::ivec2 newPos = pos;
 			for (int y = 0; y > (int)particle.cellularVelocity.y - 1; y--) {
@@ -277,9 +285,9 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 		}
 		
 		case Fire: {
-			if (rand() % 2 == 0) { // smoke chance
-				addFluidVelocity(pos, 1, 10, 0, 2, -2);
-				setFluidDensity(pos, 3, glm::ivec4(.8, .8, .8, 1.0));
+			if (rand() % 1 == 0) { // smoke chance
+				addFluidVelocity(pos + glm::ivec2(0, 2), 1, 15, 0, 5, -5);
+				setFluidDensity(pos + glm::ivec2(0, 2), 0, glm::vec4(.24, .24, .24, 1.0));
 			}
 
 			if (rand() % 5 == 0) { // spread chance
@@ -287,7 +295,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 					glm::ivec2 searchAt = pos + dir;
 					if (inBounds(searchAt) && particleGet(searchAt).type == Wood) {
 						Particle& near = particleGet(searchAt);
-						near.type = Fire;
+						near.type = BurningWood;
 						near.updated = true;
 					}
 				}
@@ -309,6 +317,48 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 			}
 
 			if (rand() % 20 == 0) { // die chance
+				particle.type = Air;
+			}
+
+			break;
+		}
+
+		case BurningWood: {
+			for (glm::ivec2 dir : {RIGHT, LEFT, UP, UPRIGHT, UPLEFT}) {
+				glm::ivec2 searchAt = pos + dir;
+				if (inBounds(searchAt) && particleGet(searchAt).type == Water) {
+					particle.type = Wood;
+					break;
+				}
+			}
+
+			if (rand() % 20 == 0) { // spread chance
+				for (glm::ivec2 dir : DIRS) {
+					glm::ivec2 searchAt = pos + dir;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Wood) {
+						Particle& near = particleGet(searchAt);
+						near.type = BurningWood;
+						near.updated = true;
+					}
+				}
+			}
+
+			if (rand() % 3 == 0) { // flame chance
+				if (rand() % 4 < 3) { // straight up
+					glm::ivec2 searchAt = pos + UP;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Air) {
+						particleGet(searchAt).type = Fire;
+					}
+				} else { // up diag
+					glm::ivec2 dir = rand() % 2 == 0 ? UPRIGHT : UPLEFT;
+					glm::ivec2 searchAt = pos + dir;
+					if (inBounds(searchAt) && particleGet(searchAt).type == Air) {
+						particleGet(searchAt).type = Fire;
+					}
+				}
+			}
+
+			if (rand() % 80 == 0) { // die chance
 				particle.type = Air;
 			}
 
@@ -400,8 +450,8 @@ void addPixel(float* pixel, float r, float g, float b, float a) {
 	*(pixel + 3) = a;
 }
 
-void addPixel(float* pixel, glm::ivec4 c) {
-	addPixel(pixel, c.r, c.g, c.b, c.a);
+void addPixel(float* pixel, glm::vec4 c) {
+	addPixel(pixel, c.x, c.y, c.z, c.w);
 }
 
 void setPixel(float* pixel, float r, float g, float b, float a) {
@@ -411,8 +461,8 @@ void setPixel(float* pixel, float r, float g, float b, float a) {
 	*(pixel + 3) = a;
 }
 
-void setPixel(float* pixel, glm::ivec4 c) {
-	setPixel(pixel, c.r, c.g, c.b, c.a);
+void setPixel(float* pixel, glm::vec4 c) {
+	setPixel(pixel, c.x, c.y, c.z, c.w);
 }
 
 void ParticleSimulator::addFluidVelocity(glm::ivec2 pos, int r, float top, float bottom, float right, float left) {
@@ -422,7 +472,7 @@ void ParticleSimulator::addFluidVelocity(glm::ivec2 pos, int r, float top, float
 	int bottomBound = pos.y + r;
 	for (int y = bottomBound; y <= topBound; y++) {
 		for (int x = leftBound; x <= (y == topBound ? rightBound - 1 : rightBound); x++) {
-			if (!(x > 0 && y > 0 and x <= simulationSize.x && y <= simulationSize.y)) {
+			if (!(x > 0 && y > 0 && x <= simulationSize.x && y <= simulationSize.y)) {
 				continue;
 			}
 
@@ -433,11 +483,11 @@ void ParticleSimulator::addFluidVelocity(glm::ivec2 pos, int r, float top, float
 
 			float v = 0;
 			if (x < rightBound) {
-				u = y <= pos.y ? bottom : top;
+				v = y <= pos.y ? bottom : top;
 			}
 
 			float* pixel = addedFluidVelocityBuffer.get() + 4 * (y * (simulationSize.x + 1) + x);
-			addPixel(pixel, glm::ivec4(
+			addPixel(pixel, glm::vec4(
 				u,
 				v,
 				0,
@@ -447,14 +497,14 @@ void ParticleSimulator::addFluidVelocity(glm::ivec2 pos, int r, float top, float
 	}
 }
 
-void ParticleSimulator::setFluidDensity(glm::ivec2 pos, int r, glm::ivec4 col) {
+void ParticleSimulator::setFluidDensity(glm::ivec2 pos, int r, glm::vec4 col) {
 	for (int y = pos.y - r; y <= pos.y + r; y++) {
 		for (int x = pos.x - r; x <= pos.x + r; x++) {
-			if (!inBounds(pos)) {
+			if (!inBounds(glm::ivec2(x, y))) {
 				continue;
 			}
 
-			float* pixel = addedFluidDensityBuffer.get() + 4 * (pos.y * simulationSize.x + pos.x);
+			float* pixel = addedFluidDensityBuffer.get() + 4 * (y * simulationSize.x + x);
 			setPixel(pixel, col);
 		}
 	}
@@ -486,18 +536,16 @@ void ParticleSimulator::clearFluidBuffers() {
 	for (int y = 0; y < simulationSize.y; y++) {
 		for (int x = 0; x < simulationSize.x; x++) {
 			float* pixel = addedFluidDensityBuffer.get() + 4 * (y * simulationSize.x + x);
-			setPixel(pixel, glm::ivec4(0, 0, 0, 0));
+			setPixel(pixel, glm::vec4(0, 0, 0, 0));
 		}
 	}
 
 	for (int y = 0; y <= simulationSize.y; y++) {
 		for (int x = 0; x <= simulationSize.x; x++) {
 			float* pixel = addedFluidVelocityBuffer.get() + 4 * (y * (simulationSize.x + 1) + x);
-			setPixel(pixel, glm::ivec4(0, 0, 0, 0));
+			setPixel(pixel, glm::vec4(0, 0, 0, 0));
 		}
 	}
-	// memset(addedFluidDensityBuffer.get(), 0, simulationSize.x * simulationSize.y * 4);
-	// memset(addedFluidVelocityBuffer.get(), 0, (simulationSize.x + 1) * (simulationSize.y + 1) * 4);
 }
 
 void ParticleSimulator::update(float dt, float* fluidVelocityBuffer, GLuint fluidVelocityTexture, GLuint fluidDensityTexture) {

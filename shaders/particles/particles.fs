@@ -33,6 +33,9 @@ void main() {
 	case Fire:
 		FragColor = RGB(255, 115, 0);
 		break;
+	case BurningWood:
+		FragColor = RGB(255, 0, 20);
+		break;
 	default:
 		FragColor = vec4(0, 0, 0, 0);	
 	}

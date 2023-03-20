@@ -6,24 +6,29 @@ out vec4 result;
 
 void main() {
 	ivec2 pos = ivec2(texCoords * gridSize);
-	if (getO(pos) == 0.0) {
+	if (min(inBounds(pos), getO(pos)) == 0.0) {
 		result = vec4(0, 0, 0, 1);
 		return;
 	}
 
+	ivec2 up = pos + ivec2(0, 1);
+	ivec2 dp = pos + ivec2(0, -1);
+	ivec2 rp = pos + ivec2(1, 0);
+	ivec2 lp = pos + ivec2(-1, 0);
+
 	vec2 bl = getVel(pos);
-	vec2 tl = getVel(pos + ivec2(0, 1));
-	vec2 br = getVel(pos + ivec2(1, 0));
+	vec2 tl = getVel(up);
+	vec2 br = getVel(rp);
 
 	float b = bl.y;
 	float l = bl.x;
 	float t = -tl.y;
 	float r = -br.x;
 	
-	float ts = getO(pos + ivec2(0, 1));
-	float bs = getO(pos + ivec2(0, -1));
-	float rs = getO(pos + ivec2(1, 0));
-	float ls = getO(pos + ivec2(-1, 0));
+	float ts = min(inBounds(up), getO(up));
+	float bs = min(inBounds(dp), getO(dp));
+	float rs = min(inBounds(rp), getO(rp));
+	float ls = min(inBounds(lp), getO(lp));
 	
 	float d = (b + l + t + r); 
 	float s = ts + bs + rs + ls;

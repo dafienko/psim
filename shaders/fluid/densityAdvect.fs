@@ -12,7 +12,7 @@ void main() {
 
 	vec2 vel = vec2(sampleU(fPos), sampleV(fPos));
 	vec2 advectFrom = fPos - vel * dt;
-	if (getO(ivec2(advectFrom)) > 0) {
+	if (min(inBounds(ivec2(advectFrom)), getO(ivec2(advectFrom))) > 0) {
 		result = sampleDensity(advectFrom);
 	} else {
 		result = vec3(0, 0, 0);

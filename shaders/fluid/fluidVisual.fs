@@ -32,6 +32,7 @@ void main() {
 		break;
 	}
 
+	// draw fluid obstacles
 	// float o = getO(pos);
 	// if (o == 0.0) {
 	// 	result = vec4(1.0, 1.0, 1.0, 1.0);

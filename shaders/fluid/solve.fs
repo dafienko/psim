@@ -18,8 +18,12 @@ void main() {
 	vec2 bDS = getDS(pos + ivec2(0, -1));
 
 	float o = getO(pos);
-	float lo = getO(pos + ivec2(-1, 0));
-	float bo = getO(pos + ivec2(0, -1));
+	
+	ivec2 l = pos + ivec2(-1, 0);
+	float lo = getO(l);
+
+	ivec2 b = pos + ivec2(0, -1);
+	float bo = getO(b);
 	
 	float u = thisVel.x;
 	float v = thisVel.y;
@@ -27,10 +31,15 @@ void main() {
 	u += -DS.x * getForceFraction(lo, DS.y) * dt;
 	u += lDS.x * getForceFraction(o, lDS.y) * dt;
 	u *= min(1, max(0, o + lo - 1));
-	
-	v += bDS.x * getForceFraction(o, bDS.y) * dt;
+
 	v += -DS.x * getForceFraction(bo, DS.y) * dt;
+	v += bDS.x * getForceFraction(o, bDS.y) * dt;
 	v *= min(1, max(0, o + bo - 1));
+
+	if (onBorder(pos)) {
+		u /= 2.0;
+		v /= 2.0;
+	}
 
 	result = vec4(u, v, 0.0, 1.0);
 }

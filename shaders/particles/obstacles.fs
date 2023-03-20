@@ -15,7 +15,7 @@ void main() {
 	vec2 p = ivec2(texCoords * gridSize);
 	uint particleType = texture(particlesTexture, texCoords).r;
 
-	if (p.x == 0 || p.y == 0 || p.y == gridSize.y - 1) {
+	if (false && (p.x == 0 || p.y == 0 || p.y == gridSize.y - 1 || p.x == gridSize.x - 1)) {
 		result = 0.0;
 	} else {
 		if (!(particleType == Air || particleType == Fire)) {

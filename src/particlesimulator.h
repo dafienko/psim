@@ -19,7 +19,8 @@ class ParticleSimulator : public Renderable {
 			Sand,
 			Water,
 			Wood,
-			Fire
+			Fire,
+			BurningWood,
 		};
 
 		struct Particle {
@@ -67,7 +68,7 @@ class ParticleSimulator : public Renderable {
 
 		void clearFluidBuffers();
 		void addFluidVelocity(glm::ivec2 pos, int r, float top, float bottom, float right, float left);
-		void setFluidDensity(glm::ivec2 pos, int r, glm::ivec4 color);
+		void setFluidDensity(glm::ivec2 pos, int r, glm::vec4 color);
 		void updateFluidTextures(GLuint fluidVelocityTexture, GLuint fluidDensityTexture);
 		void updateParticle(glm::ivec2, glm::vec2 fluidVel);
 	public: 
