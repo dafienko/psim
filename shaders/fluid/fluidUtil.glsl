@@ -9,11 +9,11 @@ uniform sampler2D pressureTexture;
 uniform sampler2D obstaclesTexture;
 uniform sampler2D densityTexture;
 
+const bool EDGES_ARE_BORDERS = false;
+
+uniform bool JET_STREAMS_ENABLED;
 const int spacing = 30;
 const int thickness = 3;
-
-const bool JET_STREAMS_ENABLED = false;
-const bool EDGES_ARE_BORDERS = false;
 
 vec2 getDS(ivec2 cell) {
 	vec2 ds = texelFetch(pressureTexture, cell, 0).xy;

@@ -37,8 +37,8 @@ void main() {
 	v *= min(1, max(0, o + bo - 1));
 
 	if (onBorder(pos)) {
-		u /= 2.0;
-		v /= 2.0;
+		u *= .999;
+		v *= .999;
 	}
 
 	result = vec4(u, v, 0.0, 1.0);

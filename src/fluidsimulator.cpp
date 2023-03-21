@@ -37,6 +37,8 @@ FluidSimulator::FluidSimulator(glm::ivec2 simulationSize) :
 			} else if (key == GLFW_KEY_DOWN) {
 				fluidRenderMode += 2;
 				fluidRenderMode %= 3;
+			} else if (key == GLFW_KEY_S) {
+				jetStreamsEnabled = !jetStreamsEnabled;
 			}
 
 			static const std::string MODE_LABELS[] = {
@@ -99,6 +101,11 @@ void FluidSimulator::updatePressure(float dt) {
 
 	pressureTarget.bind();
 
+	glUniform1i(
+		glGetUniformLocation(fluidShader.getProgram(), "JET_STREAMS_ENABLED"), 
+		jetStreamsEnabled
+	);
+
 	glUniform2f(
 		glGetUniformLocation(fluidShader.getProgram(), "gridSize"), 
 		simulationSize.x, simulationSize.y
@@ -120,6 +127,11 @@ void FluidSimulator::solve(float dt) {
 	pressureTarget.bindAsTexture("pressureTexture", gridSolveShader.getProgram(), 2);
 
 	physicsTargets.bind();
+
+	glUniform1i(
+		glGetUniformLocation(gridSolveShader.getProgram(), "JET_STREAMS_ENABLED"), 
+		jetStreamsEnabled
+	);
 
 	glUniform2f(
 		glGetUniformLocation(gridSolveShader.getProgram(), "gridSize"), 
@@ -143,6 +155,11 @@ void FluidSimulator::advect(float dt) {
 
 	physicsTargets.bind();
 
+	glUniform1i(
+		glGetUniformLocation(advectVelocityShader.getProgram(), "JET_STREAMS_ENABLED"), 
+		jetStreamsEnabled
+	);
+
 	glUniform2f(
 		glGetUniformLocation(advectVelocityShader.getProgram(), "gridSize"), 
 		simulationSize.x + 1, simulationSize.y + 1
@@ -163,6 +180,11 @@ void FluidSimulator::advect(float dt) {
 	densityTargets.bindAsTexture("densityTexture", advectDensityShader.getProgram(), 3);
 
 	densityTargets.bind();
+
+	glUniform1i(
+		glGetUniformLocation(advectDensityShader.getProgram(), "JET_STREAMS_ENABLED"), 
+		jetStreamsEnabled
+	);
 
 	glUniform2f(
 		glGetUniformLocation(advectDensityShader.getProgram(), "gridSize"), 
@@ -200,6 +222,11 @@ void FluidSimulator::render() {
 	obstaclesTargets.bindAsTexture("obstaclesTexture", visualShader.getProgram(), 1);
 	pressureTarget.bindAsTexture("pressureTexture", visualShader.getProgram(), 2);
 	densityTargets.bindAsTexture("densityTexture", visualShader.getProgram(), 3);
+
+	glUniform1i(
+		glGetUniformLocation(visualShader.getProgram(), "JET_STREAMS_ENABLED"), 
+		jetStreamsEnabled
+	);
 
 	glUniform2f(
 		glGetUniformLocation(visualShader.getProgram(), "gridSize"), 

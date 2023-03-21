@@ -30,6 +30,7 @@ class FluidSimulator: public Renderable {
 		std::unique_ptr<float> velocityBuffer;
 
 		int fluidRenderMode = 0;
+		bool jetStreamsEnabled = false;
 
 		void updatePressure(float dt);
 		void addParticleTextures();
