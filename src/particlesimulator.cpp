@@ -171,7 +171,11 @@ std::optional<ParticleSimulator::ParticleType> ParticleSimulator::isSwappable(gl
 }
 
 glm::ivec2 ParticleSimulator::screenPosToGridPos(glm::vec2 screenPos) {
-	screenPos /= Core::getWindowSize();
+	float aspect = static_cast<float>(simulationSize.x) / static_cast<float>(simulationSize.y);
+	glm::vec2 tl = Quad::getAspectTL(aspect);
+	screenPos -= tl;
+	screenPos /= Quad::getAspectSize(aspect);
+	
 	return glm::ivec2(
 		(int)(screenPos.x * simulationSize.x),
 		(int)((1.0f - screenPos.y) * simulationSize.y)

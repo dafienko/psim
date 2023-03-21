@@ -100,7 +100,9 @@
 		"set": "cpp",
 		"strstream": "cpp",
 		"typeindex": "cpp",
-		"__availability": "cpp"
+		"__availability": "cpp",
+		"__std_stream": "cpp",
+		"unordered_set": "cpp"
 	},
 	"cmake.configureOnOpen": true
 }

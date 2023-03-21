@@ -64,17 +64,27 @@ void Quad::render() {
 	);
 }
 
+glm::vec2 Quad::getAspectSize(float aspect) {
+	glm::vec2 windowSize = Core::getWindowSize();
+	float x = std::min(windowSize.x, windowSize.y * aspect);
+	
+	return glm::vec2(
+		x,
+		x / aspect
+	);
+}
+
+glm::vec2 Quad::getAspectTL(float aspect) {
+	glm::vec2 windowSize = Core::getWindowSize();
+	glm::vec2 aspectSize = getAspectSize(aspect);
+
+	return (windowSize - aspectSize) / 2.0f;
+}
+
 void Quad::renderAspect(float aspect) {
 	glm::vec2 windowSize = Core::getWindowSize();
-	
-	float x = std::min(windowSize.x, windowSize.y * aspect);
-	float y = x / aspect;
-	
-	glm::vec2 tl(
-		(windowSize.x - x) / (windowSize.x * 2.0f),
-		(windowSize.y - y) / (windowSize.y * 2.0f)
-	);
-	tl = glm::vec2(-1, -1) + tl;
+	glm::vec2 test = glm::vec2(1) / glm::vec2(2, 3);
+	glm::vec2 tl = glm::vec2(-1, -1) + (getAspectTL(aspect) / windowSize) * 2.0f;
 	glm::vec2 br = -tl;
 	
 	Quad::render(tl, br);
