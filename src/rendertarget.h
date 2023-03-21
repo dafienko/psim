@@ -26,4 +26,5 @@ class RenderTarget {
 		void bindAsTexture(const char* textureName, GLuint program, GLint location);
 		void clear(int buffersToClear);
 		void renderToQuad();
+		void renderToQuadWithAspect(float aspect);
 };

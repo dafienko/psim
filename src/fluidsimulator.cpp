@@ -216,5 +216,5 @@ void FluidSimulator::render() {
 		fluidRenderMode
 	);
 
-	Quad::render();
+	Quad::renderAspect(static_cast<float>(simulationSize.x) / static_cast<float>(simulationSize.y));
 }

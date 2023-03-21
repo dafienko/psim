@@ -78,6 +78,15 @@ void RenderTarget::renderToQuad() {
 	Quad::render();
 }
 
+void RenderTarget::renderToQuadWithAspect(float aspect) {
+	Quad::quadShaderProgram->bind(); 
+	glDisable(GL_DEPTH_TEST);
+
+	bindAsTexture("screenTexture", Quad::quadShaderProgram->getProgram());
+	
+	Quad::renderAspect(aspect);
+}
+
 RenderTarget::~RenderTarget() {
 	glDeleteFramebuffers(1, &fbo);
 	glDeleteTextures(1, &textureColorbuffer);

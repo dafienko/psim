@@ -26,6 +26,8 @@ std::unique_ptr<Simulation> simulation;
 
 std::unique_ptr<UI> Core::mainUI;
 
+bool Core::paused = false;
+
 bool mouse1Down = false;
 bool mouse2Down = false;
 
@@ -53,9 +55,14 @@ void Core::init(glm::ivec2 simSize) {
 		} 
 		
 		if (action == GLFW_PRESS) {
-			if (key == GLFW_KEY_M) {
+			switch(key) {
+			case GLFW_KEY_M:
 				configMenu->visible = !configMenu->visible;
-			}	
+				break;
+			case GLFW_KEY_SPACE:
+				paused = !paused;
+				break;
+			}
 		}
 	});
 

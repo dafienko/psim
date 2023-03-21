@@ -31,7 +31,9 @@ int main(int argc, char** argv) {
 	});
 
 	Window::loop([] (float dt) {
-		Core::update(dt);
+		if (!Core::paused) {
+			Core::update(dt);
+		}
 		Core::render();
 	});
  

@@ -12,6 +12,7 @@ namespace Core {
 	extern std::unique_ptr<Event<double, double>> mouseMoveEvent;
 	extern std::unique_ptr<Event<int, int, int>> mouseButtonEvent;
 	extern std::unique_ptr<UI> mainUI;
+	extern bool paused;
 
 	void init(glm::ivec2 simSize);
 	void update(float dt);

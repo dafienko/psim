@@ -20,7 +20,6 @@ void Window::init(int width, int height, const char* title) {
 		exit(EXIT_FAILURE);
 	}
 
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -32,7 +31,7 @@ void Window::init(int width, int height, const char* title) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
- 
+
 	glfwSetKeyCallback(window, [] (GLFWwindow* window, int key, int scancode, int action, int mods) {
 		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, GLFW_TRUE);

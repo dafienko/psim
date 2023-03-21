@@ -11,5 +11,6 @@ namespace Quad {
 	void init();
 	void render();
 	void render(glm::vec2 tl, glm::vec2 br);
+	void renderAspect(float aspect);
 	void destroy();
 }

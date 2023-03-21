@@ -72,6 +72,26 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 			}
 		}
 	});
+
+	Core::mouseMoveEvent->bind([&] (double x, double y) {
+		if (Core::isMouse1Down()) {
+			paintAtCursor();
+		}
+	});
+}
+
+void ParticleSimulator::paintAtCursor() {
+	glm::ivec2 mouseGridPos = screenPosToGridPos(Core::getMousePosition());
+	for (int x = mouseGridPos.x - brushRadius; x <= mouseGridPos.x + brushRadius; x++) {
+		for (int y = mouseGridPos.y - brushRadius; y <= mouseGridPos.y + brushRadius; y++) {
+			glm::ivec2 pos(x, y);
+			if (inBounds(pos)) {
+				Particle p = {};
+				p.type = selectedParticleType;
+				particleSet(pos, p);
+			}
+		}
+	}
 }
 
 void ParticleSimulator::selectParticleType(ParticleType type) {
@@ -397,16 +417,7 @@ void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
 
 	if (Core::isMouse1Down()) {
 		glm::ivec2 mouseGridPos = screenPosToGridPos(Core::getMousePosition());
-		for (int x = mouseGridPos.x - brushRadius; x <= mouseGridPos.x + brushRadius; x++) {
-			for (int y = mouseGridPos.y - brushRadius; y <= mouseGridPos.y + brushRadius; y++) {
-				glm::ivec2 pos(x, y);
-				if (inBounds(pos)) {
-					Particle p = {};
-					p.type = selectedParticleType;
-					particleSet(pos, p);
-				}
-			}
-		}
+		paintAtCursor();
 	}
 }
 
@@ -551,8 +562,7 @@ void ParticleSimulator::clearFluidBuffers() {
 void ParticleSimulator::update(float dt, float* fluidVelocityBuffer, GLuint fluidVelocityTexture, GLuint fluidDensityTexture) {
 	clearFluidBuffers();
 	updateParticles(fluidVelocityBuffer);
-	updateFluidTextures(fluidVelocityTexture, fluidDensityTexture);
-	updateParticlesTexture();
+	updateFluidTextures(fluidVelocityTexture, fluidDensityTexture); 
 }
 
 void ParticleSimulator::renderObstacles() {
@@ -571,10 +581,13 @@ void ParticleSimulator::renderObstacles() {
 }
 
 void ParticleSimulator::render() {
+	updateParticlesTexture();
+	RenderTarget::bindDefault();
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 
-	particlesTargets.getCurrent().renderToQuad();
+	particlesTargets.getCurrent().renderToQuadWithAspect(static_cast<float>(simulationSize.x) / static_cast<float>(simulationSize.y));
 	ui->render();
 }
 

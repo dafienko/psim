@@ -65,6 +65,7 @@ class ParticleSimulator : public Renderable {
 		glm::vec2 sampleVelocityBuffer(float* fluidVelocityBuffer, glm::ivec2 pos);
 
 		void selectParticleType(ParticleType type);
+		void paintAtCursor();
 
 		void clearFluidBuffers();
 		void addFluidVelocity(glm::ivec2 pos, int r, float top, float bottom, float right, float left);

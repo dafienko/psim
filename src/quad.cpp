@@ -1,6 +1,9 @@
 #include "quad.h"
 
 #include <GL/glew.h>
+#include <iostream>
+
+#include "core.h"
 
 GLuint quadVAO, positionsVBO, relPositionsVBO;
 
@@ -59,6 +62,22 @@ void Quad::render() {
 		glm::vec2(-1, -1),
 		glm::vec2(1, 1)
 	);
+}
+
+void Quad::renderAspect(float aspect) {
+	glm::vec2 windowSize = Core::getWindowSize();
+	
+	float x = std::min(windowSize.x, windowSize.y * aspect);
+	float y = x / aspect;
+	
+	glm::vec2 tl(
+		(windowSize.x - x) / (windowSize.x * 2.0f),
+		(windowSize.y - y) / (windowSize.y * 2.0f)
+	);
+	tl = glm::vec2(-1, -1) + tl;
+	glm::vec2 br = -tl;
+	
+	Quad::render(tl, br);
 }
 
 void Quad::destroy() {
