@@ -55,10 +55,16 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 	glm::ivec2 glyphsheetSize = font.getGlyphsheetSize();
 	glUniform2f(
 		glGetUniformLocation(glyphShader->getProgram(), "glyphsheetSize"),
-		(float)glyphsheetSize.x, (float)glyphsheetSize.y
+		static_cast<float>(glyphsheetSize.x), static_cast<float>(glyphsheetSize.y)
 	);
 
-	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::getWindowSize().x, (float)Core::getWindowSize().y, 0.0f);
+	glm::mat4x4 ortho = glm::ortho(
+		0.0f, 
+		static_cast<float>(Core::getWindowSize().x), 
+		static_cast<float>(Core::getWindowSize().y), 
+		0.0f
+	);
+
 	GLint projLoc = glGetUniformLocation(glyphShader->getProgram(), "projection");
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, &ortho[0][0]);
 
@@ -76,8 +82,8 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 			glm::vec2 tl = glm::vec2(textPos) + glm::vec2(glyph.tlOffset.x, -glyph.tlOffset.y) * contentScale;
 			glm::vec2 size = glm::vec2(glyph.glyphSize) * contentScale;
 
-			glm::vec2 tlf((float) tl.x, (float) tl.y);
-			glm::vec2 brf = tlf + glm::vec2((float) size.x, (float) size.y);
+			glm::vec2 tlf(static_cast<float>(tl.x), static_cast<float>(tl.y));
+			glm::vec2 brf = tlf + glm::vec2(static_cast<float>(size.x), static_cast<float>(size.y));
 
 			glUniform2f(glGetUniformLocation(glyphShader->getProgram(), "glyphTL"), glyph.texTL.x, glyph.texTL.y);
 			glUniform2f(glGetUniformLocation(glyphShader->getProgram(), "glyphBR"), glyph.texBR.x, glyph.texBR.y);
@@ -92,7 +98,7 @@ void Text::renderText(const std::string &text, glm::ivec2 pos, FontFace fontFace
 }
 
 glm::ivec2 Text::getTextBounds(const std::string &text, FontFace fontFace, unsigned int fontSize) {
-	glm::ivec2 bounds(0, (int)fontSize);
+	glm::ivec2 bounds(0, static_cast<int>(fontSize));
 	const glm::vec2 contentScale = Window::getContentScale();
 
 	const Font &font = getFont(fontFace, fontSize);
@@ -103,7 +109,7 @@ glm::ivec2 Text::getTextBounds(const std::string &text, FontFace fontFace, unsig
 			textPos = 0;
 		} else {
 			const Glyph glyph = font.getGlyph(c);
-			bounds.x = std::max(bounds.x, (int)(textPos + glyph.glyphSize.x * contentScale.x));
+			bounds.x = std::max(bounds.x, static_cast<int>(textPos + glyph.glyphSize.x * contentScale.x));
 			textPos += glyph.advance * contentScale.x;
 		}
 	}

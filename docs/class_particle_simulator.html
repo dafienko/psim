@@ -101,17 +101,22 @@ Collaboration diagram for ParticleSimulator:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af4955fa2f44d22001fefb9d1b797fb4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#af4955fa2f44d22001fefb9d1b797fb4e">ParticleSimulator</a> (glm::ivec2 <a class="el" href="class_particle_simulator.html#accb3ba69fdb3b17f44e335d325864708">simulationSize</a>)</td></tr>
+<tr class="memdesc:af4955fa2f44d22001fefb9d1b797fb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a Particle Simulator Object with the given simulation size.  <br /></td></tr>
 <tr class="separator:af4955fa2f44d22001fefb9d1b797fb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9585a4a5c77bcf52f309b6c52f4af3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#aa9585a4a5c77bcf52f309b6c52f4af3d">update</a> (float dt, float *fluidVelocityBuffer)</td></tr>
-<tr class="separator:aa9585a4a5c77bcf52f309b6c52f4af3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac3d0e56a6c600552b1955335426657"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#a3ac3d0e56a6c600552b1955335426657">update</a> (float dt, float *fluidVelocityBuffer, GLuint fluidVelocityTexture, GLuint fluidDensityTexture)</td></tr>
+<tr class="memdesc:a3ac3d0e56a6c600552b1955335426657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one physics step in the particle simulation.  <br /></td></tr>
+<tr class="separator:a3ac3d0e56a6c600552b1955335426657"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5b5c89df6cdbfb4581e9b84f3b7eded"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#ad5b5c89df6cdbfb4581e9b84f3b7eded">renderObstacles</a> ()</td></tr>
+<tr class="memdesc:ad5b5c89df6cdbfb4581e9b84f3b7eded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the particles that should be obstacles to the fluid simulator to the currently bound rendertarget.  <br /></td></tr>
 <tr class="separator:ad5b5c89df6cdbfb4581e9b84f3b7eded"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1d9fcf362db136f99c5a14aa87b80c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#af1d9fcf362db136f99c5a14aa87b80c4">render</a> () override</td></tr>
+<tr class="memdesc:af1d9fcf362db136f99c5a14aa87b80c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render self for the current frame.  <br /></td></tr>
 <tr class="separator:af1d9fcf362db136f99c5a14aa87b80c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97922ee96710a6ff551ae414d858e690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#a97922ee96710a6ff551ae414d858e690">~ParticleSimulator</a> ()</td></tr>
 <tr class="separator:a97922ee96710a6ff551ae414d858e690"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_renderable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_renderable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_renderable.html">Renderable</a></td></tr>
 <tr class="memitem:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_renderable.html#a7d02709d871bd2bde97d41d933df5adf">render</a> ()=0</td></tr>
+<tr class="memdesc:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render self for the current frame.  <br /></td></tr>
 <tr class="separator:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a10673e331f1f3db760937727441344 inherit pub_methods_class_renderable"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_renderable.html#a7a10673e331f1f3db760937727441344">~Renderable</a> ()=0</td></tr>
 <tr class="separator:a7a10673e331f1f3db760937727441344 inherit pub_methods_class_renderable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +124,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:accb3ba69fdb3b17f44e335d325864708"><td class="memItemLeft" align="right" valign="top">const glm::ivec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_particle_simulator.html#accb3ba69fdb3b17f44e335d325864708">simulationSize</a></td></tr>
+<tr class="memdesc:accb3ba69fdb3b17f44e335d325864708"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the simulation in pixels.  <br /></td></tr>
 <tr class="separator:accb3ba69fdb3b17f44e335d325864708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -145,6 +151,14 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Construct a Particle Simulator Object with the given simulation size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">simulationSize</td><td>the size of the simulation in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -189,6 +203,8 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Render self for the current frame. </p>
+
 <p>Implements <a class="el" href="class_renderable.html#a7d02709d871bd2bde97d41d933df5adf">Renderable</a>.</p>
 
 </div>
@@ -208,10 +224,12 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Render the particles that should be obstacles to the fluid simulator to the currently bound rendertarget. </p>
+
 </div>
 </div>
-<a id="aa9585a4a5c77bcf52f309b6c52f4af3d" name="aa9585a4a5c77bcf52f309b6c52f4af3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9585a4a5c77bcf52f309b6c52f4af3d">&#9670;&#160;</a></span>update()</h2>
+<a id="a3ac3d0e56a6c600552b1955335426657" name="a3ac3d0e56a6c600552b1955335426657"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ac3d0e56a6c600552b1955335426657">&#9670;&#160;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +244,19 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>fluidVelocityBuffer</em>&#160;</td>
+          <td class="paramname"><em>fluidVelocityBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLuint&#160;</td>
+          <td class="paramname"><em>fluidVelocityTexture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GLuint&#160;</td>
+          <td class="paramname"><em>fluidDensityTexture</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -235,6 +265,17 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run one physics step in the particle simulation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>real time delta since last update </td></tr>
+    <tr><td class="paramname">fluidVelocityBuffer</td><td>fluid velocity buffer to be read from </td></tr>
+    <tr><td class="paramname">fluidVelocityTexture</td><td>fluid velocity texture object </td></tr>
+    <tr><td class="paramname">fluidDensityTexture</td><td>fluid density texture object </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -250,6 +291,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The size of the simulation in pixels. </p>
 
 </div>
 </div>

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 #include "instance.h"
 #include "ui.h"
@@ -71,14 +72,23 @@ void Instance::removeChild(Instance& child) {
 }
 
 void Instance::setParent(Instance* newParent) {
+	if (newParent == dynamic_cast<Instance*>(this)) {
+		throw std::invalid_argument("cannot set parent to self");
+	}
+
 	if (parent) {
 		parent->removeChild(*this);
 	}
 
+	parent = newParent;
+
 	if (newParent) {
-		parent = newParent;
 		newParent->addChild(*this);
 	}
+}
+
+Instance* Instance::getParent() {
+	return parent;
 }
 
 std::vector<Instance*> Instance::getChildren() const {
@@ -86,13 +96,11 @@ std::vector<Instance*> Instance::getChildren() const {
 }
 
 Instance* Instance::findChild(const std::string& name) const {
-	for (Instance* child : children) {
-		if (child->name == name) {
-			return child;
-		}
-	}
+	auto child = std::find_if(children.begin(), children.end(), [&name](Instance* child) {
+		return child->name == name;
+	});
 
-	return nullptr;
+	return child == children.end() ? nullptr : *child;
 }
 
 Instance* Instance::getChild(const std::string& name) const {
@@ -106,12 +114,4 @@ Instance* Instance::getChild(const std::string& name) const {
 }
 
 // deleting an instance deletes all descendants of that instance
-Instance::~Instance() {
-	if (parent) {
-		parent->removeChild(*this);
-
-		for (Instance* child : children) {
-			delete child;
-		}
-	}
-}
+Instance::~Instance() {}

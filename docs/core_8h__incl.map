@@ -1,9 +1,13 @@
 <map id="src/core.h" name="src/core.h">
-<area shape="rect" id="node1" title=" " alt="" coords="57,5,137,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="33,152,103,177"/>
-<area shape="rect" id="node3" title=" " alt="" coords="22,79,77,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="101,79,192,104"/>
-<area shape="rect" id="node5" href="$event_8h.html" title=" " alt="" coords="217,79,282,104"/>
-<area shape="rect" id="node6" title=" " alt="" coords="163,152,242,177"/>
-<area shape="rect" id="node7" title=" " alt="" coords="267,152,325,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="121,5,201,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,299,75,324"/>
+<area shape="rect" id="node3" title=" " alt="" coords="167,225,222,251"/>
+<area shape="rect" id="node4" title=" " alt="" coords="423,152,513,177"/>
+<area shape="rect" id="node5" href="$event_8h.html" title=" " alt="" coords="78,225,143,251"/>
+<area shape="rect" id="node8" href="$ui_8h.html" title=" " alt="" coords="261,79,304,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="99,299,178,324"/>
+<area shape="rect" id="node7" title=" " alt="" coords="293,299,352,324"/>
+<area shape="rect" id="node9" href="$renderable_8h.html" title=" " alt="" coords="305,152,399,177"/>
+<area shape="rect" id="node10" href="$instance_8h.html" title=" " alt="" coords="199,152,281,177"/>
+<area shape="rect" id="node11" title=" " alt="" coords="247,225,377,251"/>
 </map>

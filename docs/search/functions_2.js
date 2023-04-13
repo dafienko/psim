@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['destroy_0',['destroy',['../class_u_i.html#a173524e42d69f24fd136f2b0bfde7fe6',1,'UI::destroy()'],['../class_u_i_object.html#a6ff917f7ded092f9fb920485889017f8',1,'UIObject::destroy()'],['../namespace_core.html#acfd5c914674dee64384b7f8ac9651770',1,'Core::destroy()'],['../namespace_quad.html#a56172876a6f59f6e487f25a7ab06c2dc',1,'Quad::destroy()'],['../namespace_text.html#a1c7b6d61410558bce572f62c3fad4040',1,'Text::destroy()'],['../namespace_window.html#aa89262ad2538473c8d7e4d8dd641849d',1,'Window::destroy()']]],
-  ['disconnect_1',['disconnect',['../class_event_1_1_event_listener.html#ada1e2d37d68bddee31693ee08531c9dc',1,'Event::EventListener::disconnect()'],['../class_event.html#af43fb5adca7baa75816b952b1d719659',1,'Event::disconnect()']]]
+  ['checkglerrors_0',['checkGLErrors',['../core_8cpp.html#abe4491f99c39137d17bdc525af130464',1,'checkGLErrors(const std::string &amp;file, int line):&#160;core.cpp'],['../core_8h.html#abe4491f99c39137d17bdc525af130464',1,'checkGLErrors(const std::string &amp;file, int line):&#160;core.cpp']]],
+  ['checkshadererrors_1',['checkShaderErrors',['../shader_8cpp.html#a7bc40c00ca9b2089f4afe72a2ac78c50',1,'shader.cpp']]],
+  ['clear_2',['clear',['../class_render_target.html#aff917324e0e420c0780f4bf64cd3aafe',1,'RenderTarget::clear()'],['../class_render_target_array.html#a613cb82b25eca4be5063c68f9d333a2d',1,'RenderTargetArray::clear()']]],
+  ['contentscale_3',['contentScale',['../window_8cpp.html#a65a3f5fca08477c5125325db3295f81b',1,'window.cpp']]],
+  ['createinstancefromjson_4',['createInstanceFromJSON',['../instance_8cpp.html#a9ca3e7c4732d5c67f11d3a824438b474',1,'instance.cpp']]]
 ];

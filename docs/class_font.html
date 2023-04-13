@@ -83,26 +83,34 @@ Collaboration diagram for Font:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_font__coll__graph.png" border="0" usemap="#a_font_coll__map" alt="Collaboration graph"/></div>
 <map name="a_font_coll__map" id="a_font_coll__map">
-<area shape="rect" title=" " alt="" coords="5,5,143,141"/>
+<area shape="rect" title=" " alt="" coords="5,5,157,156"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad63f44b84c8fac98aafa55113113304d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#ad63f44b84c8fac98aafa55113113304d">Font</a> (<a class="el" href="font_8h.html#ad4585222552b1d2484b56ad8af9c1b36">FontFace</a> <a class="el" href="class_font.html#afc76803f612bdb9e82b753784952459a">fontFace</a>, unsigned int <a class="el" href="class_font.html#aa1e2786e1393edf7dc91d9af79b3e0c1">fontSize</a>, FT_Library &amp;ft)</td></tr>
+<tr class="memdesc:ad63f44b84c8fac98aafa55113113304d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new font.  <br /></td></tr>
 <tr class="separator:ad63f44b84c8fac98aafa55113113304d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a134aaa2f78af0c12d3ce504957169768"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#a134aaa2f78af0c12d3ce504957169768">~Font</a> ()</td></tr>
 <tr class="separator:a134aaa2f78af0c12d3ce504957169768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c505a62520597b9d303ce2817af50e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_glyph.html">Glyph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#a2c505a62520597b9d303ce2817af50e3">getGlyph</a> (char c) const</td></tr>
+<tr class="memdesc:a2c505a62520597b9d303ce2817af50e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the glyph object for the specified char.  <br /></td></tr>
 <tr class="separator:a2c505a62520597b9d303ce2817af50e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65412c08d517953a5c9a49d0dcdb3fa2"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#a65412c08d517953a5c9a49d0dcdb3fa2">getGlyphTexture</a> () const</td></tr>
+<tr class="memdesc:a65412c08d517953a5c9a49d0dcdb3fa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the glyph texture object.  <br /></td></tr>
 <tr class="separator:a65412c08d517953a5c9a49d0dcdb3fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08338245754ad8a1dc5a41ca3574829"><td class="memItemLeft" align="right" valign="top">glm::ivec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#ac08338245754ad8a1dc5a41ca3574829">getGlyphsheetSize</a> () const</td></tr>
+<tr class="memdesc:ac08338245754ad8a1dc5a41ca3574829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the pixel dimensions of the glyph sheet.  <br /></td></tr>
+<tr class="separator:ac08338245754ad8a1dc5a41ca3574829"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa1e2786e1393edf7dc91d9af79b3e0c1"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#aa1e2786e1393edf7dc91d9af79b3e0c1">fontSize</a></td></tr>
+<tr class="memdesc:aa1e2786e1393edf7dc91d9af79b3e0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">the font size used to create this font  <br /></td></tr>
 <tr class="separator:aa1e2786e1393edf7dc91d9af79b3e0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc76803f612bdb9e82b753784952459a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="font_8h.html#ad4585222552b1d2484b56ad8af9c1b36">FontFace</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_font.html#afc76803f612bdb9e82b753784952459a">fontFace</a></td></tr>
+<tr class="memdesc:afc76803f612bdb9e82b753784952459a"><td class="mdescLeft">&#160;</td><td class="mdescRight">the font face of this font  <br /></td></tr>
 <tr class="separator:afc76803f612bdb9e82b753784952459a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -137,6 +145,16 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Create a new font. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fontFace</td><td>the font face to use for this font </td></tr>
+    <tr><td class="paramname">fontSize</td><td>roughly how tall should each glyph be in pixels </td></tr>
+    <tr><td class="paramname">ft</td><td>freetype library reference </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -174,6 +192,35 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get the glyph object for the specified char. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the char of the glyph to be returned </dd></dl>
+
+</div>
+</div>
+<a id="ac08338245754ad8a1dc5a41ca3574829" name="ac08338245754ad8a1dc5a41ca3574829"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08338245754ad8a1dc5a41ca3574829">&#9670;&#160;</a></span>getGlyphsheetSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::ivec2 Font::getGlyphsheetSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the pixel dimensions of the glyph sheet. </p>
+<dl class="section return"><dt>Returns</dt><dd>glm::ivec2 </dd></dl>
+
 </div>
 </div>
 <a id="a65412c08d517953a5c9a49d0dcdb3fa2" name="a65412c08d517953a5c9a49d0dcdb3fa2"></a>
@@ -191,6 +238,9 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Get the glyph texture object. </p>
+<dl class="section return"><dt>Returns</dt><dd>GLuint </dd></dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -206,6 +256,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>the font face of this font </p>
+
 </div>
 </div>
 <a id="aa1e2786e1393edf7dc91d9af79b3e0c1" name="aa1e2786e1393edf7dc91d9af79b3e0c1"></a>
@@ -219,6 +271,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>the font size used to create this font </p>
 
 </div>
 </div>

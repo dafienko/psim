@@ -99,8 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6341f64eac001da3458910e4a4c89ad9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a6341f64eac001da3458910e4a4c89ad9">Event</a> ()</td></tr>
 <tr class="separator:a6341f64eac001da3458910e4a4c89ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cf538b7f7c36ee9ad48763f61add989"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a1cf538b7f7c36ee9ad48763f61add989">bind</a> (std::function&lt; void(Args...)&gt; callback)</td></tr>
+<tr class="memdesc:a1cf538b7f7c36ee9ad48763f61add989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind a callback to this event.  <br /></td></tr>
 <tr class="separator:a1cf538b7f7c36ee9ad48763f61add989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8ff356df70c0fea3eb9745c9df68a41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#aa8ff356df70c0fea3eb9745c9df68a41">fire</a> (Args &amp;...args)</td></tr>
+<tr class="memdesc:aa8ff356df70c0fea3eb9745c9df68a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire all bound event callbacks.  <br /></td></tr>
 <tr class="separator:aa8ff356df70c0fea3eb9745c9df68a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e9d7e609dcb0c41d78d586517ebe2a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#a2e9d7e609dcb0c41d78d586517ebe2a6">~Event</a> ()</td></tr>
 <tr class="separator:a2e9d7e609dcb0c41d78d586517ebe2a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,6 +110,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af43fb5adca7baa75816b952b1d719659"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event.html#af43fb5adca7baa75816b952b1d719659">disconnect</a> (<a class="el" href="class_event_1_1_event_listener.html">EventListener</a> &amp;listener)</td></tr>
+<tr class="memdesc:af43fb5adca7baa75816b952b1d719659"><td class="mdescLeft">&#160;</td><td class="mdescRight">disconnect a bound event listener from this event  <br /></td></tr>
 <tr class="separator:af43fb5adca7baa75816b952b1d719659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
@@ -197,6 +200,14 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Bind a callback to this event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>The callback to be run when the event is fired </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="af43fb5adca7baa75816b952b1d719659" name="af43fb5adca7baa75816b952b1d719659"></a>
@@ -225,6 +236,14 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>disconnect a bound event listener from this event </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">listener</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aa8ff356df70c0fea3eb9745c9df68a41" name="aa8ff356df70c0fea3eb9745c9df68a41"></a>
@@ -252,6 +271,14 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Fire all bound event callbacks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>The arguments forwarded to each callback function </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -54,7 +54,6 @@ class ParticleSimulator : public Renderable {
 		void updateParticlesTexture();
 
 		bool inBounds(glm::ivec2 pos);
-		bool isEmpty(glm::ivec2 pos);
 		std::optional<ParticleType> isSwappable(glm::ivec2 pos, ParticleType replacementType);
 
 		Particle& particleGet(glm::ivec2 pos) const;
@@ -64,6 +63,7 @@ class ParticleSimulator : public Renderable {
 		glm::ivec2 screenPosToGridPos(glm::vec2 screenPos);
 		glm::vec2 sampleVelocityBuffer(float* fluidVelocityBuffer, glm::ivec2 pos);
 
+		void setBrushRadius(int r);
 		void selectParticleType(ParticleType type);
 		void paintAtCursor();
 
@@ -73,12 +73,38 @@ class ParticleSimulator : public Renderable {
 		void updateFluidTextures(GLuint fluidVelocityTexture, GLuint fluidDensityTexture);
 		void updateParticle(glm::ivec2, glm::vec2 fluidVel);
 	public: 
+		//! The size of the simulation in pixels
 		const glm::ivec2 simulationSize;
 
+		/**
+		 * @brief Construct a Particle Simulator Object with the given simulation size
+		 * 
+		 * @param simulationSize the size of the simulation in pixels
+		 */
 		explicit ParticleSimulator(glm::ivec2 simulationSize);
 
+		/**
+		 * @brief Run one physics step in the particle simulation
+		 * 
+		 * @param dt real time delta since last update
+		 * @param fluidVelocityBuffer fluid velocity buffer to be read from
+		 * @param fluidVelocityTexture fluid velocity texture object
+		 * @param fluidDensityTexture fluid density texture object
+		 */
 		void update(float dt, float* fluidVelocityBuffer, GLuint fluidVelocityTexture, GLuint fluidDensityTexture);
+		
+		/**
+		 * @brief Render the particles that should be obstacles to the fluid simulator to the currently bound rendertarget
+		 * 
+		 */
 		void renderObstacles();
+
+		/**
+		 * @brief Clear all the particles in the simulation
+		 * 
+		 */
+		void clearParticles();
+
 		void render() override;
 
 		~ParticleSimulator();

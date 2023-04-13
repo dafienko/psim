@@ -1,52 +1,59 @@
+Checking src/TEST_event.cpp ...
+src/TEST_event.cpp:27:59: performance: Function parameter 'c' should be passed by const reference. [passedByValue]
+ eventWithArgs.bind([=, &ran] (int a, bool b, std::string c) {
+                                                          ^
+1/21 files checked 1% done
+Checking src/TEST_instance.cpp ...
+2/21 files checked 3% done
 Checking src/core.cpp ...
-1/18 files checked 7% done
+3/21 files checked 9% done
 Checking src/fluidsimulator.cpp ...
-2/18 files checked 17% done
+4/21 files checked 20% done
 Checking src/font.cpp ...
-3/18 files checked 25% done
+src/font.cpp:133:14: style: Variable 'bmp' can be declared as reference to const [constVariable]
+  FT_Bitmap& bmp = face->glyph->bitmap;
+             ^
+5/21 files checked 28% done
 Checking src/instance.cpp ...
-src/instance.cpp:90:28: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
-  if (child->name == name) {
-                           ^
-4/18 files checked 30% done
+6/21 files checked 32% done
 Checking src/main.cpp ...
-5/18 files checked 32% done
+Checking src/main.cpp: TESTING...
+7/21 files checked 33% done
 Checking src/particlesimulator.cpp ...
-src/particlesimulator.h:53:8: style: Unused private function: 'ParticleSimulator::isEmpty' [unusedPrivateFunction]
-  bool isEmpty(glm::ivec2 pos);
-       ^
-6/18 files checked 52% done
+8/21 files checked 60% done
 Checking src/quad.cpp ...
-7/18 files checked 56% done
+9/21 files checked 63% done
 Checking src/renderable.cpp ...
-8/18 files checked 56% done
+10/21 files checked 63% done
 Checking src/rendertarget.cpp ...
-9/18 files checked 61% done
+11/21 files checked 68% done
 Checking src/rendertargetarray.cpp ...
-10/18 files checked 64% done
+12/21 files checked 70% done
 Checking src/shader.cpp ...
-11/18 files checked 71% done
+13/21 files checked 75% done
 Checking src/simulation.cpp ...
-12/18 files checked 72% done
+14/21 files checked 76% done
+Checking src/test.cpp ...
+15/21 files checked 77% done
 Checking src/text.cpp ...
-13/18 files checked 79% done
+16/21 files checked 83% done
 Checking src/ui.cpp ...
-14/18 files checked 80% done
+17/21 files checked 84% done
 Checking src/uiframe.cpp ...
-15/18 files checked 81% done
+18/21 files checked 85% done
 Checking src/uiobject.cpp ...
-16/18 files checked 89% done
+19/21 files checked 91% done
 Checking src/uitext.cpp ...
-17/18 files checked 93% done
+20/21 files checked 94% done
 Checking src/window.cpp ...
-18/18 files checked 100% done
-src/core.cpp:94:0: style: The function 'isMouse2Down' is never used. [unusedFunction]
+21/21 files checked 100% done
+src/core.cpp:104:0: style: The function 'isMouse2Down' is never used. [unusedFunction]
 bool Core::isMouse2Down() {
 ^
-src/particlesimulator.cpp:111:0: style: The function 'isEmpty' is never used. [unusedFunction]
-bool ParticleSimulator::isEmpty(glm::ivec2 p) {
+src/rendertarget.cpp:72:0: style: The function 'renderToQuad' is never used. [unusedFunction]
+void RenderTarget::renderToQuad() {
 ^
-src/rendertargetarray.cpp:50:0: style: The function 'getLast' is never used. [unusedFunction]
+src/rendertargetarray.cpp:54:0: style: The function 'getLast' is never used. [unusedFunction]
 RenderTarget& RenderTargetArray::getLast() {
 ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingIncludeSystem]

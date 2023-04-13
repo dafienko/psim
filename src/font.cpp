@@ -9,16 +9,31 @@ static std::string FONT_FACE_FILENAMES[] = {
 
 class Glyphsheet { // 16x8 spritesheet for character glyphs
 	public: 
+		//! How many rows of glyphs there are in the glyphsheet texture
 		static const int GLYPH_SHEET_ROWS = 8;
+		//! How many columns of glyphs there are in the glyphsheet texture
 		static const int GLYPH_SHEET_COLS = 16;
 
-		const unsigned int width, height;
-		const unsigned int glyphWidth, glyphHeight;
+		//! How wide in pixels the Glyphsheet is
+		const unsigned int width;
+		//! How tall in pixels the Glyphsheet is
+		const unsigned int height;
+
+		//! How wide in pixels an individual glyph is
+		const unsigned int glyphWidth;
+		//! How tall in pixels an individual glyph is
+		const unsigned int glyphHeight;
 
 	private:
 		std::unique_ptr<unsigned char> buffer;
 
 	public:
+		/**
+		 * @brief Create glyphsheet for storing glyphs with the specified glyph size
+		 * 
+		 * @param glyphWidth 
+		 * @param glyphHeight 
+		 */
 		Glyphsheet(unsigned int glyphWidth, unsigned int glyphHeight) : 
 			width(glyphWidth * GLYPH_SHEET_COLS),
 			height(glyphHeight * GLYPH_SHEET_ROWS),
@@ -29,12 +44,24 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 			memset(buffer.get(), 0, width * height * sizeof(unsigned char));
 		}
 
+		/**
+		 * @brief Buffer the glyph bitmap for the specified character
+		 * 
+		 * @param c The character the bitmap is for
+		 * @param bitmapBuffer The bitmap pixels 
+		 * @param bitmapWidth The width of the bitmap 
+		 * @param bitmapHeight The height of the bitmap
+		 * @return glm::vec4 
+		 */
 		glm::vec4 bufferGlyphBitmap(unsigned char c, unsigned char* bitmapBuffer, unsigned int bitmapWidth, unsigned int bitmapHeight) {
 			assert(bitmapWidth <= glyphWidth);
 			assert(bitmapHeight <= glyphHeight);
-			assert((int)c < 128);
+			assert(static_cast<int>(c) < 128);
 
-			glm::ivec2 glyphSheetPos((int)c % GLYPH_SHEET_COLS, (int)c / GLYPH_SHEET_COLS);
+			glm::ivec2 glyphSheetPos(
+				static_cast<int>(c) % GLYPH_SHEET_COLS, 
+				static_cast<int>(c) / GLYPH_SHEET_COLS
+			);
 
 			for (unsigned int y = 0; y < bitmapHeight; y++) {
 				int bufferRow = glyphSheetPos.y * glyphHeight + y; 
@@ -49,10 +76,20 @@ class Glyphsheet { // 16x8 spritesheet for character glyphs
 			);
 		}
 
+		/**
+		 * @brief Get the raw glyphsheet buffer
+		 * 
+		 * @return unsigned* 
+		 */
 		unsigned char* getBuffer() const {
 			return buffer.get();
 		}
 
+		/**
+		 * @brief Get the size in pixels of the buffer
+		 * 
+		 * @return glm::ivec2 
+		 */
 		glm::ivec2 getSize() const {
 			return glm::ivec2(width, height);
 		}

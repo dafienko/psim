@@ -78,14 +78,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8820d2f818a23d0dc773787354bbf73f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a8820d2f818a23d0dc773787354bbf73f">init</a> (int width, int height)</td></tr>
-<tr class="separator:a8820d2f818a23d0dc773787354bbf73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50f1d3964af79682f1b130abb429362a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a50f1d3964af79682f1b130abb429362a">init</a> (glm::ivec2 simSize)</td></tr>
+<tr class="separator:a50f1d3964af79682f1b130abb429362a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a7af92bfcdd5b7ee7cfa99b2503ac67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a1a7af92bfcdd5b7ee7cfa99b2503ac67">update</a> (float dt)</td></tr>
 <tr class="separator:a1a7af92bfcdd5b7ee7cfa99b2503ac67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a818e02782f3ebdd642cddcb1c666bced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a818e02782f3ebdd642cddcb1c666bced">render</a> ()</td></tr>
 <tr class="separator:a818e02782f3ebdd642cddcb1c666bced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c82c0fd87b8a983c50d21340d0e01ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a0c82c0fd87b8a983c50d21340d0e01ef">resize</a> (int width, int height)</td></tr>
-<tr class="separator:a0c82c0fd87b8a983c50d21340d0e01ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9a81b0a1f483c1fea6ec8b116ac20ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#ab9a81b0a1f483c1fea6ec8b116ac20ea">resize</a> (glm::ivec2 <a class="el" href="core_8cpp.html#af6ec1beebd82bdc394aab54870380916">windowSize</a>)</td></tr>
+<tr class="separator:ab9a81b0a1f483c1fea6ec8b116ac20ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12dc25a2bc697bb3809e95f595a6f63c"><td class="memItemLeft" align="right" valign="top">glm::ivec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a12dc25a2bc697bb3809e95f595a6f63c">getWindowSize</a> ()</td></tr>
 <tr class="separator:a12dc25a2bc697bb3809e95f595a6f63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d2b75c060a6323a77d8aad53a74d5c"><td class="memItemLeft" align="right" valign="top">glm::vec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a90d2b75c060a6323a77d8aad53a74d5c">getMousePosition</a> ()</td></tr>
@@ -105,6 +105,10 @@ Variables</h2></td></tr>
 <tr class="separator:a11cb31bfafca854df31020cb2f2ee466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa38b52c9001d1937cbe2bd5bc6413c"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_event.html">Event</a>&lt; int, int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a7fa38b52c9001d1937cbe2bd5bc6413c">mouseButtonEvent</a></td></tr>
 <tr class="separator:a7fa38b52c9001d1937cbe2bd5bc6413c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5da2d3cfadaeaed79e8da239ed9e40b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_u_i.html">UI</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#af5da2d3cfadaeaed79e8da239ed9e40b">mainUI</a></td></tr>
+<tr class="separator:af5da2d3cfadaeaed79e8da239ed9e40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83680625b0bef87e4a0a3c1c146bc9ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_core.html#a83680625b0bef87e4a0a3c1c146bc9ff">paused</a> = false</td></tr>
+<tr class="separator:a83680625b0bef87e4a0a3c1c146bc9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="acfd5c914674dee64384b7f8ac9651770" name="acfd5c914674dee64384b7f8ac9651770"></a>
@@ -158,8 +162,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8820d2f818a23d0dc773787354bbf73f" name="a8820d2f818a23d0dc773787354bbf73f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8820d2f818a23d0dc773787354bbf73f">&#9670;&#160;</a></span>init()</h2>
+<a id="a50f1d3964af79682f1b130abb429362a" name="a50f1d3964af79682f1b130abb429362a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50f1d3964af79682f1b130abb429362a">&#9670;&#160;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,19 +171,9 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void Core::init </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">glm::ivec2&#160;</td>
+          <td class="paramname"><em>simSize</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -237,8 +231,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0c82c0fd87b8a983c50d21340d0e01ef" name="a0c82c0fd87b8a983c50d21340d0e01ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c82c0fd87b8a983c50d21340d0e01ef">&#9670;&#160;</a></span>resize()</h2>
+<a id="ab9a81b0a1f483c1fea6ec8b116ac20ea" name="ab9a81b0a1f483c1fea6ec8b116ac20ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9a81b0a1f483c1fea6ec8b116ac20ea">&#9670;&#160;</a></span>resize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,19 +240,9 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void Core::resize </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">glm::ivec2&#160;</td>
+          <td class="paramname"><em>windowSize</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -306,6 +290,28 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="af5da2d3cfadaeaed79e8da239ed9e40b" name="af5da2d3cfadaeaed79e8da239ed9e40b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5da2d3cfadaeaed79e8da239ed9e40b">&#9670;&#160;</a></span>mainUI</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="class_u_i.html">UI</a> &gt; Core::mainUI</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7fa38b52c9001d1937cbe2bd5bc6413c" name="a7fa38b52c9001d1937cbe2bd5bc6413c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7fa38b52c9001d1937cbe2bd5bc6413c">&#9670;&#160;</a></span>mouseButtonEvent</h2>
 
@@ -339,6 +345,28 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::unique_ptr&lt; <a class="el" href="class_event.html">Event</a>&lt; double, double &gt; &gt; Core::mouseMoveEvent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a83680625b0bef87e4a0a3c1c146bc9ff" name="a83680625b0bef87e4a0a3c1c146bc9ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83680625b0bef87e4a0a3c1c146bc9ff">&#9670;&#160;</a></span>paused</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Core::paused = false</td>
         </tr>
       </table>
   </td>

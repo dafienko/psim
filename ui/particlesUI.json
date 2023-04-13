@@ -23,6 +23,27 @@
 				"scale": [0.5, 0.0],
 				"offset": [0.0, 20.0]
 			}
+		},
+
+		{
+			"type": "UIFrame",
+			"name": "cursor",
+
+			"backgroundTransparency": 1.0,
+			"backgroundColor": [0.0, 0.0, 0.0],
+
+			"borderThickness": 1,
+			"borderColor": [0.0, 1.0, 0.0],
+			
+			"anchorPoint": [0.5, 0.5],
+			"size": {
+				"scale": [0.0, 0.0],
+				"offset": [10.0, 10.0]
+			},
+			"position": {
+				"scale": [0.0, 0.0],
+				"offset": [120.0, 120.0]
+			}
 		}
 	]
 }

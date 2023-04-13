@@ -11,13 +11,11 @@
 #include "quad.h"
 #include "core.h"
 #include "uitext.h"
+#include "uiframe.h"
+#include "window.h"
 
 #define FLUID_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
 #define GRAVITY_AFFECTS_PARTICLE_TYPE(particleType) particleType == Sand || particleType == Water
-
-float randf() {
-	return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-}
 
 ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) : 
 	grid(new Particle[simulationSize.x * simulationSize.y]),
@@ -35,16 +33,8 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 	
 	simulationSize(simulationSize)
 {
-	for (int y = 0; y < simulationSize.y; y++) {
-		for (int x = 0; x < simulationSize.x; x++) {
-			Particle p = {};
-			p.type = Air;
-			p.simulateAsParticle = false;
-			p.cellularVelocity = glm::vec2(0.0f);
-			p.particleVelocity = glm::vec2(0.0f);
-			grid.get()[y * simulationSize.x + x] = p;
-		}
-	}
+	clearParticles();
+	setBrushRadius(5);
 
 	glGenTextures(1, &textureColorBuffer);
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
@@ -69,15 +59,52 @@ ParticleSimulator::ParticleSimulator(glm::ivec2 simulationSize) :
 				selectParticleType(Wood);
 			} else if (key == GLFW_KEY_5) {
 				selectParticleType(Fire);
+			} else if (key == GLFW_KEY_C) {
+				clearParticles();
+			} else if (key == GLFW_KEY_EQUAL) {
+				setBrushRadius(brushRadius + 1);
+			} else if (key == GLFW_KEY_MINUS) {
+				setBrushRadius(brushRadius - 1);
 			}
 		}
 	});
 
-	Core::mouseMoveEvent->bind([&] (double x, double y) {
+	UIFrame* cursor = dynamic_cast<UIFrame*>(ui->getChild("cursor"));
+	cursor->position.offset = glm::vec2(300, 300);
+
+	Core::mouseMoveEvent->bind([this, cursor] (double x, double y) {
+		cursor->position.offset = glm::vec2(x, y) / Window::getContentScale();
+		
 		if (Core::isMouse1Down()) {
 			paintAtCursor();
 		}
 	});
+}
+
+void ParticleSimulator::clearParticles() {
+	for (int y = 0; y < simulationSize.y; y++) {
+		for (int x = 0; x < simulationSize.x; x++) {
+			Particle p = {};
+			p.type = Air;
+			p.simulateAsParticle = false;
+			p.cellularVelocity = glm::vec2(0.0f);
+			p.particleVelocity = glm::vec2(0.0f);
+			grid.get()[y * simulationSize.x + x] = p;
+		}
+	}
+}
+
+void ParticleSimulator::setBrushRadius(int r) {
+	brushRadius = std::max(0, r);
+
+	glm::vec2 screenSize = Window::getWindowScreenCoordinateSize();
+	float particlePixelSize = std::min(
+		screenSize.x / simulationSize.x,
+		screenSize.y / simulationSize.y
+	);
+
+	UIFrame* cursor = dynamic_cast<UIFrame*>(ui->getChild("cursor"));
+	cursor->size.offset = glm::vec2(particlePixelSize * (brushRadius * 2 + 1));
 }
 
 void ParticleSimulator::paintAtCursor() {
@@ -151,10 +178,6 @@ void ParticleSimulator::particleSwap(glm::ivec2 src, glm::ivec2 dest) {
 	particleSet(src, tmp);
 }
 
-bool ParticleSimulator::isEmpty(glm::ivec2 p) {
-	return inBounds(p) && particleGet(p).type == 0;
-}
-
 std::optional<ParticleSimulator::ParticleType> ParticleSimulator::isSwappable(glm::ivec2 p, ParticleType replacementType) {
 	if (inBounds(p)) {
 		Particle& dest = particleGet(p);
@@ -177,8 +200,8 @@ glm::ivec2 ParticleSimulator::screenPosToGridPos(glm::vec2 screenPos) {
 	screenPos /= Quad::getAspectSize(aspect);
 	
 	return glm::ivec2(
-		(int)(screenPos.x * simulationSize.x),
-		(int)((1.0f - screenPos.y) * simulationSize.y)
+		static_cast<int>(screenPos.x * simulationSize.x),
+		static_cast<int>((1.0f - screenPos.y) * simulationSize.y)
 	);
 }
 
@@ -254,7 +277,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 
 		case Sand: {
 			glm::ivec2 newPos = pos;
-			for (int y = 0; y > (int)particle.cellularVelocity.y - 1; y--) {
+			for (int y = 0; y > static_cast<int>(particle.cellularVelocity.y) - 1; y--) {
 				auto downMaterial = checkDir(newPos, DOWN);
 				if (downMaterial == Air) {
 					newPos += DOWN;
@@ -278,7 +301,7 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 
 		case Water: {
 			glm::ivec2 newPos = pos;
-			for (int y = 0; y > std::min((int)particle.cellularVelocity.y, -1); y--) {
+			for (int y = 0; y > std::min(static_cast<int>(particle.cellularVelocity.y), -1); y--) {
 				if (checkDir(newPos, DOWN)) {
 					newPos += DOWN;
 				} else {
@@ -309,10 +332,8 @@ void ParticleSimulator::updateParticle(glm::ivec2 pos, glm::vec2 fluidVel) {
 		}
 		
 		case Fire: {
-			if (rand() % 1 == 0) { // smoke chance
-				addFluidVelocity(pos + glm::ivec2(0, 2), 1, 15, 0, 5, -5);
-				setFluidDensity(pos + glm::ivec2(0, 2), 0, glm::vec4(.24, .24, .24, 1.0));
-			}
+			addFluidVelocity(pos + glm::ivec2(0, 2), 1, 15, 0, 5, -5);
+			setFluidDensity(pos + glm::ivec2(0, 2), 0, glm::vec4(.24, .24, .24, 1.0));
 
 			if (rand() % 5 == 0) { // spread chance
 				for (glm::ivec2 dir : DIRS) {
@@ -420,7 +441,6 @@ void ParticleSimulator::updateParticles(float* fluidVelocityBuffer) {
 	}
 
 	if (Core::isMouse1Down()) {
-		glm::ivec2 mouseGridPos = screenPosToGridPos(Core::getMousePosition());
 		paintAtCursor();
 	}
 }

@@ -87,7 +87,7 @@ glm::vec2 Window::getMousePosition() {
 	double x, y;
 	glfwGetCursorPos(window, &x, &y);
 	
-	glm::vec2 pos((float)x, (float)y);
+	glm::vec2 pos(static_cast<float>(x), static_cast<float>(y));
 	pos /= Window::getWindowScreenCoordinateSize();
 	pos *= Window::getWindowFramebufferSize();
 	return pos;
@@ -106,10 +106,10 @@ glm::ivec2 Window::getWindowScreenCoordinateSize() {
 }
 
 void Window::loop(std::function<void(float)> loopCallback) {
-	float last = (float)glfwGetTime();
+	float last = static_cast<float>(glfwGetTime());
 	while (!glfwWindowShouldClose(window))
 	{
-		float t = (float)glfwGetTime();
+		float t = static_cast<float>(glfwGetTime());
 		float dt = t - last;
 		last = t;
 

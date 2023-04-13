@@ -1,9 +1,9 @@
 <map id="src/ui.cpp" name="src/ui.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="186,5,265,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="51,79,123,104"/>
-<area shape="rect" id="node3" href="$ui_8h.html" title=" " alt="" coords="195,152,237,177"/>
-<area shape="rect" id="node13" href="$uiobject_8h.html" title=" " alt="" coords="147,79,226,104"/>
-<area shape="rect" id="node14" href="$core_8h.html" title=" " alt="" coords="328,152,387,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="179,5,258,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="44,79,116,104"/>
+<area shape="rect" id="node3" href="$ui_8h.html" title=" " alt="" coords="227,152,269,177"/>
+<area shape="rect" id="node13" href="$uiobject_8h.html" title=" " alt="" coords="141,79,219,104"/>
+<area shape="rect" id="node14" href="$core_8h.html" title=" " alt="" coords="316,79,375,104"/>
 <area shape="rect" id="node4" title=" " alt="" coords="229,225,320,251"/>
 <area shape="rect" id="node5" href="$renderable_8h.html" title=" " alt="" coords="112,225,205,251"/>
 <area shape="rect" id="node6" href="$instance_8h.html" title=" " alt="" coords="5,225,88,251"/>

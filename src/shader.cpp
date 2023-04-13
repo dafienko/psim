@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 
 void getFileSource(const std::string &filename, std::string &source_text) {
 	std::ifstream file(filename);
@@ -37,8 +38,7 @@ void getFileSource(const std::string &filename, std::string &source_text) {
 			}
 		}
 	} else {
-		std::cerr << "could not find file " << filename << std::endl;
-		exit(EXIT_FAILURE);
+		throw std::invalid_argument("could not find file " + filename);
 	}
 }
 

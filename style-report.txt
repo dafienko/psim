@@ -1,25 +1,21 @@
 src/font.cpp:6:  Static/global string variables are not permitted.  [runtime/string] [4]
-src/font.cpp:33:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/font.cpp:35:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/font.cpp:45:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/font.cpp:46:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/instance.cpp:10:  Is this a non-const reference? If so, make const or use a pointer: json& data  [runtime/references] [2]
-src/particlesimulator.cpp:129:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/particlesimulator.cpp:130:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/particlesimulator.cpp:161:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
-src/particlesimulator.cpp:201:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/particlesimulator.cpp:225:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/particlesimulator.cpp:231:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
-src/shader.cpp:9:  Is this a non-const reference? If so, make const or use a pointer: std::string &source_text  [runtime/references] [2]
-src/text.cpp:54:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/text.cpp:72:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/text.cpp:73:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/text.cpp:88:  Using C-style cast.  Use static_cast<int>(...) instead  [readability/casting] [4]
-src/ui.cpp:37:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/uiobject.cpp:95:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/window.cpp:83:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/window.cpp:102:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
-src/window.cpp:105:  Using C-style cast.  Use static_cast<float>(...) instead  [readability/casting] [4]
+src/instance.cpp:11:  Is this a non-const reference? If so, make const or use a pointer: json& data  [runtime/references] [2]
+src/particlesimulator.cpp:239:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:310:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:311:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:338:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:349:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:350:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:356:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:364:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:380:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:391:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:392:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:398:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/particlesimulator.cpp:406:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+src/shader.cpp:10:  Is this a non-const reference? If so, make const or use a pointer: std::string &source_text  [runtime/references] [2]
+Done processing src/TEST_event.cpp
+Done processing src/TEST_instance.cpp
 Done processing src/core.cpp
 Done processing src/fluidsimulator.cpp
 Done processing src/font.cpp
@@ -32,10 +28,11 @@ Done processing src/rendertarget.cpp
 Done processing src/rendertargetarray.cpp
 Done processing src/shader.cpp
 Done processing src/simulation.cpp
+Done processing src/test.cpp
 Done processing src/text.cpp
 Done processing src/ui.cpp
 Done processing src/uiframe.cpp
 Done processing src/uiobject.cpp
 Done processing src/uitext.cpp
 Done processing src/window.cpp
-Total errors found: 22
+Total errors found: 16

@@ -100,13 +100,17 @@ Collaboration diagram for Simulation:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0206f74a751323fa48ef396f69bd1b63"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simulation.html#a0206f74a751323fa48ef396f69bd1b63">Simulation</a> (glm::ivec2 <a class="el" href="class_simulation.html#a223fe61f314d2cd2ea64cf0e14f834c2">simulationSize</a>)</td></tr>
+<tr class="memdesc:a0206f74a751323fa48ef396f69bd1b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_simulation.html">Simulation</a> object.  <br /></td></tr>
 <tr class="separator:a0206f74a751323fa48ef396f69bd1b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ab3e08e9daccf5a82d449950e2b919e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simulation.html#a6ab3e08e9daccf5a82d449950e2b919e">update</a> (float dt)</td></tr>
+<tr class="memdesc:a6ab3e08e9daccf5a82d449950e2b919e"><td class="mdescLeft">&#160;</td><td class="mdescRight">step the simulation once  <br /></td></tr>
 <tr class="separator:a6ab3e08e9daccf5a82d449950e2b919e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad07475fd3e15b45cb0cd79f5d282d378"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simulation.html#ad07475fd3e15b45cb0cd79f5d282d378">render</a> () override</td></tr>
+<tr class="memdesc:ad07475fd3e15b45cb0cd79f5d282d378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render self for the current frame.  <br /></td></tr>
 <tr class="separator:ad07475fd3e15b45cb0cd79f5d282d378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_renderable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_renderable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_renderable.html">Renderable</a></td></tr>
 <tr class="memitem:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_renderable.html#a7d02709d871bd2bde97d41d933df5adf">render</a> ()=0</td></tr>
+<tr class="memdesc:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render self for the current frame.  <br /></td></tr>
 <tr class="separator:a7d02709d871bd2bde97d41d933df5adf inherit pub_methods_class_renderable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a10673e331f1f3db760937727441344 inherit pub_methods_class_renderable"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_renderable.html#a7a10673e331f1f3db760937727441344">~Renderable</a> ()=0</td></tr>
 <tr class="separator:a7a10673e331f1f3db760937727441344 inherit pub_methods_class_renderable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,6 +118,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a223fe61f314d2cd2ea64cf0e14f834c2"><td class="memItemLeft" align="right" valign="top">const glm::ivec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_simulation.html#a223fe61f314d2cd2ea64cf0e14f834c2">simulationSize</a></td></tr>
+<tr class="memdesc:a223fe61f314d2cd2ea64cf0e14f834c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size in pixels of the simulator.  <br /></td></tr>
 <tr class="separator:a223fe61f314d2cd2ea64cf0e14f834c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -141,6 +146,14 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new <a class="el" href="class_simulation.html">Simulation</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">simulationSize</td><td>the simulation size in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -167,6 +180,8 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Render self for the current frame. </p>
+
 <p>Implements <a class="el" href="class_renderable.html#a7d02709d871bd2bde97d41d933df5adf">Renderable</a>.</p>
 
 </div>
@@ -187,6 +202,14 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>step the simulation once </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>the real-time delta since the last update </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -201,6 +224,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The size in pixels of the simulator. </p>
 
 </div>
 </div>

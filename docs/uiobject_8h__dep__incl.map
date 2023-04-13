@@ -1,12 +1,13 @@
 <map id="src/uiobject.h" name="src/uiobject.h">
-<area shape="rect" id="node1" title=" " alt="" coords="223,5,323,31"/>
-<area shape="rect" id="node2" href="$ui_8cpp.html" title=" " alt="" coords="62,79,141,104"/>
-<area shape="rect" id="node3" href="$uiframe_8h.html" title=" " alt="" coords="165,79,264,104"/>
-<area shape="rect" id="node7" href="$uiobject_8cpp.html" title=" " alt="" coords="400,79,515,104"/>
-<area shape="rect" id="node8" href="$uitext_8h.html" title=" " alt="" coords="289,79,375,104"/>
-<area shape="rect" id="node4" href="$core_8cpp.html" title=" " alt="" coords="285,152,379,177"/>
-<area shape="rect" id="node5" href="$instance_8cpp.html" title=" " alt="" coords="142,152,261,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="270,5,370,31"/>
+<area shape="rect" id="node2" href="$ui_8cpp.html" title=" " alt="" coords="109,79,187,104"/>
+<area shape="rect" id="node3" href="$uiframe_8h.html" title=" " alt="" coords="212,79,311,104"/>
+<area shape="rect" id="node7" href="$uiobject_8cpp.html" title=" " alt="" coords="447,79,561,104"/>
+<area shape="rect" id="node8" href="$uitext_8h.html" title=" " alt="" coords="335,79,422,104"/>
+<area shape="rect" id="node4" href="$core_8cpp.html" title=" " alt="" coords="142,152,237,177"/>
+<area shape="rect" id="node5" href="$instance_8cpp.html" title=" " alt="" coords="261,152,379,177"/>
 <area shape="rect" id="node6" href="$uiframe_8cpp.html" title=" " alt="" coords="5,152,117,177"/>
-<area shape="rect" id="node9" href="$particlesimulator_8cpp.html" title=" " alt="" coords="529,152,692,177"/>
-<area shape="rect" id="node10" href="$uitext_8cpp.html" title=" " alt="" coords="404,152,505,177"/>
+<area shape="rect" id="node9" href="$fluidsimulator_8cpp.html" title=" " alt="" coords="403,152,549,177"/>
+<area shape="rect" id="node10" href="$particlesimulator_8cpp.html" title=" " alt="" coords="573,152,736,177"/>
+<area shape="rect" id="node11" href="$uitext_8cpp.html" title=" " alt="" coords="760,152,861,177"/>
 </map>

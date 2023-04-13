@@ -2,6 +2,7 @@
 
 #include "window.h"
 #include "core.h"
+#include "test.h"
 
 #define W 1000
 #define H 800 
@@ -9,7 +10,14 @@
 #define SIM_HEIGHT H / 5
 #define WINDOW_TITLE "psim" 
 
+// #define TESTING 
+
 int main(int argc, char** argv) {
+#ifdef TESTING
+	std::cout << "TESTING..." << std::endl;
+
+	runTests();
+#else 
 	Window::init(W, H, WINDOW_TITLE);
 	Core::init(glm::ivec2(SIM_WIDTH, SIM_HEIGHT));
 
@@ -34,6 +42,7 @@ int main(int argc, char** argv) {
 		if (!Core::paused) {
 			Core::update(dt);
 		}
+		
 		Core::render();
 	});
  
@@ -41,4 +50,6 @@ int main(int argc, char** argv) {
 	Window::destroy();
 
 	exit(EXIT_SUCCESS); 
+#endif
+
 }

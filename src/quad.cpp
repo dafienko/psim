@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 #include <iostream>
+#include <algorithm>
 
 #include "core.h"
 
@@ -83,7 +84,6 @@ glm::vec2 Quad::getAspectTL(float aspect) {
 
 void Quad::renderAspect(float aspect) {
 	glm::vec2 windowSize = Core::getWindowSize();
-	glm::vec2 test = glm::vec2(1) / glm::vec2(2, 3);
 	glm::vec2 tl = glm::vec2(-1, -1) + (getAspectTL(aspect) / windowSize) * 2.0f;
 	glm::vec2 br = -tl;
 	

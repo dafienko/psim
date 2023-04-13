@@ -95,13 +95,16 @@ Collaboration diagram for Event&lt; Args &gt;::EventListener:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ada1e2d37d68bddee31693ee08531c9dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event_1_1_event_listener.html#ada1e2d37d68bddee31693ee08531c9dc">disconnect</a> ()</td></tr>
+<tr class="memdesc:ada1e2d37d68bddee31693ee08531c9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop listening to the bound event.  <br /></td></tr>
 <tr class="separator:ada1e2d37d68bddee31693ee08531c9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a6ee4cc52493341d8815938dfa8751e1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event_1_1_event_listener.html#a6ee4cc52493341d8815938dfa8751e1b">EventListener</a> (<a class="el" href="class_event.html">Event</a> &amp;listeningTo, std::function&lt; void(Args...)&gt; callback)</td></tr>
+<tr class="memdesc:a6ee4cc52493341d8815938dfa8751e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_event.html">Event</a> Listener object.  <br /></td></tr>
 <tr class="separator:a6ee4cc52493341d8815938dfa8751e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c56b2eb0882aa70a7ef5f12b294af94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_event_1_1_event_listener.html#a2c56b2eb0882aa70a7ef5f12b294af94">fire</a> (Args &amp;&amp;...args)</td></tr>
+<tr class="memdesc:a2c56b2eb0882aa70a7ef5f12b294af94"><td class="mdescLeft">&#160;</td><td class="mdescRight">execute this event listener's callback  <br /></td></tr>
 <tr class="separator:a2c56b2eb0882aa70a7ef5f12b294af94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
@@ -146,6 +149,15 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Construct a new <a class="el" href="class_event.html">Event</a> Listener object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">listeningTo</td><td>the event this listener is listening to </td></tr>
+    <tr><td class="paramname">callback</td><td>the callback to run on the event's trigger </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -174,6 +186,8 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Stop listening to the bound event. </p>
+
 </div>
 </div>
 <a id="a2c56b2eb0882aa70a7ef5f12b294af94" name="a2c56b2eb0882aa70a7ef5f12b294af94"></a>
@@ -201,6 +215,14 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>execute this event listener's callback </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>the args to be passed to the callback </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

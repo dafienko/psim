@@ -95,7 +95,12 @@ void UIObject::render() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 	uiShader->bind();
 
-	glm::mat4x4 ortho = glm::ortho(0.0f, (float)Core::getWindowSize().x, (float)Core::getWindowSize().y, 0.0f);
+	glm::mat4x4 ortho = glm::ortho(
+		0.0f, 
+		static_cast<float>(Core::getWindowSize().x), 
+		static_cast<float>(Core::getWindowSize().y), 
+		0.0f
+	);
 	GLint projLoc = glGetUniformLocation(uiShader->getProgram(), "projection");
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, &ortho[0][0]);
 

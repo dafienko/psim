@@ -5,7 +5,7 @@ ifeq ($(OS),Windows_NT) # windows
 	RM = del /q /f
 	BIN = main.exe
 else # mac
-    CC = clang++
+    CC = g++
 	CINCLUDE = -isystem /opt/homebrew/include/ -isystem /opt/homebrew/include/freetype2/ -isystem /Library/Developer/CommandLineTools/usr/lib/clang/14.0.0/include
 	LDFLAGS = -L /opt/homebrew/lib/ -lglfw -lglew -lfreetype -framework OpenGL
 	RMDIR = rm -rf
@@ -20,7 +20,7 @@ DEP = $(BUILD)/deps
 SRC_FILES = $(wildcard $(SRC)/*.cpp)
 OBJ_FILES = $(patsubst $(SRC)/%.cpp, $(BUILD)/%.o, $(SRC_FILES))
 
-CCFLAGS = -Ofast -Wall -std=c++20
+CCFLAGS = -g -Wall -std=c++20 --coverage
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP)/$*.d
 
 all: $(BIN)
@@ -45,9 +45,15 @@ docs:
 static:
 	cppcheck --enable=all src/ &> static-analysis-report.txt && cpplint src/*.cpp &> style-report.txt
 
+.PHONY: coverage
+coverage:
+	gcov -r build/*.gcno
+	gcovr --html-details coverage/
+
 clean:
 	$(RMDIR) $(BUILD)
 	$(RM) $(BIN)
+	$(RM) *.gcov
 
 DEPFILES = $(patsubst $(SRC)/%.cpp, $(DEP)/%.d, $(SRC_FILES))
 $(DEPFILES):

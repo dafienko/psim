@@ -83,32 +83,47 @@ Collaboration diagram for RenderTarget:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_render_target__coll__graph.png" border="0" usemap="#a_render_target_coll__map" alt="Collaboration graph"/></div>
 <map name="a_render_target_coll__map" id="a_render_target_coll__map">
-<area shape="rect" title=" " alt="" coords="5,5,133,229"/>
+<area shape="rect" title=" " alt="" coords="5,5,196,259"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9900ac23e1c10126379631937d68612b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a9900ac23e1c10126379631937d68612b">RenderTarget</a> (int width, int height)</td></tr>
+<tr class="memdesc:a9900ac23e1c10126379631937d68612b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Render Target object.  <br /></td></tr>
 <tr class="separator:a9900ac23e1c10126379631937d68612b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dcecf0d68b5d0d6fa065bbd0194a6fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a3dcecf0d68b5d0d6fa065bbd0194a6fe">RenderTarget</a> (int width, int height, GLint internalFormat, GLint texFilterType)</td></tr>
+<tr class="memdesc:a3dcecf0d68b5d0d6fa065bbd0194a6fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Render Target object.  <br /></td></tr>
 <tr class="separator:a3dcecf0d68b5d0d6fa065bbd0194a6fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c8ef0f2c9e46ed80e5e3ce6e5567b8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a5c8ef0f2c9e46ed80e5e3ce6e5567b8b">~RenderTarget</a> ()</td></tr>
 <tr class="separator:a5c8ef0f2c9e46ed80e5e3ce6e5567b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1021b06f0d4a0e45f5ad8dc4d8abebe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a1021b06f0d4a0e45f5ad8dc4d8abebe0">setSize</a> (int width, int height)</td></tr>
+<tr class="memdesc:a1021b06f0d4a0e45f5ad8dc4d8abebe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">resize the render target  <br /></td></tr>
 <tr class="separator:a1021b06f0d4a0e45f5ad8dc4d8abebe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66228323ba26c86a24832db883f24273"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a66228323ba26c86a24832db883f24273">getTexture</a> () const</td></tr>
+<tr class="memdesc:a66228323ba26c86a24832db883f24273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the OpenGL Texture object of this rendertarget.  <br /></td></tr>
+<tr class="separator:a66228323ba26c86a24832db883f24273"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3be95ab0face573601ed15eecb7beef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#ad3be95ab0face573601ed15eecb7beef">bind</a> ()</td></tr>
+<tr class="memdesc:ad3be95ab0face573601ed15eecb7beef"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the render target so it can be drawn to  <br /></td></tr>
 <tr class="separator:ad3be95ab0face573601ed15eecb7beef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a593fd91dff1e2b7dd4f6ef7cafac3c2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a593fd91dff1e2b7dd4f6ef7cafac3c2a">bindAsTexture</a> ()</td></tr>
+<tr class="memdesc:a593fd91dff1e2b7dd4f6ef7cafac3c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the render target to the GL_TEXTURE0  <br /></td></tr>
 <tr class="separator:a593fd91dff1e2b7dd4f6ef7cafac3c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2808fc47c7255a36fec3fa75cbd5e589"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a2808fc47c7255a36fec3fa75cbd5e589">bindAsTexture</a> (const char *textureName, GLuint program)</td></tr>
+<tr class="memdesc:a2808fc47c7255a36fec3fa75cbd5e589"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the render target to GL_TEXTURE0 for the specified uniform  <br /></td></tr>
 <tr class="separator:a2808fc47c7255a36fec3fa75cbd5e589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa80a69eaa41f4019d4577bd5b0482e3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#aa80a69eaa41f4019d4577bd5b0482e3e">bindAsTexture</a> (const char *textureName, GLuint program, GLint location)</td></tr>
+<tr class="memdesc:aa80a69eaa41f4019d4577bd5b0482e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">bind the render target to the specified location for the specified uniform  <br /></td></tr>
 <tr class="separator:aa80a69eaa41f4019d4577bd5b0482e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff917324e0e420c0780f4bf64cd3aafe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#aff917324e0e420c0780f4bf64cd3aafe">clear</a> (int buffersToClear)</td></tr>
+<tr class="memdesc:aff917324e0e420c0780f4bf64cd3aafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the render target  <br /></td></tr>
 <tr class="separator:aff917324e0e420c0780f4bf64cd3aafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58d6dbef4741c4f3cabcd85d77368b9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#a58d6dbef4741c4f3cabcd85d77368b9c">renderToQuad</a> ()</td></tr>
+<tr class="memdesc:a58d6dbef4741c4f3cabcd85d77368b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the render target stretched over the current viewport size.  <br /></td></tr>
 <tr class="separator:a58d6dbef4741c4f3cabcd85d77368b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85d8c5cc1a388d6d4123e0ac8e57d21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_render_target.html#af85d8c5cc1a388d6d4123e0ac8e57d21">renderToQuadWithAspect</a> (float aspect)</td></tr>
+<tr class="memdesc:af85d8c5cc1a388d6d4123e0ac8e57d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the render target as large as possible while maintaining the specified aspect ratio.  <br /></td></tr>
+<tr class="separator:af85d8c5cc1a388d6d4123e0ac8e57d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -141,6 +156,15 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct a new Render Target object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>the width of the render target </td></tr>
+    <tr><td class="paramname">height</td><td>the height of the render target </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -182,6 +206,17 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Construct a new Render Target object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>the width of the render target </td></tr>
+    <tr><td class="paramname">height</td><td>the height of the render target </td></tr>
+    <tr><td class="paramname">internalFormat</td><td>the openGL internal format to use </td></tr>
+    <tr><td class="paramname">texFilterType</td><td>the openGL texture filter type to use </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a5c8ef0f2c9e46ed80e5e3ce6e5567b8b" name="a5c8ef0f2c9e46ed80e5e3ce6e5567b8b"></a>
@@ -217,6 +252,8 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>bind the render target so it can be drawn to </p>
+
 </div>
 </div>
 <a id="a593fd91dff1e2b7dd4f6ef7cafac3c2a" name="a593fd91dff1e2b7dd4f6ef7cafac3c2a"></a>
@@ -233,6 +270,8 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>bind the render target to the GL_TEXTURE0 </p>
 
 </div>
 </div>
@@ -261,6 +300,15 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>bind the render target to GL_TEXTURE0 for the specified uniform </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">textureName</td><td>the name of the sampler uniform </td></tr>
+    <tr><td class="paramname">program</td><td>the program that contains the uniform </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -295,6 +343,16 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>bind the render target to the specified location for the specified uniform </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">textureName</td><td>the name of the sampler uniform </td></tr>
+    <tr><td class="paramname">program</td><td>the program that contains the uniform </td></tr>
+    <tr><td class="paramname">location</td><td>the GL_TEXTURE location to set the uniform to </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -339,6 +397,34 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>clear the render target </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffersToClear</td><td>the OpenGL flags to clear </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a66228323ba26c86a24832db883f24273" name="a66228323ba26c86a24832db883f24273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66228323ba26c86a24832db883f24273">&#9670;&#160;</a></span>getTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint RenderTarget::getTexture </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the OpenGL Texture object of this rendertarget. </p>
+<dl class="section return"><dt>Returns</dt><dd>GLuint </dd></dl>
+
 </div>
 </div>
 <a id="a58d6dbef4741c4f3cabcd85d77368b9c" name="a58d6dbef4741c4f3cabcd85d77368b9c"></a>
@@ -355,6 +441,34 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Render the render target stretched over the current viewport size. </p>
+
+</div>
+</div>
+<a id="af85d8c5cc1a388d6d4123e0ac8e57d21" name="af85d8c5cc1a388d6d4123e0ac8e57d21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af85d8c5cc1a388d6d4123e0ac8e57d21">&#9670;&#160;</a></span>renderToQuadWithAspect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RenderTarget::renderToQuadWithAspect </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>aspect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render the render target as large as possible while maintaining the specified aspect ratio. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aspect</td><td>the aspect ratio to maintain </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -383,6 +497,15 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>resize the render target </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">width</td><td>the new width in pixels </td></tr>
+    <tr><td class="paramname">height</td><td>the new height in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
