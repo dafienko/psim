@@ -20,7 +20,7 @@ DEP = $(BUILD)/deps
 SRC_FILES = $(wildcard $(SRC)/*.cpp)
 OBJ_FILES = $(patsubst $(SRC)/%.cpp, $(BUILD)/%.o, $(SRC_FILES))
 
-CCFLAGS = -g -Wall -std=c++20 --coverage
+CCFLAGS = -Ofast -Wall -std=c++20
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP)/$*.d
 
 all: $(BIN)
