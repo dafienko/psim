@@ -1,4 +1,4 @@
-#PSIM (*P*article *Sim*ulator)
+# PSIM (*P*article *Sim*ulator)
 PSIM is a fluid and particle simulator sandbox designed inspired by [*Powder Game*](https://dan-ball.jp/en/javagame/dust/). Particles are simulated as simple cellular automota on the CPU, and fluid is simulated on the GPU. Fluid responds to changes in the particle simulation.  
 
 ## Controls
